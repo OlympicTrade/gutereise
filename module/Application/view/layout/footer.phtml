@@ -1,0 +1,89 @@
+<div class="block" id="footer">
+    <div class="wrapper">
+        <div class="about">
+            <div class="logo"></div>
+            <div class="desc">
+                Некий текст, рассказывающий как наша компанеия проводит экскурсии и туры.
+                Некий текст, рассказывающий как наша компанеия проводит экскурсии и туры. Обзорная экскурсия и
+                Петропавловская крепость
+            </div>
+        </div>
+        <div class="menu">
+            <ul class="item">
+                <li class="title">Услуги</li>
+                <li><a href="/excursions/">Экскурсии</a></li>
+                <li><a href="/tours/">Туры</a></li>
+                <li><a href="/hotels/">Отели</a></li>
+                <li><a href="/transport/">Аренда автотранспорта</a></li>
+                <li><a href="/transport/">Аренда катеров и вертолетов</a></li>
+            </ul>
+            <ul class="item">
+                <li class="title">О компании</li>
+                <li><a href="//">Наша деятельность</a></li>
+                <li><a href="/guarant/">Финансовые гарантии</a></li>
+                <li><a href="/documents/">Документы</a></li>
+                <li><a href="/partners/">Партнеры</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div class="contacts">
+            <div class="row address">
+                <i class="fas fa-map-marker-alt"></i>
+                <?php echo $contacts->get('address') ?>
+            </div>
+            <div class="row">
+                <i class="fas fa-map-marker-alt"></i>
+                <?php echo $contacts->get('phone_1') . ', ' . $contacts->get('phone_2') ?>
+            </div>
+            <div class="row">
+                <i class="fas fa-map-marker-alt"></i>
+                <?php echo $contacts->get('email') ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$jsonLd = [
+    '@context'  => 'http://schema.org',
+    '@type'     => 'Organization',
+    'url'       => $settings->get('domain'),
+    'name'      => $settings->get('site_name'),
+    'logo'      => $settings->get('domain') . '/images/logo.png',
+    'telephone' => $contacts->get('phone_1'),
+    'email'     => $contacts->get('email'),
+    'contactPoint' => (object) [
+        '@type'       => 'ContactPoint',
+        'telephone'   => $contacts->get('phone_1'),
+        'contactType' => 'sales',
+        'areaServed'  => ['RU']
+    ],
+    'sameAs' => [
+        $contacts->get('vkontakte')
+    ],
+];
+?>
+
+<script type="application/ld+json">
+<?php echo \Zend\Json\Json::encode((object) $jsonLd); ?>
+</script>
+
+<?php
+$jsonLd = [
+    '@context'  => 'http://schema.org',
+    '@type'     => 'WebSite',
+    'url'       => $settings->get('domain'),
+    'name'      => $settings->get('site_name'),
+    /*'potentialAction' => (object) [
+        '@type'       => 'SearchAction',
+        'target'      => $settings->get('domain') . '/search/?query={search_term}',
+        'query-input' => 'required name=search_term',
+    ],*/
+];
+?>
+
+<script type="application/ld+json">
+<?php echo \Zend\Json\Json::encode((object) $jsonLd); ?>
+</script>
+</body>
+</html>

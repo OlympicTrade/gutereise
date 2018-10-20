@@ -1,0 +1,56 @@
+</div>
+<div id="footer" class="block">
+    <a  href="<?php echo $this->link($contacts->get('phone')) ?>" class="call">
+        Задать вопрос
+    </a>
+    <a href="<?php echo $contacts->get('vkontakte') ?>" class="social">
+        Vkontakte
+    </a>
+    <div class="clear"></div>
+</div>
+
+<?php
+echo $this->settings->get('html_body');
+?>
+
+<?php
+$jsonLd = [
+    '@context'  => 'http://schema.org',
+    '@type'     => 'Organization',
+    'url'       => $settings->get('domain'),
+    'name'      => $settings->get('site_name'),
+    'logo'      => $settings->get('domain') . '/images/logo-b.png',
+    'telephone' => $contacts->get('phone_1'),
+    'email'     => $contacts->get('email'),
+    'contactPoint' => (object) [
+        '@type'       => 'ContactPoint',
+        'telephone'   => $contacts->get('phone_1'),
+        'contactType' => 'sales',
+        'areaServed'  => ['RU']
+    ],
+    'sameAs' => [
+        $contacts->get('vkontakte')
+    ],
+];
+?>
+
+<script type="application/ld+json">
+<?php echo \Zend\Json\Json::encode((object) $jsonLd); ?>
+</script>
+
+<?php
+$jsonLd = [
+    '@context'  => 'http://schema.org',
+    '@type'     => 'WebSite',
+    'url'       => $settings->get('domain'),
+    'name'      => $settings->get('site_name'),
+    'potentialAction' => (object) [
+        '@type'       => 'SearchAction',
+        'target'      => $settings->get('domain') . '/catalog/search/?query={search_term}',
+        'query-input' => 'required name=search_term',
+    ],
+];
+?>
+<noscript><div><img src="https://mc.yandex.ru/watch/44381401" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</body>
+</html>

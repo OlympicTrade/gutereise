@@ -1,0 +1,25 @@
+<?php echo $this->header([
+    'background' => '/images/headers/petergof.jpg'
+]); ?>
+
+<div class="about-block">
+    <div class="block">
+        <div class="wrapper">
+            <div class="col-l">
+                <div class="certificate">
+                    <a class="pic popup-img" href="<?php echo $about->getPlugin('certificate')->getImage('hr') ?>">
+                        <img src="<?php echo $about->getPlugin('certificate')->getImage('m') ?>" alt="Свидетельство туроператора">
+                    </a>
+                    <div class="link">
+                        <a class="btn small popup-img" href="<?php echo $about->getPlugin('certificate')->getImage('hr') ?>">Увеличть</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-r">
+                <h1><?php echo $about->get('name') ?></h1>
+                <div class="std-text"><?php echo $about->get('text') ?></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

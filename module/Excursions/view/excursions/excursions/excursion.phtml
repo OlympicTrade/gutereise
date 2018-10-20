@@ -1,0 +1,192 @@
+<?php echo $this->header([
+    'background' => '/images/headers/petergof.jpg'
+]); ?>
+
+<div class="block">
+    <div class="wrapper">
+    <div class="excursion-block">
+    <div class="col-l">
+        <?php /*
+        <ul id="imageGallery">
+            <?php
+            $html = '';
+
+            $image = $excursion->getPlugin('image');
+            $html .=
+                '<li data-thumb="' . $image->getImage('m') . '" data-src="' . $image->getImage('hr') . '">'.
+                    '<img src="' . $image->getImage('r') . '">'.
+                '</li>';
+
+            foreach ($excursion->getPlugin('images') as $image) {
+                $html .=
+                    '<li data-thumb="' . $image->getImage('m') . '" data-src="' . $image->getImage('hr') . '">'.
+                        '<img src="' . $image->getImage('r') . '">'.
+                    '</li>';
+            }
+
+            echo $html;
+            ?>
+        </ul>
+        <script>
+            $('#imageGallery').lightSlider({
+                gallery:true,
+                item:1,
+                loop:true,
+                //thumbItem:9,
+                slideMargin:0,
+                enableDrag: false,
+                currentPagerPosition:'left',
+                vertical:true,
+                verticalHeight:400,
+                vThumbWidth:150,
+                vThumbHeight:150,
+                thumbMargin:4,
+                thumbItem:4,
+                onSliderLoad: function(el) {
+                    el.lightGallery({
+                        selector: '#imageGallery .lslide'
+                    });
+                }
+            });
+        </script>
+        */ ?>
+
+        <div class="desc-box">
+
+            <h2><?php echo $excursion->get('name') ?></h2>
+            <div class="std-text"><?php echo $excursion->get('text') ?></div>
+
+            <div class="attrs-list">
+                <div class="row">
+                    <div class="label">Длительность</div>
+                    Индивидуальная экскурсия на 5 часов
+                </div>
+                <div class="row">
+                    <div class="label">Время и место начала</div>
+                    Начало и окончание экскурсии в любом месте города по Вашему желанию
+                </div>
+                <div class="row">
+                    <div class="label">В стоимость включено</div>
+                    <div class="row"><i class="fas fa-check"></i>  Аренда <a class="popup" href="/transport/mercedes-benz-e-class/">Мерседеса Е 211</a>/<a href="">Мерседеса Виано</a>/<a href="">Мерседеса Спринтера</a></div>
+                    <div class="row"><i class="fas fa-check"></i>  Входные билеты в Екатерининский дворец и Екатерининский парк</div>
+                    <div class="row"><i class="fas fa-check"></i>  Услуги русскоговорящего гида 5 часов</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gallery">
+            <h2>Из нашей галлереи</h2>
+            <?php
+            $html = '<div class="cols">';
+
+            $html .=
+                '<div class="col-33 pic">'.
+                    '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="">'.
+                '</div>';
+
+            foreach ($excursion->getPlugin('images') as $image) {
+                $html .=
+                    '<div class="col-33 pic">'.
+                        '<img src="' . $image->getImage('m') . '" alt="">'.
+                    '</div>';
+            }
+
+            $html .= '</div>';
+            echo $html;
+            ?>
+        </div>
+
+        <?php echo $this->comments([
+            'depend_id' => $excursion->getId(),
+            'depend_type' => \Comments\Model\Comment::TYPE_EXCURSION,
+        ]); ?>
+    </div>
+    <div class="col-r sidebar">
+        <div class="slider">
+            <?php
+            $html =
+                '<form action="/excursions/get-price/" method="post" class="excursion-form">'.
+                    //'<div class="header">Стоимость экскурсии</div>'.
+                    $this->commonForm($commonForm).
+                    '<input type="hidden" name="db_excursion_id" value="' . $excursion->getId() . '">'.
+                    '<div class="price-box std-errors"></div>'.
+                    '<div class="btns">'.
+                        '<span class="btn yellow order">Забронировать</span>'.
+                    '</div>'.
+                '</form>';
+
+            echo $html;
+            ?>
+        </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+    </div>
+</div>
+
+<script>
+    var form = $('.excursion-form');
+    var timer = null;
+
+    form.formSubmit({
+        success: function(resp, form){
+            updatePrice(resp.data);
+        }
+    });
+
+    $('input', form).on('keyup change', function () {
+        timer = setTimeout(function() {
+            $.commonForm.setData({
+                date:     $('[name="date"]', form).val(),
+                lang_id:  $('[name="lang_id"]', form).val(),
+                adults:   $('[name="adults"]', form).val(),
+                children: $('[name="children"]', form).val()
+            });
+            form.submit();
+        });
+    }).trigger('change');
+
+    function updatePrice(data) {
+        var html = '';
+        if(data.errors.length) {
+            $.each(data.errors, function (key, val) {
+                html += '<div class="error">' + val + '</div>';
+            });
+        } else {
+            html +=
+                '<div class="price"><span>' + $.aptero.price(data.price) + '</span> <i class="fas fa-ruble-sign"></i></div>';
+            if(!data.child) {
+                html +=
+                    '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i> за человека</div>';
+            } else {
+                html +=
+                    '<div class="notice">' +
+                        'взрослый - <b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i>, ' +
+                        'детский - <b>'  + $.aptero.price(data.child) + '</b> <i class="fas fa-ruble-sign"></i>' +
+                    '</div>';
+            }
+        }
+        $('.price-box', form).html(html);
+    }
+
+    $('.order', form).on('click', function() {
+        var data = $.aptero.serializeArray(form);
+        data.id = <?php echo $excursion->getId() ?>;
+
+        $.fancybox.open({
+            src: '/excursions/order/',
+            type: 'ajax',
+            opts: {
+                ajax: {
+                    settings: {
+                        method: 'get',
+                        data: data
+                    }
+                },
+                afterLoad: function(e, slide) {
+                    initElements(e.$refs.slider);
+                }
+            }
+        });
+    });
+</script>

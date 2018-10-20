@@ -1,0 +1,13 @@
+User-Agent: *
+Disallow: /*search
+Disallow: /user/*
+Disallow: *?*
+Allow: *?*page=*
+Disallow: *?*page=*&*
+Disallow: /*sort=
+Host: https://gutereise.ru
+Sitemap: https://gutereise.ru/sitemap/
+
+User-agent: Googlebot
+Allow: /sitemap/?images=1
+Sitemap: https://gutereise.ru/sitemap/?images=1

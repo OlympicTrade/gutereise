@@ -1,0 +1,22 @@
+<?php echo $this->header([
+    'background' => '/images/headers/petergof.jpg'
+]); ?>
+
+<div class="block std-container-right museum-block">
+    <div class="col-l">
+        <div class="desc-box">
+            <h2><?php echo $museum->get('name') ?></h2>
+            <div class="std-text"><?php echo $museum->get('text') ?></div>
+        </div>
+        <h2><?php echo $museum->get('header2') ?></h2>
+        <div class="items-list items-3">
+            <?php echo $this->museumsPointsList($museum->getPlugin('points')) ?>
+        </div>
+    </div>
+    <div class="col-r">
+        <div class="items-list items-1 excursions-list">
+            <?php echo $this->excursionsList($museum->getPlugin('excursions')) ?>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,16 @@
+<?php echo $this->header([
+    'background' => '/images/headers/petergof.jpg'
+]); ?>
+
+<div class="block excursions-block">
+    <div class="wrapper">
+        <div class="col-left">
+        </div>
+        <div class="col-right">
+            <div class="items-list items-3 excursions-list">
+                <?php echo $this->museumsList($museums) ?>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

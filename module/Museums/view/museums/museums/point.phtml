@@ -1,0 +1,15 @@
+<?php echo $this->header([
+    'background' => '/images/headers/petergof.jpg'
+]); ?>
+
+<div class="block std-container-right museum-block">
+    <div class="col-l">
+        <div class="desc-box">
+            <h2><?php echo $point->get('name') ?></h2>
+            <div class="std-text"><?php echo $point->get('text') ?></div>
+        </div>
+    </div>
+    <div class="col-r">
+    </div>
+    <div class="clear"></div>
+</div>

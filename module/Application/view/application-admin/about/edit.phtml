@@ -1,0 +1,31 @@
+<h1>
+    <i class="fa module-icon-<?php echo $this->engine->module->get('module') ?>"></i>
+    <?php echo $this->header ?>
+</h1>
+
+<?php $form = $this->editForm ?>
+<?php echo $this->form()->openTag($form) ?>
+<div class="edit-form std-form">
+    <div class="tabs tabs-class" data-name="edit-tabs">
+        <div class="tabs-header">
+            <div class="tab" data-tab="general">Основное</div>
+        </div>
+        <div class="tabs-body">
+            <div class="tab" data-tab="general">
+                <?php
+                echo $this->adminFormRow($form->get('certificate-image'));
+                echo $this->adminFormRow($form->get('name'));
+                echo $this->adminFormRow($form->get('text'));
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-box">
+        <a class="btn btn-blue btn-submit" href="">
+            <i class="fa fa-check"></i>
+            Сохранить
+        </a>
+    </div>
+</div>
+<?php echo $this->form()->closeTag() ?>

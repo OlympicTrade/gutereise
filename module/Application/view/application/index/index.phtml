@@ -1,0 +1,228 @@
+<div class="block main-block-1">
+    <div class="video">
+        <img src="images/placeholder.jpg" alt="" class="placeholder-image">
+    </div>
+    <div class="wrapper">
+        <h1>Индивидуальные экскурсии и туры по Санкт-Петербургу</h1>
+        <div class="menu">
+            <a href="/excursions/" class="btn yellow">Экскурсии</a>
+            <a href="/tours/" class="btn yellow">Туры</a>
+            <a href="/hotels/" class="btn yellow">Отели</a>
+            <a href="/transport/" class="btn yellow">Траспорт</a>
+        </div>
+        <div class="tags">
+            <a href="#" class="btn">Эрмитаж</a>
+            <a href="#" class="btn">Петергоф</a>
+            <a href="#" class="btn">Ораниенбаум</a>
+            <a href="#" class="btn">Мосты</a>
+            <a href="#" class="btn">Обзорная экскурсия</a>
+            <a href="#" class="btn">Гатчина</a>
+            <a href="#" class="btn">Исаакиевский собор</a>
+            <a href="#" class="btn">Царское село</a>
+            <a href="#" class="btn">Павловск</a>
+            <a href="#" class="btn">Меншиковский дворец</a>
+            <a href="#" class="btn">Фонтаны</a>
+        </div>
+    </div>
+</div>
+<script>
+    <?php
+    $settings = \Application\Model\Settings::getInstance();
+
+    $month = date('n');
+    if($month < 2 || $month > 9) {
+        $video = $settings->get('video_winter');
+        $start = 7;
+    } else {
+        $video = $settings->get('video_summer');
+        $start = 5;
+    }
+    ?>
+
+    var block = $('.main-block-1');
+    var video = $('.video', block);
+
+    var marginTop = ((block.innerWidth() * 0.5625) - block.innerHeight()) / 2;
+
+    video.YTPlayer({
+        fitToBackground: true,
+        controls: 0,
+        videoId: '<?php echo $video ?>',
+        pauseOnScroll: false,
+        playerVars: {
+            start: <?php echo $start ?>,
+            autoplay: 1,
+            controls: 0,
+            showinfo: 0
+        },
+        callback: function() {
+            video.children('.background').css({marginTop: -marginTop});
+        }
+    });
+</script>
+
+<div class="main-block main-block-2">
+    <div class="block">
+        <div class="wrapper">
+            <div class="header">
+                <h2>Индивидуальные экскурсии по Петербургу</h2>
+                <div class="separ"></div>
+                <div class="notice">Эта серия настольных игр лучше всего передаёт атмосферу хтонического кошмара и безысходности из рассказов Лавкрафта.</div>
+            </div>
+            <div class="menu">
+                <a href="/excursions/overview/" class="item">
+                    <img src="/images/m-1.jpg" alt="Обзорные экскурсии">
+                    <span class="desc">Обзорные экскурсии</span>
+                </a>
+                <a href="/excursions/museums/" class="item">
+                    <img src="/images/m-2.jpg" alt="Музеи и искуство">
+                    <span class="desc">Музеи и искуство</span>
+                </a>
+                <a href="/excursions/region/" class="item">
+                    <img src="/images/m-3.jpg" alt="Загородные экскурси">
+                    <span class="desc">Загородные экскурсии</span>
+                </a>
+                <a href="/excursions/water/" class="item">
+                    <img src="/images/m-4.jpg" alt="Экскурсии по рекам и каналам">
+                    <span class="desc">Экскурсии по рекам и каналам</span>
+                </a>
+                <a href="/excursions/unusual/" class="item">
+                    <img src="/images/m-5.jpg" alt="Необычные экскурсии">
+                    <span class="desc">Необычные экскурсии</span>
+                </a>
+                <a href="/excursions/literature/" class="item">
+                    <img src="/images/m-6.jpg" alt="Литературные экскурсии">
+                    <span class="desc">Литературные экскурсии</span>
+                </a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?/*
+<div class="main-block main-block-2">
+    <div class="block">
+        <div class="wrapper">
+            <div class="header">
+                <h2>Индивидуальные экскурсии по Петербургу</h2>
+                <div class="separ"></div>
+                <div class="notice">Эта серия настольных игр лучше всего передаёт атмосферу хтонического кошмара и безысходности из рассказов Лавкрафта.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="block items-list owl-carousel excursions-list">
+        <?php echo $this->excursionsList($excursions) ?>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script>
+    var block = $('.main-block-2');
+
+    $('.excursions-list', block).owlCarousel({
+        loop: false,
+        //center: true,
+        margin: 30,
+        nav: false,
+        responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:5
+            }
+        }
+    });
+</script>
+*/ ?>
+
+<div class="main-block-3">
+    <div id="main-block-3-map" style="height: 450px;"></div>
+    <div class="notice">
+        <div class="title">Составьте свой тур самостоятельно</div>
+        <div class="desc">Мы поможем составить маршрут спецално для вас, поможем выбрать отель, встретить на
+            вокзале и в аэропорту. </div>
+    </div>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAk5H6D3lQ-4JvduK8UeT0rcqelhmN3QxY"></script>
+    <script>
+        var map = new google.maps.Map(document.getElementById('main-block-3-map'), {
+            center: {lat: 59.936765, lng: 30.288474},
+            zoom: 14,
+            disableDefaultUI: true,
+            scrollwheel: false,
+            styles: getGoogleMapStyle()
+        });
+
+        var infoWindows = [];
+
+        $.ajax({
+            url: '/museums/get-map-points/',
+            method: 'post',
+            success: function (points) {
+                $.each(points, function (key, val) {
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: val.html
+                    });
+
+                    infoWindows.push(infoWindow);
+
+                    var marker = new google.maps.Marker({
+                        position: {lat: parseFloat(val.lat), lng: parseFloat(val.lng)},
+                        icon: "/images/marker.png",
+                        map: map
+                    });
+
+                    marker.addListener("click", function() {
+                        $.each(infoWindows, function (key, val) { val.close() });
+                        infoWindow.open(map, marker);
+                    });
+                });
+            }
+        });
+    </script>
+</div>
+
+<div class="main-block-4">
+    <div class="col-l">
+        <div class="header">Отзывы о нас</div>
+        <div class="owl-carousel reviews">
+            <?php
+            $html = '';
+
+            $reviews = \Reviews\Model\Review::getEntityCollection();
+            foreach ($reviews as $review) {
+                $html .=
+                    '<div class="review">'.
+                    '<div class="name">' . $review->get('name') . '</div>'.
+                    '<div class="stars">' . $this->stars($review->get('stars')) . '</div>'.
+                    '<div class="text">' . $review->get('review') . '</div>'.
+                    '</div>';
+            }
+
+            echo $html;
+            ?>
+        </div>
+    </div>
+    <div class="col-r"></div>
+    <div class="clear"></div>
+</div>
+
+<script>
+    var block = $('.main-block-4');
+    $('.reviews', block).owlCarousel({
+        loop: true,
+        margin: 0,
+        navText: [' ', ' '],
+        nav: true,
+        responsive:{
+            0:{
+                items:1
+            }
+        }
+    });
+</script>

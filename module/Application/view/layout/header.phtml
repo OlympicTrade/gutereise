@@ -1,0 +1,55 @@
+<?php
+$this->generateMeta();
+
+$version = $settings->get('html_css_js_version');
+
+$this->headLink()
+    ->prependStylesheet('/css/compress-' . $version . '.css');
+
+$this->headScript()
+    ->setAllowArbitraryAttributes(true)
+    ->prependFile('/js/compress-' . $version . '.js')
+    ->prependFile('//use.fontawesome.com/releases/v5.0.6/js/all.js', null, ['async' => true])
+
+    //->prependFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+    //->prependFile('//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+    ->prependFile('/engine/js/jquery/jquery-ui.js')
+    ->prependFile('/engine/js/jquery/jquery.js')
+    ;
+
+if(MODE != 'dev') {
+    $this->headScript()
+        ->prependFile('/js/counters/chat.js', null, ['async' => true])
+        ->prependFile('/js/counters/yandex.js', null, ['async' => true])
+        ->prependFile('/js/counters/google.js', null, ['async' => true]);
+}
+?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle() . "\n";
+    echo $this->headMeta()  . "\n";
+    echo $this->headLink()  . "\n";
+    echo $this->headScript()  . "\n";
+    echo $this->settings->get('html_head');
+    ?>
+</head>
+<body>
+<div class="block" id="header">
+    <div class="wrapper">
+        <a href="/" class="logo"></a>
+        <ul class="nav">
+            <li class="active"><a href="/">Главная</a></li>
+            <li><a href="/excursions/">Экскурсии</a></li>
+            <li><a href="/tours/">Туры</a></li>
+            <li><a href="/hotels/">Отели</a></li>
+            <li><a href="/transport/">Транспорт</a></li>
+            <li><a href="/about/">О компании</a></li>
+        </ul>
+        <div class="contacts">
+            <div class="phone"><?php echo $contacts->get('phone_1') ?></div>
+            <div class="email"><?php echo $contacts->get('email') ?></div>
+        </div>
+    </div>
+</div>

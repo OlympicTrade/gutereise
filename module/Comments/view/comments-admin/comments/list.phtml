@@ -1,0 +1,22 @@
+<h1>
+    <i class="fa module-icon-<?php echo $this->engine->module->get('module') ?>"></i>
+    <?php echo $this->engine->module->get('name') ?>
+
+    <?php
+    $addUrl = $this->url('admin', array(
+        'module' => $this->engine->module->get('module'),
+        'section' => $this->engine->module->get('section'),
+        'action' => 'edit'
+    ));
+    ?>
+</h1>
+
+<div class="panel">
+    <?php echo $this->adminTableList($this->fields, $this->tableData); ?>
+</div>
+
+<div id="popup-delete" style="display: none;">
+    <div style="text-align: center; margin-bottom: 10px;">Удалить запись?</div>
+    <a href="" class="btn btn-green btn-remove"><i class="fa fa-check"></i> Удалить</a>
+    <a href="" class="btn btn-red" onclick="$.fancybox.close();"><i class="fa fa-times"></i> Отмена</a>
+</div>
