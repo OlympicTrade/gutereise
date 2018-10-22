@@ -12,6 +12,9 @@ class ExcursionsWidgets extends AbstractHelper
             case 'types':
                 return $this->renderTypes($data);
                 break;
+            case 'search':
+                return $this->renderSearch($data);
+                break;
             case 'museums':
                 return $this->renderMuseums($data);
                 break;
@@ -21,22 +24,6 @@ class ExcursionsWidgets extends AbstractHelper
 
         return '';
     }
-    /*
-    public function __invoke($form, $data)
-    {
-        $html =
-           '<div class="sidebar filters">';
-
-        //$html .= $this->renderForm($form);
-        //$html .= $this->renderLinks('Тип экскурсии', $data['types']);
-        $html .= $this->renderLinks('Тип экскурсии', 'types', $data['types']);
-        $html .= $this->renderCheckbox('Достопримечательности', 'museums', $data['museums']);
-
-        $html .=
-            '</div>';
-
-        return $html;
-    }*/
 
     protected function renderForm(Form $form)
     {
@@ -100,6 +87,19 @@ class ExcursionsWidgets extends AbstractHelper
         $html .=
                     '</div>'.
                 '</div>'.
+            '</div>';
+
+        return $html;
+    }
+
+    protected function renderSearch($data)
+    {
+        $val = $data['value'];
+
+        $html =
+            '<div class="widget search">'.
+                '<i class="fas fa-search"></i>'.
+                '<input type="text" name="search" value="' . $val . '" placeholder="Найти экскурсию">'.
             '</div>';
 
         return $html;

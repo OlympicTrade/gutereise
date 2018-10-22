@@ -6,51 +6,6 @@
     <div class="wrapper">
     <div class="excursion-block">
     <div class="col-l">
-        <?php /*
-        <ul id="imageGallery">
-            <?php
-            $html = '';
-
-            $image = $excursion->getPlugin('image');
-            $html .=
-                '<li data-thumb="' . $image->getImage('m') . '" data-src="' . $image->getImage('hr') . '">'.
-                    '<img src="' . $image->getImage('r') . '">'.
-                '</li>';
-
-            foreach ($excursion->getPlugin('images') as $image) {
-                $html .=
-                    '<li data-thumb="' . $image->getImage('m') . '" data-src="' . $image->getImage('hr') . '">'.
-                        '<img src="' . $image->getImage('r') . '">'.
-                    '</li>';
-            }
-
-            echo $html;
-            ?>
-        </ul>
-        <script>
-            $('#imageGallery').lightSlider({
-                gallery:true,
-                item:1,
-                loop:true,
-                //thumbItem:9,
-                slideMargin:0,
-                enableDrag: false,
-                currentPagerPosition:'left',
-                vertical:true,
-                verticalHeight:400,
-                vThumbWidth:150,
-                vThumbHeight:150,
-                thumbMargin:4,
-                thumbItem:4,
-                onSliderLoad: function(el) {
-                    el.lightGallery({
-                        selector: '#imageGallery .lslide'
-                    });
-                }
-            });
-        </script>
-        */ ?>
-
         <div class="desc-box">
 
             <h2><?php echo $excursion->get('name') ?></h2>

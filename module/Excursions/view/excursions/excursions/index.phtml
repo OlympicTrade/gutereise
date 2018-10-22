@@ -3,10 +3,13 @@
 ]); ?>
 
 <div class="block excursions-block">
-    <div class="wrapper">
+    <div class="container">
         <div class="col-left sidebar">
             <div class="slider filters">
                 <?php
+                echo $this->ExcursionsWidgets('search', [
+                    'value'   => $filters['search'],
+                ]);
                 echo $this->ExcursionsWidgets('types', [
                     'value'   => $filters['type'],
                     'data'    => \Excursions\Model\ExcursionType::getEntityCollection()
@@ -19,7 +22,7 @@
             </div>
         </div>
         <div class="col-right">
-            <div class="items-list items-4 excursions-list">
+            <div class="items-list items-3 excursions-list">
                 <?php echo $this->excursionsList($excursions, $sidebarForm) ?>
             </div>
         </div>

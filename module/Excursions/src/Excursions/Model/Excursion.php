@@ -36,8 +36,8 @@ class Excursion extends Entity
             $image->setFolder('excursions');
             $image->addResolutions([
                 'm' => [
-                    'width'  => 400,
-                    'height' => 300,
+                    'width'  => 450,
+                    'height' => 230,
                     'crop'   => true,
                 ],
                 'r' => [

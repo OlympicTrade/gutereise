@@ -4,13 +4,12 @@ $this->generateMeta();
 $version = $settings->get('html_css_js_version');
 
 $this->headLink()
+    ->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css')
     ->prependStylesheet('/css/compress-' . $version . '.css');
 
 $this->headScript()
     ->setAllowArbitraryAttributes(true)
     ->prependFile('/js/compress-' . $version . '.js')
-    ->prependFile('//use.fontawesome.com/releases/v5.0.6/js/all.js', null, ['async' => true])
-
     ->prependFile('/engine/js/jquery/jquery-ui.js')
     ->prependFile('/engine/js/jquery/jquery.js')
     ;
@@ -35,7 +34,7 @@ if(MODE != 'dev') {
 </head>
 <body>
 <div class="block" id="header">
-    <div class="wrapper">
+    <div class="wide-wrapper">
         <a href="/" class="logo"></a>
         <ul class="nav">
             <li class="active"><a href="/">Главная</a></li>

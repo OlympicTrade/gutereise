@@ -33,7 +33,13 @@
     box-shadow: inset 0 0 0 2px #fcd829;
     background: #fcd829;
     color: #000;
-    transition: all ease .3s;
+    transition: all ease .2s;
+}
+
+.btn.yellow:hover {
+    box-shadow: inset 0 0 0 2px #f13c4c;
+    background: #f13c4c;
+    color: #ffffff;
 }
 
 .btn.gray {

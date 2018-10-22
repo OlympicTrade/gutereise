@@ -23,7 +23,7 @@ h1 {
 }
 
 .block {
-    padding: 0 20px;
+    padding: 0 75px;
 }
 
 .block.gray {
@@ -39,6 +39,10 @@ h1 {
     max-width: 1300px;
     min-width: 700px;
     margin: 0 auto;
+}
+
+.wide-wrapper {
+    position: relative;
 }
 
 .panel {
@@ -60,7 +64,7 @@ h1 {
     box-shadow: 0 0 15px rgba(21, 21, 21, 0.6);
 }
 
-#header .wrapper {
+#header .wide-wrapper {
     height: 68px;
     padding: 0 0 0 220px;
 }
@@ -148,7 +152,7 @@ h1 {
     width: 100%;
     background-position: 50% 0;
     background-size: cover;
-    padding: 0;
+    height: 400px;
 }
 
 .header-block * {
@@ -156,13 +160,19 @@ h1 {
 }
 
 .header-block .bg {
-    position: relative;
+    background: url(../images/1.jpg) 0 50%;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
 }
 
 .header-block .bg img {
-    display: block;
+    display: none;
 }
-
+/*
 .header-block .bg:after {
     content: '';
     position: absolute;
@@ -171,24 +181,28 @@ h1 {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.35);
+}*/
+
+.header-block .bg:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: url(../images/hb-shadow.png);
+    width: 1686px;
+    height: 224px;
 }
 
 .header-block .box {
     position: absolute;
-    left: 50%;
-    top: 40%;
-    margin-left: -350px;
+    bottom: 20px;
     color: #ffffff;
-    width: 700px;
-    text-align: center;
 }
 
 .header-block h1 {
-    font-size: 55px;
+    font-size: 60px;
     font-weight: 900;
     text-shadow: 0 4px 0 rgba(0,0,0,0.8);
-    font-family: Merriweather, serif;
-    font-style: italic;
 }
 
 .header-block .desc {
@@ -582,6 +596,10 @@ h1 {
 
 }
 
+.items-list .item {
+    float: left;
+}
+
 .items-list.items-4 .item {
     position: relative;
     float: left;
@@ -602,6 +620,10 @@ h1 {
     margin-right: 0;
 }
 
+.items-list .item {
+    position: relative;
+}
+
 .items-list .item .pic {
     height: 80%;
     display: block;
@@ -610,7 +632,7 @@ h1 {
 
 .items-list .item img {
     display: block;
-    transition: all ease .2s;
+    transition: all ease .4s;
 }
 
 .items-list .item:hover img {
@@ -637,30 +659,72 @@ h1 {
 }
 
 .items-list .item .desc {
-    box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.15);
+    position: relative;
+    /*box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.15);*/
     background: #ffffff;
-    padding: 12px 15px 22px 15px;
+    padding: 20px 25px 80px 25px;
 }
 
 .items-list .item .name {
     display: block;
-    text-align: center;
-    font-size: 19px;
-    font-weight: 700;
-    border-bottom: 3px solid #ffdd00;
     padding-bottom: 10px;
-    margin-bottom: 10px;
-    line-height: 1.2;
-    height: 57px;
     overflow: hidden;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 22px;
+}
+
+.items-list .item .time  {
+    position: absolute;
+    right: 25px;
+    top: 14px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.items-list .item .time i {
+    margin-right: 5px;
 }
 
 .items-list .item .preview  {
     overflow: hidden;
     height: 85px;
-
+    color: #868686;
 }
 
+.items-list .item .order  {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+}
+
+.items-list .item .order .btn {
+    position: absolute;
+    right: 0;
+    width: 50%;
+    height: 60px;
+    line-height: 60px;
+}
+
+.items-list .item .order .price {
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 60px;
+    color: #f13c4c;
+    padding-top: 5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.items-list .item .order .price span {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/*
 .items-list .item .btns {
     text-align: center;
     margin-top: 25px;
@@ -689,23 +753,20 @@ h1 {
 .items-list .item .btn:last-child {
     border-radius: 0 16px 16px 0;
 }
-
-.items-list .item .time {
-    position: absolute;
-    right: 15px;
-    top: 34px;
-}
-
+*/
 .excursions-block {
+    background: #f7f7f7;
     padding-top: 30px;
     padding-bottom: 80px;
-    padding-left: 375px;
+}
+
+.excursions-block .container {
+    padding-left: 385px;
 }
 
 .excursions-block .col-left {
     width: 355px;
-    margin-left: -355px;
-    padding-right: 35px;
+    margin-left: -385px;
     float: left;
 }
 
@@ -714,17 +775,46 @@ h1 {
     float: left;
 }
 
-.excursions-block {
-
+.excursions-block .sidebar {
+    background: #ffffff;
+    padding-bottom: 40px;
+    padding-top: 24px;
 }
 
 .excursions-block .widget {
     background: #ffffff;
-    padding: 20px;
+    padding: 20px 30px;
+}
+
+.excursions-block .widget.search {
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 20px;
+}
+
+.excursions-block .widget.search input {
+    padding-left: 35px;
+    height: 33px;
+    border: none;
+    border-bottom: 1px solid #000;
+    background: none;
+    font-size: 16px;
+    width: 100%;
+}
+
+.excursions-block .widget.search i {
+    position: absolute;
+    top: 4px;
+    font-size: 20px;
+}
+
+.excursions-block .widget.search {
+
 }
 
 .excursions-block .widget .header {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
     margin-bottom: 16px;
 }
@@ -735,6 +825,7 @@ h1 {
 
 .excursions-block .widget label {
     margin-bottom: 7px;
+    font-size: 15px;
 }
 
 .excursions-block .widget .h-box {
@@ -748,6 +839,7 @@ h1 {
 
 .excursions-block .widget .links a {
     border-bottom: 1px solid #bfbfbf;
+    font-size: 15px;
     display: inline-block;
     margin: 0 10px 5px 0;
     transition: all ease .2s;
@@ -842,7 +934,7 @@ h1 {
     width: 295px;
     margin-right: -330px;
 }
-
+/*
 .items-list {
 
 }
@@ -908,12 +1000,6 @@ h1 {
 }
 
 .items-list .item .name {
-    text-align: center;
-    font-size: 19px;
-    font-weight: 700;
-    border-bottom: 3px solid #ffdd00;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
 }
 
 .items-list .item .btns {
@@ -943,13 +1029,7 @@ h1 {
 
 .items-list .item .btn:last-child {
     border-radius: 0 16px 16px 0;
-}
-
-.items-list .item .time {
-    position: absolute;
-    right: 15px;
-    top: 34px;
-}
+}*/
 
 .museum-block {
 

@@ -31,25 +31,29 @@ class ExcursionsList extends AbstractHelper
                 ];*/
 
                 $price = $excursion->getPrice();
-                $html .=
+                /*$html .=
                     '<div class="info">' .
                         '<div class="row">' .
                             'Длительность <i class="far fa-clock"></i> ' . $view->declension($excursion->get('duration'), ['час', 'часа', 'часов']) .
-                        '</div>' .
+                        '</div>' .*/
                         /*'<div class="row">' .
                             '<i class="fas fa-ruble-sign"></i> ' . $view->price($price) . ' руб. (' . $view->price($price) . ' c чел.)' .
                         '</div>' .*/
-                    '</div>';
+                    //'</div>';
                 //}
 
                 $html .=
                     '<div class="desc">'.
                         '<a  href="' . $excursion->getUrl() . '" class="name">' . $excursion->get('name') . '</a>'.
+                        '<div class="time"><i class="far fa-clock"></i> ' . $view->declension($excursion->get('duration'), ['час', 'часа', 'часов']) . '</div>'.
                         '<div class="preview">' . $excursion->get('preview') . '</div>'.
-                        '<div class="btns">' .
-                            '<div class="btn gray">Отложить</div>'.
-                            '<div class="btn yellow">Бронировать</div>'.
-                        '</div>'.
+                    '</div>'.
+                    '<div class="order">' .
+                        '<div class="price">
+                            от <span>15 000 <i class="fas fa-ruble-sign"></i></span> <br>
+                            за человека
+                        </div>'.
+                        '<div class="btn yellow">Бронировать</div>'.
                     '</div>'.
                 '</div>';
         }
