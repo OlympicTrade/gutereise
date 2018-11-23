@@ -111,7 +111,7 @@ function initCoolectionsList() {
         $('.add', collectionBox).on('click', function(){
             var html = '<tr>';
 
-            $('input[type="text"], select', $('.form', collectionBox)).each(function() {
+            $('input[type="text"], select, textarea', $('.form', collectionBox)).each(function() {
                 var el = $(this).clone()
                     .attr('name', name + '[add][' + $(this).data('name') + '][]')
                     .val($(this).val());
@@ -129,7 +129,7 @@ function initCoolectionsList() {
 
             html = $(html);
 
-            $('input[type="text"], select', $('.form', collectionBox)).each(function() {
+            $('input[type="text"], select, textarea', $('.form', collectionBox)).each(function() {
                 html.find('[data-name="' + $(this).data('name') + '"]').val($(this).val());
             });
 

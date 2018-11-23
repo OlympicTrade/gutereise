@@ -29,9 +29,26 @@ class Excursion extends Entity
             'preview'           => [],
             'text'              => [],
             'title'             => [],
+            'duration'          => [],
+            'time_from'         => [],
+            'time_to'           => [],
             'description'       => [],
             'url'               => [],
         ]);
+
+        $this->addPlugin('header', function() {
+            $image = new \Aptero\Db\Plugin\Image();
+            $image->setTable('excursions_headers');
+            $image->setFolder('excursions_headers');
+            $image->addResolutions([
+                'a' => [
+                    'width'  => 162,
+                    'height' => 162,
+                    'crop'   => true,
+                ],
+            ]);
+            return $image;
+        });
 
         $this->addPlugin('image', function() {
             $image = new \Aptero\Db\Plugin\Image();
@@ -43,12 +60,21 @@ class Excursion extends Entity
                     'height' => 162,
                     'crop'   => true,
                 ],
-                'hr' => [
-                    'width'  => 1900,
-                    'height' => 900,
-                ]
             ]);
+            return $image;
+        });
 
+        $this->addPlugin('image', function() {
+            $image = new \Aptero\Db\Plugin\Image();
+            $image->setTable('excursions_images');
+            $image->setFolder('excursions');
+            $image->addResolutions([
+                'a' => [
+                    'width'  => 162,
+                    'height' => 162,
+                    'crop'   => true,
+                ],
+            ]);
             return $image;
         });
 
@@ -61,15 +87,26 @@ class Excursion extends Entity
                     'width'  => 162,
                     'height' => 162,
                 ],
-                'hr' => [
-                    'width'  => 1900,
-                    'height' => 900,
-                ]
             ]);
 
             $image->select()->order('sort');
 
             return $image;
+        });
+
+        $this->addPlugin('plan', function($model) {
+            $item = new Entity();
+            $item->setTable('excursions_plan');
+            $item->addProperties([
+                'depend'     => [],
+                'icon'       => [],
+                'header'     => [],
+                'text'       => [],
+            ]);
+            $catalog = $item->getCollection()->getPlugin();
+            $catalog->setParentId($model->getId());
+
+            return $catalog;
         });
 
         $this->addPlugin('museums', function($model) {
@@ -119,16 +156,21 @@ class Excursion extends Entity
 
     protected function updateFromDb()
     {
+        if(!$dbId = $this->get('db_excursion_id')) {
+            return;
+        }
+
         $sync = new Sync();
-        $data = $sync->getExcursionData(['id' => $this->getId()]);
-        $this->set('duration', $data->duration);
+        $data = $sync->getExcursionData(['id' => $dbId]);
 
         $dbData = new \StdClass();
-        $dbData->min_time = $data->min_time;
-        $dbData->max_time = $data->max_time;
-        $dbData->duration = $data->duration;
-        $dbData->price_total = $data->price->summary->income;
-        $dbData->price_adult = $data->price->summary->adult;
+        $dbData->min_time    = $data->min_time;
+        $dbData->max_time    = $data->max_time;
+        $dbData->duration    = $data->duration;
+        $dbData->min_time    = $data->min_time;
+        $dbData->max_time    = $data->max_time;
+        /*$dbData->price_total = $data->price->summary->income;
+        $dbData->price_adult = $data->price->summary->adult;*/
 
         $this->set('db_data', $dbData);
     }

@@ -49,6 +49,14 @@ function initMetric() {
 function initElements(box) {
     $('[name="phone"]', box).inputmask('+7 (999) 999-99-99');
 
+    $('.anchor', box).on('click', function () {
+        var scrollTo = $($(this).attr('href')).offset().top - 100;
+
+        $('html, body').animate({scrollTop: scrollTo}, 300);
+
+        return false;
+    });
+
     $('.select-group', box).each(function () {
         var group = $(this);
         var vals = $('span', group);
@@ -220,7 +228,25 @@ function initElements(box) {
 function initPopups() {
     $('body').on('click', '.popup, .popup-img', function() {
         var el = $(this);
-        var type = el.hasClass('.popup-img') ? 'html' : 'ajax';
+        var type = el.hasClass('popup-img') ? 'image' : 'ajax';
+
+        if(el.hasClass('popup-img')) {
+            $.fancybox.open({
+                src:  el.attr('href'),
+                type: 'image',
+                opts: {
+                    afterLoad: function(e, slide) {
+                        slide.$slide.on('click', function(e) {
+                            if($(e.target).hasClass('fancybox-slide')) {
+                                $.fancybox.close()
+                            }
+                        });
+                    }
+                }
+            });
+
+            return false;
+        }
 
         $.fancybox.open({
             src: el.attr('href'),

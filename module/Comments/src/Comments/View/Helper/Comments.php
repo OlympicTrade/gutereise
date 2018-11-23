@@ -20,8 +20,11 @@ class Comments extends AbstractHelper
 
         $html =
             '<div class="comments">'.
-                '<h2>Вопросы и отзывы</h2>'.
-                '<form action="/comments/add-comment/" class="form cols">'.
+                '<div class="std-header">'.
+                    '<h2>Вопросы и отзывы</h2>'.
+                    '<div class="separ"></div>'.
+                '</div>'.
+                /*'<form action="/comments/add-comment/" class="form cols">'.
                     '<input type="hidden" name="depend_id" value="' . $options['depend_id'] . '">'.
                     '<input type="hidden" name="depend_type" value="' . $options['depend_type'] . '">'.
                     '<div class="row cols">'.
@@ -35,7 +38,7 @@ class Comments extends AbstractHelper
                         '<input type="submit" class="btn black" value="Отправить">'.
                         '<div class="notice">Мы отправим ответ на e-mail или по SMS на указанный телефон</div>'.
                     '</div>'.
-                '</form>'.
+                '</form>'.*/
                 '<div class="list">';
 
         if(!$comments->count()) {

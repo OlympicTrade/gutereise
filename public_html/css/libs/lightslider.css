@@ -132,7 +132,6 @@
     transition: border-radius 0.12s linear 0s 0.35s linear 0s;
 }
 .lSSlideOuter .lSPager.lSGallery li.active, .lSSlideOuter .lSPager.lSGallery li:hover {
-    border-radius: 5px;
 }
 .lSSlideOuter .lSPager.lSGallery img {
     display: block;

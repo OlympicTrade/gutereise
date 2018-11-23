@@ -9,7 +9,8 @@
     <div class="tabs tabs-class" data-name="edit-tabs">
         <div class="tabs-header">
             <div class="tab" data-tab="general">Основное</div>
-            <div class="tab" data-tab="link">Связи</div>
+            <div class="tab" data-tab="plan">План</div>
+            <div class="tab" data-tab="links">Связи</div>
             <div class="tab" data-tab="photo">Фото</div>
             <div class="tab" data-tab="seo">SEO</div>
             <div class="tab" data-tab="text">Текст</div>
@@ -17,6 +18,7 @@
         <div class="tabs-body">
             <div class="tab" data-tab="general">
                 <?php
+                echo $this->adminFormRow($form->get('header-image'));
                 echo $this->adminFormRow($form->get('image-image'));
                 echo $this->adminFormRow($form->get('transport'));
                 echo $this->adminFormRow($form->get('name'));
@@ -27,6 +29,9 @@
                 echo $this->adminFormRow($form->get('url'));
                 ?>
             </div>
+            <div class="tab" data-tab="plan">
+                <?php echo $this->formRow($form->get('plan-collection')); ?>
+            </div>
             <div class="tab" data-tab="photo">
                 <?php echo $this->formRow($form->get('images-images')); ?>
             </div>
@@ -36,7 +41,7 @@
                 echo $this->adminFormRow($form->get('description'));
                 ?>
             </div>
-            <div class="tab" data-tab="link">
+            <div class="tab" data-tab="links">
                 <?php
                 echo $this->adminFormRow($form->get('types-collection'));
                 echo $this->adminFormRow($form->get('museums-collection'));

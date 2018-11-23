@@ -19,6 +19,10 @@ class ExcursionsEditForm extends Form
             'model' => $model->getPlugin('image'),
         ]);
 
+        $this->get('header-image')->setOptions([
+            'model' => $model->getPlugin('header'),
+        ]);
+
         $this->get('images-images')->setOptions([
             'model'   => $model->getPlugin('images'),
             'product' => $model,
@@ -26,6 +30,7 @@ class ExcursionsEditForm extends Form
 
         $this->get('museums-collection')->setOption('model', $model->getPlugin('museums'));
         $this->get('types-collection')->setOption('model', $model->getPlugin('types'));
+        $this->get('plan-collection')->setOption('model', $model->getPlugin('plan'));
     }
 
     public function __construct()
@@ -127,6 +132,11 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'header-image',
+            'type'  => 'Aptero\Form\Element\Admin\Image',
+        ]);
+
+        $this->add([
             'name' => 'images-images',
             'type'  => 'Aptero\Form\Element\Admin\Images',
         ]);
@@ -154,6 +164,29 @@ class ExcursionsEditForm extends Form
                         'label'   => 'Тип',
                         'width'   => 150,
                         'options' => new ExcursionType()
+                    ],
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'plan-collection',
+            'type'  => 'Aptero\Form\Element\Admin\Collection',
+            'options' => [
+                'options'      => [
+                    'icon' => [
+                        'label'   => 'Иконка',
+                        'width'   => 130,
+                        'options' => ['museum' => 'Музей', 'park' => 'Парк', 'marker' => 'Точка на карте']
+                    ],
+                    'header' => [
+                        'label'   => 'Заголовок',
+                        'width'   => 150,
+                    ],
+                    'text' => [
+                        'label'   => 'Описание',
+                        'width'   => 400,
+                        'type'    => 'textarea'
                     ],
                 ]
             ],

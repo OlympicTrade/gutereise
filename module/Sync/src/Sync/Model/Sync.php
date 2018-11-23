@@ -19,12 +19,16 @@ class Sync
 
     public function load($urlFunc, $params)
     {
-        $url = self::DB_DOMAIN . '/sync/' . $urlFunc . '/?' . \GuzzleHttp\Psr7\build_query($params);
+        $url = self::DB_DOMAIN . '/sync/' . $urlFunc . '/?' . http_build_query($params);
+        $resp = (new \GuzzleHttp\Client())->request('GET', $url);
 
-        if($urlFunc == 'add-order') die($url);
-        $json = file_get_contents($url);
-
-        $data = Json::decode($json);
+        try {
+            $data = Json::decode($resp->getBody());
+        } catch (\Exception $e) {
+            var_dump($params);
+            echo $e->getMessage();
+            die();
+        }
 
         return $data;
     }

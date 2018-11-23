@@ -101,6 +101,7 @@ class Module
              37 => PUBLIC_DIR . '/js/libs/lightgallery.js',
              //37 => PUBLIC_DIR . '/js/libs/owl.navigation.js',
              45 => PUBLIC_DIR . '/js/libs/aptero.js',
+             47 => PUBLIC_DIR . '/js/libs/parallax.js',
              50 => PUBLIC_DIR . '/js/libs/cookie.js',
              65 => PUBLIC_DIR . '/js/libs/form-validator.js',
              75 => PUBLIC_DIR . '/js/libs/counter.js',

@@ -56,7 +56,6 @@
                 var obj = this;
                 var top;
 
-                console.log(obj.sliderH);
                 $(window).on('scroll', function() {
                     var newScroll = $(this).scrollTop();
                     var sizeRevert = (obj.windowH - obj.navH - obj.margin) > obj.sliderH;

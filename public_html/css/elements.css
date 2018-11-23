@@ -1,3 +1,7 @@
+:root {
+    --color-1: #fcd828;
+}
+
 .btn {
     position: relative;
     cursor: pointer;
@@ -30,16 +34,18 @@
 }
 
 .btn.yellow {
-    box-shadow: inset 0 0 0 2px #fcd829;
-    background: #fcd829;
+    box-shadow: inset 0 0 0 2px var(--color-1);
+    background: var(--color-1);
     color: #000;
     transition: all ease .2s;
 }
 
 .btn.yellow:hover {
-    box-shadow: inset 0 0 0 2px #f13c4c;
-    background: #f13c4c;
-    color: #ffffff;
+    /*box-shadow: inset 0 0 0 2px #f13c4c;
+    background: #f13c4c;*/
+    background: #ffffff;
+    color: #000000;
+    //color: #ffffff;
 }
 
 .btn.gray {
@@ -152,21 +158,25 @@ input, select, textarea {
     margin-bottom: 2px;
 }
 
-
-.std-errors .error,
-.std-form .error {
-    margin-top: -2px;
+.std-form .error,
+.std-errors .error {
     position: relative;
     padding: 2px 8px;
     background: #ee4923;
     color: #fff;
     border-radius: 0 0 2px 2px;
+    border-bottom: 1px solid #fff;
     font-size: 12px;
+}
+
+.std-form .error {
+    margin-top: -2px;
 }
 
 .std-counter {
 
 }
+
 .success-box {
     padding: 20px 0 0 0;
     text-align: center;
@@ -222,12 +232,12 @@ input, select, textarea {
 }
 
 .std-counter .incr {
-    right: 5px;
+    right: 8px;
     background-position: -15px 50%;
 }
 
 .std-counter .decr {
-    left: 5px;
+    left: 8px;
 }
 
 .select-group {

@@ -188,7 +188,7 @@
 <div class="main-block-4">
     <div class="col-l">
         <div class="header">Отзывы о нас</div>
-        <div class="owl-carousel reviews">
+        <div class="reviews">
             <?php
             $html = '';
 
@@ -212,15 +212,12 @@
 
 <script>
     var block = $('.main-block-4');
-    $('.reviews', block).owlCarousel({
-        loop: true,
-        margin: 0,
-        navText: [' ', ' '],
-        nav: true,
-        responsive:{
-            0:{
-                items:1
-            }
-        }
+    $('.reviews', block).lightSlider({
+        item: 1,
+        pager: false,
+        loop: false,
+        slideMove: 1,
+        easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+        speed: 600,
     });
 </script>

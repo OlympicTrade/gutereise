@@ -113,10 +113,6 @@ class ExcursionsController extends AbstractActionController
     {
         $filters = $this->params()->fromQuery();
 
-        /*if(!isset($filters['sort'])) {
-            $filters['sort'] = 'popularity';
-        }*/
-
         if($options['type']) {
             $filters['type'] = $options['type']->getId();
         }
@@ -126,33 +122,37 @@ class ExcursionsController extends AbstractActionController
 
     public function excursionAction($excursion)
     {
-        //
-
-        //$url = $this->params()->fromRoute('url');
-
-        //$excursion = $this->getExcursionsService()->getExcursion(['url' => $url]);
         $view = $this->generate('/excursions/');
         $view->setTemplate('excursions/excursions/excursion');
 
         $this->addBreadcrumbs([['url' => $excursion->getUrl(), 'name' => $excursion->get('name')]]);
 
         return $view->setVariables([
+            'headerImage'    => $excursion->getPlugin('header')->getImage('h'),
             'header'         => $excursion->get('header'),
             'headerDesc'     => $excursion->get('header_desc'),
             'excursion'      => $excursion,
             'breadcrumbs'    => $this->getBreadcrumbs(),
-            'commonForm'     => new CommonForm(),
+            'commonForm'     => new CommonForm($excursion),
         ]);
     }
 
     public function getPriceAction()
     {
-        $form = new CommonForm();
+        $exId = $this->params()->fromPost('excursion_id');
+        $excursion = new Excursion();
+        $excursion->setId($exId);
+
+        if(!$excursion->load()) {
+            return $this->send404();
+        }
+
+        $form = new CommonForm($excursion);
         $form->setFilters();
         $form->setData($this->params()->fromPost());
 
         if ($form->isValid()) {
-            return new JsonModel(['data' => $this->getExcursionsService()->getPrice($form->getData())]);
+            return new JsonModel(['data' => $this->getExcursionsService()->getPrice($excursion, $form->getData())]);
         } else {
             return $jsonModel = new JsonModel(['errors' => $form->getMessages()]);
         }
@@ -177,7 +177,7 @@ class ExcursionsController extends AbstractActionController
                 return $jsonModel = new JsonModel(['errors' => []]);
                 $formData = $form->getData();
 
-                if($errors = $this->getExcursionsService()->getPrice($formData)['errors']) {
+                if($errors = $this->getExcursionsService()->getPrice($excursion, $formData)['errors']) {
                     return $jsonModel = new JsonModel([
                         'errors' => ['form' => $errors]
                     ]);
@@ -190,7 +190,7 @@ class ExcursionsController extends AbstractActionController
             } else {
                 return $jsonModel = new JsonModel([
                     'errors' =>
-                        $form->getMessages() + ['form' => $this->getExcursionsService()->getPrice($form->getData())['errors']]
+                        $form->getMessages() + ['form' => $this->getExcursionsService()->getPrice($excursion, $form->getData())['errors']]
                 ]);
             }
         }

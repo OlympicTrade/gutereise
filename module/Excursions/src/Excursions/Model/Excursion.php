@@ -30,14 +30,48 @@ class Excursion extends Entity
             'url'               => [],
         ]);
 
+        $this->addPlugin('plan', function($model) {
+            $item = new Entity();
+            $item->setTable('excursions_plan');
+            $item->addProperties([
+                'depend'     => [],
+                'icon'       => [],
+                'header'     => [],
+                'text'       => [],
+            ]);
+            $catalog = $item->getCollection();
+            $catalog->select()->where(['depend' => $model->getId()]);
+
+            return $catalog;
+        });
+
+        $this->addPlugin('header', function() {
+            $image = new \Aptero\Db\Plugin\Image();
+            $image->setTable('excursions_headers');
+            $image->setFolder('excursions_headers');
+            $image->addResolutions([
+                'h' => [
+                    'width'  => 1920,
+                    'height' => 440,
+                    'crop'   => true,
+                ],
+            ]);
+            return $image;
+        });
+
         $this->addPlugin('image', function() {
             $image = new \Aptero\Db\Plugin\Image();
             $image->setTable('excursions_images');
             $image->setFolder('excursions');
             $image->addResolutions([
+                'g' => [
+                    'width'  => 800,
+                    'height' => 500,
+                    'crop'   => true,
+                ],
                 'm' => [
-                    'width'  => 450,
-                    'height' => 230,
+                    'width'  => 505,
+                    'height' => 240,
                     'crop'   => true,
                 ],
                 'r' => [
@@ -46,9 +80,8 @@ class Excursion extends Entity
                     'crop'   => true,
                 ],
                 'hr' => [
-                    'width'  => 1366,
-                    'height' => 658,
-                    'crop'   => true,
+                    'width'  => 1780,
+                    'height' => 970,
                 ]
             ]);
 
@@ -60,9 +93,9 @@ class Excursion extends Entity
             $image->setTable('excursions_gallery');
             $image->setFolder('excursions_gallery');
             $image->addResolutions([
-                'm' => [
-                    'width'  => 400,
-                    'height' => 300,
+                'g' => [
+                    'width'  => 800,
+                    'height' => 500,
                     'crop'   => true,
                 ],
                 'r' => [
@@ -71,9 +104,8 @@ class Excursion extends Entity
                     'crop'   => true,
                 ],
                 'hr' => [
-                    'width'  => 1366,
-                    'height' => 658,
-                    'crop'   => true,
+                    'width'  => 1780,
+                    'height' => 970,
                 ]
             ]);
 

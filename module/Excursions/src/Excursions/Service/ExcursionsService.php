@@ -85,27 +85,27 @@ class ExcursionsService extends AbstractService
         return $excursion;
     }
 
-    public function getPrice($data)
+    public function getPrice($excursion, $data)
     {
         if(!$data['date'] || !$data['lang_id'] || !$data['adults']) {
             return ['errors' => ['Заполните форму для рассчета стоимости']];
         }
 
-        $data['excursion_id'] = $data['db_excursion_id'];
-        unset($data['db_excursion_id']);
+        unset($data['excursion_id']);
+        $data['excursion_id'] = $excursion->get('db_excursion_id');
 
         $sync = new Sync();
         $resp = $sync->load('get-price', $data);
 
-        $errors = [];
+        $errors = (array) $resp->errors;
+        foreach($resp->days as $day) {
+            $errors += (array) $day->museums->errors;
+            $errors += (array) $day->transports->errors;
+            $errors += (array) $day->guides->errors;
+        }
 
-        foreach ($resp->summary->errors as $code => $error) {
-            if($code == DbConstants::ERROR_MUSEUM_TICKETS) {
-                $errors[] = $data['date'] . ' музей не работает';
-                break;
-            }
-
-            $errors[] = DbConstants::$errors[$code];
+        foreach($errors as $code => &$error) {
+            $error = DbConstants::$errors[$code];
         }
 
         return [
@@ -134,7 +134,7 @@ class ExcursionsService extends AbstractService
         $sync = new Sync();
         $resp = $sync->load('add-order', $cData);
 
-        var_dump($resp);
+        dd($resp);
 
 
         return $resp->summary->income;

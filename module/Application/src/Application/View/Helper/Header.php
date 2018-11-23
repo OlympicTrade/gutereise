@@ -54,7 +54,12 @@ class Header extends AbstractHelper
             '>';
 
         if($options['background']) {
-            $html .= '<div class="bg"><img src="' . $options['background'] . '" alt="' . $options['header'] . '"></div>';
+            //$html .= '<div class="bg"><img src="' . $options['background'] . '" alt="' . $options['header'] . '"></div>';
+            $html .= '<div class="bg" style="height: 400px"></div>';
+        }
+
+        if($options['wrapper']) {
+            $html .= '<div class="wrapper">';
         }
 
         $html .= '<div class="box">';
@@ -63,11 +68,22 @@ class Header extends AbstractHelper
             $html .= '<h1>' . $options['header'] . '</h1>';
         }
 
-        if($options['headerDesc']) {
+        /*if($options['headerDesc']) {
             $html .= '<div class="desc">' . $options['headerDesc'] . '</div>';
-        }
+        }*/
+
+        $html .= $view->breadcrumbs($options['breadcrumbs'], ['delimiter' => ' / ', 'lastItem' => 'span', 'class' => 'breadcrumbs']);
 
         $html .= '</div>';
+
+        if($options['wrapper']) {
+            $html .= '</div>';
+        }
+
+        $html .=
+            '<script>
+                $(".bg").parallax({imageSrc: "' . $options['background'] . '"});
+            </script>';
 
         $html .=
             '</div>';

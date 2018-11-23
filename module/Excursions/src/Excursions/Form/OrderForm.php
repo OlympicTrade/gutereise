@@ -16,12 +16,12 @@ class OrderForm extends CommonForm
     {
         $this->excursion = $excursion;
 
-        parent::__construct();
+        parent::__construct($excursion);
 
         $this->get('db_excursion_id')->setValue($excursion->get('db_excursion_id'));
 
         $dbData = $excursion->get('db_data');
-        $this->add([
+        /*$this->add([
             'name' => 'time',
             'type'  => 'Aptero\Form\Element\Time',
             'options' => [
@@ -35,7 +35,22 @@ class OrderForm extends CommonForm
             'attributes' => [
                 'class' => 'std-select'
             ]
-        ]);
+        ]);*/
+
+        /*$this->add([
+            'name' => 'time',
+            'type'  => 'Aptero\Form\Element\Time',
+            'options' => [
+                'label' => 'Время',
+                'empty' => 'Время начала',
+                'min'   => $dbData->min_time,
+                'max'   => $dbData->max_time,
+            ],
+            'attributes' => [
+                'class' => 'std-input datepicker',
+                'placeholder' => 'Время',
+            ]
+        ]);*/
 
         $this->add([
             'name' => 'name',

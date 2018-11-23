@@ -136,7 +136,6 @@
         this.interval = null;
         this.offset   = {};
         this.options  = $.extend({}, defaultOptions);
-        // console.log(this.options);
         // Register this instance
         this.instanceNumber = instances.length;
         instances.push(this);

@@ -3,14 +3,15 @@
         <?php echo $excursion->get('name'); ?>
     </div>
     <div class="body std-form">
-        <form action="/excursions/order/?id=<?php echo $excursion->getId(); ?>" class="form-box">
-            <?php echo $this->formElement($form->get('db_excursion_id')); ?>
+        <form action="/excursions/order/?id=<?php echo $excursion->getId(); ?>" class="form-box common-form">
+            <?php echo $this->formElement($form->get('excursion_id')); ?>
+            <?php echo $this->formElement($form->get('lang_id')); ?>
             <div class="cols">
                 <div class="col-25">
                     <?php echo $this->formRow($form->get('date')); ?>
                 </div>
                 <div class="col-25 ">
-                    <?php echo $this->formRow($form->get('lang_id')); ?>
+                    <?php echo $this->formRow($form->get('time')); ?>
                 </div>
                 <div class="col-25 ">
                     <?php echo $this->formRow($form->get('adults')); ?>
@@ -59,54 +60,61 @@
 </div>
 
 <script>
-$(function() {
-    var popup = $('.order-popup');
-    var form = $('form', popup);
+var popup = $('.order-popup');
+var form = $('form', popup);
 
-    form.formSubmit({
-        success: function(resp, form){
-            $(form).fadeOut(200, function(){
-                $('.success-box', popup).fadeIn(200);
-            });
-        }
-    });
-
-    var timer = null;
-    $('input', form).on('keyup change', function () {
-        if(timer) clearTimeout(timer);
-        timer = setTimeout(function() {
-            $('.price-box, .form-errors', form).empty();
-            $.ajax({
-                url: '/excursions/get-price/',
-                method: 'post',
-                data: $.aptero.serializeArray(form),
-                success: function (resp) {
-                    var html = '';
-                    if(resp.errors.length) {
-                        $.each(resp.errors, function (key, val) {
-                            html += '<div class="error">' + val + '</div>';
-                        });
-                        $('.form-errors', form).html(html);
-                    } else {
-                        html +=
-                            '<div class="price"><span>' + $.aptero.price(resp.price) + '</span> <i class="fas fa-ruble-sign"></i></div>';
-                        if(!resp.child) {
-                            html +=
-                                '<div class="notice">' + $.aptero.price(resp.adult) + '<i class="fas fa-ruble-sign"></i> за человека</div>';
-                        } else {
-                            html +=
-                                '<div class="notice">' +
-                                'взрослый - ' + $.aptero.price(resp.adult) + '<i class="fas fa-ruble-sign"></i>, ' +
-                                'детский - '  + $.aptero.price(resp.child) + '<i class="fas fa-ruble-sign"></i>' +
-                                '</div>';
-                        }
-                        $('.price-box', form).html(html);
-                    }
-                }
-            });
-        }, 200);
-    }).trigger('change');
+form.formSubmit({
+    success: function(resp, form){
+        $(form).fadeOut(200, function(){
+            $('.success-box', popup).fadeIn(200);
+        });
+    }
 });
+
+var cForm = new CommonForm(form);
+
+var timer = null;
+$('input, select', form).on('keyup change', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+        $.ajax({
+            url: '/excursions/get-price/',
+            method: 'post',
+            data: $.aptero.serializeArray(form),
+            success: function (resp) {
+                $('.price-box, .form-errors', form).empty();
+
+                var data = resp.data;
+                var html = '';
+
+                var errorsHtml = '';
+
+                $.each(data.errors, function(key, val) {
+                    errorsHtml += '<div class="error">' + val + '</div>';
+                });
+
+                if(errorsHtml) {
+                    $('.price-box', form).html(errorsHtml);
+                    return;
+                }
+
+                html +=
+                    '<div class="price"><span>' + $.aptero.price(data.price) + '</span> <i class="fas fa-ruble-sign"></i></div>';
+                if(!data.child) {
+                    html +=
+                        '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i> за человека</div>';
+                } else {
+                    html +=
+                        '<div class="notice">' +
+                            'взрослый - <b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i>, ' +
+                            'детский - <b>'  + $.aptero.price(data.child) + '</b> <i class="fas fa-ruble-sign"></i>' +
+                        '</div>';
+                }
+                $('.price-box', form).html(html);
+            }
+        });
+    }, 200);
+}).trigger('change');
 </script>
 
 <style>

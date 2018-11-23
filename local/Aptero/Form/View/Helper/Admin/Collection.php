@@ -45,7 +45,11 @@ class Collection extends AbstractHelper
                     $select->setAttributes(['data-name' => $field])->setValue($row->get($field));
                     $html .= $this->getView()->formElement($select);
                 } else {
-                    $html .= '<input type="text" name="' . $name . '" value="' . htmlspecialchars($row->get($field)) . '">';
+                    if($opts['type'] == 'textarea') {
+                        $html .= '<textarea name="' . $name . '">' . htmlspecialchars($row->get($field)) . '</textarea>';
+                    } else {
+                        $html .= '<input type="text" name="' . $name . '" value="' . htmlspecialchars($row->get($field)) . '">';
+                    }
                 }
                 $html .= '</td>';
             };
@@ -76,7 +80,11 @@ class Collection extends AbstractHelper
                 $select->setAttributes(['data-name' => $field]);
                 $html .= $this->getView()->formElement($select);
             } else {
-                $html .= '<input type="text" data-name="' . $field . '" value="">';
+                if($opts['type'] == 'textarea') {
+                    $html .= '<textarea name="' . $name . '"  data-name="' . $field . '"></textarea>';
+                } else {
+                    $html .= '<input type="text" data-name="' . $field . '" value="">';
+                }
             }
 
             $html .=

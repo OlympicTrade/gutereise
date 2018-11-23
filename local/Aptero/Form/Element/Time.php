@@ -1,11 +1,15 @@
 <?php
+
 namespace Aptero\Form\Element;
 
-use Aptero\Date\Date;
-use Zend\Form\Element;
+use Aptero\String\Date;
+use Zend\Form\Element\Select;
 
-class Time extends Element\Select
+class Time extends Select
 {
+    protected $attributes = [
+        'type' => 'select',
+    ];
     protected $validOptionAttributes = [
         'disabled' => true,
         'selected' => true,
@@ -13,30 +17,31 @@ class Time extends Element\Select
         'value'    => true,
     ];
 
-    protected $attributes = array(
-        'type' => 'select',
-    );
-
-
-    public function setOptions($options)
+    public function setOptions($options = [])
     {
-        $timeFrom = Date::parseToDt($options['from'], 'time');
-        $timeTo   = Date::parseToDt($options['to'], 'time');
+        $options = $options + [
+            'empty'     => '',
+            'min'       => '00:00',
+            'max'       => '24:00',
+            'interval'  => '00:30',
+        ];
 
-        $daterange = new \DatePeriod($timeFrom, new \DateInterval('PT30M') ,$timeTo);
-        $sOptions = [];
-
-        if(isset($options['empty']) && $options['empty'] !== null) {
-            $sOptions[''] = $options['empty'];
+        if($options['empty'] !== null) {
+            $valOptions = [''  => $options['empty']];
         }
 
-        foreach($daterange as $dt){
-            $sOptions[$dt->format('H:i:s')] = $dt->format('H:i') . ($options['duration'] ? ' - ' . $dt->modify($options['duration'])->format('H:i') : '');
+        $min = new \DateTime('0000-00-00 ' . $options['min']);
+        $max = new \DateTime('0000-00-00 ' . $options['max']);
+
+        list($iH, $iM) = sscanf($options['interval'], '%d:%d');
+        $interval = new \DateInterval('PT' . $iH . 'H' . $iM . 'M');
+        $period = new \DatePeriod($min, $interval, $max);
+
+        foreach ($period as $dt) {
+            $valOptions[$dt->format('H:i:s')] = $dt->format('H:i');
         }
 
-        $this->setOption('options', $sOptions);
-
-        $options['options'] = $sOptions;
+        $options['options'] = $valOptions;
 
         return parent::setOptions($options);
     }

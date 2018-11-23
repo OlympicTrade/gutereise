@@ -15,7 +15,7 @@ class Image extends AbstractHelper
         $html =
             '<div class="image-form">'
                 . '<div class="left-col">'
-                    .'<a class="pic-box popup-image" href="' . $model->getImage('hr') . '"><img src="' . $model->getImage('a') . '" alt="' . $model->get('desc') . '"></a>'
+                    .'<div class="pic-box"><img src="' . $model->getImage('a') . '" alt="' . $model->get('desc') . '"></div>'
                 . '</div>'
                 . '<div class="info">'
                     . '<div class="row file">'

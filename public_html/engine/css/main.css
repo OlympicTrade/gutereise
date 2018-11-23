@@ -1333,10 +1333,17 @@ span.wrap.pink {
     min-width: 550px;
 }
 
+.edit-form .collection-list textarea {
+    width: 100%;
+    max-width: 350px;
+    padding: none;
+}
+
 .collection-list .list td {
     padding: 0;
 }
 
+.collection-list .list td textarea,
 .collection-list .list td input {
     width: 100%;
     height: 35px;
