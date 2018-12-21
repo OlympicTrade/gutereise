@@ -2,9 +2,7 @@
 namespace Transports\Controller;
 
 use Aptero\Mvc\Controller\AbstractActionController;
-
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
+use Transports\Form\CommonForm;
 
 class TransportsController extends AbstractActionController
 {
@@ -24,14 +22,12 @@ class TransportsController extends AbstractActionController
         $url = $this->params()->fromRoute('url');
         $transport = $this->getTransportsService()->getTransport(['url' => $url]);
 
-        $view = new ViewModel();
+        /*$view = new ViewModel();
         $view->setTerminal(true);
-
         $view->setVariables([
             'transport' => $transport
         ]);
-
-        return $view;
+        return $view;*/
 
 
         $view = $this->generate('/transport/');
@@ -40,9 +36,10 @@ class TransportsController extends AbstractActionController
         $this->addBreadcrumbs([['url' => $transport->getUrl(), 'name' => $transport->get('name')]]);
 
         return $view->setVariables([
-            'header'         => $transport->get('header'),
+            'header'         => $transport->get('name'),
             'transport'      => $transport,
             'breadcrumbs'    => $this->getBreadcrumbs(),
+            'commonForm'     => new CommonForm($transport),
         ]);
     }
 

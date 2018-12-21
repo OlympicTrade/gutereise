@@ -1,12 +1,12 @@
 <?php
 namespace CommentsAdmin\Form;
 
-use Aptero\Form\Form;
+use Translator\Model\Translator;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
-class CommentsEditForm extends Form
+class CommentsEditForm extends \Aptero\Form\Admin\Form
 {
     public function setModel($model)
     {
@@ -29,6 +29,24 @@ class CommentsEditForm extends Form
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
                 'label' => 'Имя',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'lang_code',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label'   => 'Язык',
+                'options' =>  Translator::$codesTranscript
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'status',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label'   => 'Показать на сайте',
+                'options' =>  [1 => 'Да', 0 => 'Нет']
             ],
         ]);
 
@@ -60,7 +78,7 @@ class CommentsEditForm extends Form
             'name' => 'send',
             'type'  => 'Zend\Form\Element\Select',
             'options' => [
-                'label' => 'Ответ',
+                'label' => 'Ответ на E-mail/Телефон',
                 'options' => [0 => 'Не посылать', 1 => 'Посылать']
             ],
         ]);

@@ -4,6 +4,7 @@ namespace TransportsAdmin\Model;
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Plugin\Image;
 use Aptero\Db\Plugin\Images;
+use Sync\Model\Sync;
 
 class Transport extends Entity
 {
@@ -22,10 +23,13 @@ class Transport extends Entity
         $this->setTable('transports');
 
         $this->addProperties([
+            'db_transport_id'  => [],
             'name'         => [],
             'preview'      => [],
+            'capacity'     => [],
             'text'         => [],
             'type'         => [],
+            'price'        => ['type' => 'json'],
             'title'        => [],
             'description'  => [],
             'url'          => [],
@@ -77,7 +81,25 @@ class Transport extends Entity
                 $model->set('url', \Aptero\String\Translit::url($model->get('name')));
             }
 
+            $model->sync();
+
             return true;
         });
+    }
+
+    public function sync()
+    {
+        if(!$dbId = $this->get('db_transport_id')) {
+            return;
+        }
+
+        $sync = new Sync();
+        $data = $sync->getTransportData(['id' => $dbId]);
+
+        $this->set('capacity', $data->capacity);
+        $this->get('price')->price = $data->price;
+        $this->get('price')->transfer = $data->transfer;
+
+        return $this;
     }
 }

@@ -160,6 +160,14 @@ class SettingsEditForm extends Form
                 'required'  => true
             ),
         ));
+
+        $this->add(array(
+            'name' => 'euro_rate',
+            'options' => array(
+                'label'     => 'Курс евро',
+                'required'  => true
+            ),
+        ));
     }
 
     public function setFilters()

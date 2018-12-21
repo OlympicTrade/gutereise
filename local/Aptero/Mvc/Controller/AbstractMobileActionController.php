@@ -56,19 +56,9 @@ abstract class AbstractMobileActionController extends AbstractActionController
         );
 
         //Micro Formats
-        /*$uf = (object) array(
-            'title'        => $meta->title,
-            'description'  => $meta->description,
-            'tags'         => $meta->keywords,
-            'type'         => 'article',
-            'url'          => $canonical,
-            'image'        => $settings->get('site_logo'),
-            'sitename'     => $settings->get('site_name'),
-            'color'        => $settings->get('site_color'),
-        );*/
 
-        $authService = new AuthService();
-        $user = $authService->getIdentity();
+        /*$authService = new AuthService();
+        $user = $authService->getIdentity();*/
 
         $contacts = new Contacts();
         $contacts->setId(1);
@@ -79,15 +69,16 @@ abstract class AbstractMobileActionController extends AbstractActionController
             'contacts'     => $contacts,
             'settings'     => $settings,
             'breadcrumbs'  => $this->getBreadcrumbs($page),
-            'page'         => $page,
+            //'page'         => $page,
             'header'       => $header,
             'meta'         => $meta,
-            //'uf'           => $uf,
         ));
 
         return new ViewModel(array(
             'breadcrumbs'  => $this->getBreadcrumbs($page),
             'header'       => $header,
+            'page'         => $page,
+            'isAjax'       => $this->getRequest()->isXmlHttpRequest(),
         ));
     }
 

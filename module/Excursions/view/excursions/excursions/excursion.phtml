@@ -3,22 +3,26 @@
     'wrapper'    => true
 ]); ?>
 
+<?php
+$duration = $excursion->get('db_data')->duration;
+?>
+
 <div class="block gray">
     <div class="wrapper">
-    <div class="excursion-block">
+    <div class="module-item-block excursion-block">
     <div class="content">
         <div class="menu">
             <a href="" class="item active">
                 <i class="far fa-file-alt"></i>
-                Описание
+                <?php echo $this->tr('Описание') ?>
             </a>
             <a href=".excursion-block .gallery" class="item anchor">
                 <i class="fas fa-camera"></i>
-                Фотографии
+                <?php echo $this->tr('Фотографии') ?>
             </a>
             <a href=".excursion-block .comments" class="item anchor">
                 <i class="far fa-comment"></i>
-                Комментарии
+                <?php echo $this->tr('Комментарии') ?>
             </a>
         </div>
 
@@ -46,30 +50,28 @@
         ?>
 
         <div class="desc-box">
-            <h2><?php echo $excursion->get('name') ?></h2>
-            <div class="std-text"><?php echo $excursion->get('text') ?></div>
+            <h2><?php echo $this->tr($excursion->get('name')) ?></h2>
+            <div class="std-text"><?php echo $this->tr($excursion->get('text')) ?></div>
 
             <div class="attrs-list">
                 <div class="row">
-                    <div class="label">Длительность</div>
-                    Экскурсия рассчитана на 5 часов
+                    <div class="label"><?php echo $this->tr('Длительность экскурсии') ?></div>
+                    <?php echo $this->declension($duration, ['час', 'часа', 'часов']) ?>
                 </div>
-                <?php /*
                 <div class="row">
-                    <div class="label">Время и место начала</div>
-                    Начало и окончание экскурсии в любом месте города по Вашему желанию
-                </div>
-                */ ?>
-                <div class="row">
-                    <div class="label">В стоимость включено</div>
-                    <div class="row"><i class="fas fa-check"></i>  Аренда <a class="popup" href="/transport/mercedes-benz-e-class/">Мерседеса Е 211</a>/<a href="">Мерседеса Виано</a>/<a href="">Мерседеса Спринтера</a></div>
-                    <div class="row"><i class="fas fa-check"></i>  Входные билеты в Екатерининский дворец и Екатерининский парк</div>
-                    <div class="row"><i class="fas fa-check"></i>  Услуги персонального гида</div>
+                    <div class="label"><?php echo $this->tr('В стоимость включено') ?></div>
+                    <div class="row"><i class="fas fa-check"></i> <?php echo $this->tr('Аренда') ?>
+                        <a class="popup" href="/transport/mercedes-benz-e-class/"><?= $this->tr('Мерседеса Е 211') ?></a>/
+                        <a class="popup" href=""><?= $this->tr('Мерседеса Виано') ?></a>/
+                        <a class="popup" href=""><?= $this->tr('Мерседеса Спринтера') ?></a>
+                    </div>
+                    <div class="row"><i class="fas fa-check"></i> <?php echo $this->tr('Входные билеты в Екатерининский дворец и Екатерининский парк') ?></div>
+                    <div class="row"><i class="fas fa-check"></i> <?php echo $this->tr('Услуги персонального гида') ?></div>
                 </div>
             </div>
         </div>
         <div class="std-header">
-            <h2>План экскурсии</h2>
+            <h2><?php echo $excursion->get('План экскурсии') ?></h2>
             <div class="separ"></div>
         </div>
 
@@ -92,8 +94,8 @@
                             '<div class="icon">' . $icons[$day->get('icon')] . '</div>'.
                         '</div>'.
                         '<div class="desc">'.
-                            '<div class="header">'. $day->get('header') . '</div>'.
-                            '<div class="text">'. $day->get('text') . '</div>'.
+                            '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
+                            '<div class="text">'. $this->tr($day->get('text')) . '</div>'.
                         '</div>'.
                     '</div>';
             }
@@ -101,33 +103,6 @@
             echo $html;
             ?>
         </div>
-
-        <?php /*
-        <div id="anc-ex-gallery" class="gallery">
-            <h2>Из нашей галлереи</h2>
-
-            <?php
-            $html =
-                '<div class="list">';
-
-            $html .=
-                '<a href="' . $excursion->getPlugin('image')->getImage('hr') . '">'.
-                    '<img src="' . $excursion->getPlugin('image')->getImage('s') . '" alt="">'.
-                '</a>';
-
-            foreach ($excursion->getPlugin('images') as $image) {
-                $html .=
-                    '<a href="' . $image->getImage('hr') . '">'.
-                        '<img src="' . $image->getImage('s') . '" alt=""></a>'.
-                    '</a>';
-            }
-
-            $html .=
-                '</div>';
-            echo $html;
-            ?>
-        </div>
-        */ ?>
 
         <?php echo $this->comments([
             'depend_id' => $excursion->getId(),
@@ -139,11 +114,16 @@
             <?php
             $html =
                 '<form action="/excursions/get-price/" method="post" class="excursion-form common-form">'.
-                    //'<div class="header">Стоимость экскурсии</div>'.
-                    $this->commonForm($commonForm).
+                    '<input type="hidden" name="id" value="' . $excursion->getId() . '">'.
+                    $this->commonForm($commonForm, [
+                        ['field' => 'date', 'icon' => 'far fa-calendar-alt'],
+                        ['field' => 'time', 'icon' => 'far fa-clock'],
+                        ['field' => 'adults', 'icon' => 'fas fa-user'],
+                        ['field' => 'children', 'icon' => 'fas fa-child'],
+                    ]).
                     '<div class="price-box std-errors"></div>'.
                     '<div class="btns">'.
-                        '<span class="btn yellow order">Забронировать</span>'.
+                        '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
                     '</div>'.
                 '</form>';
 
@@ -151,7 +131,6 @@
             ?>
         </div>
     </div>
-    <div class="clear"></div>
     </div>
     </div>
 </div>
@@ -202,15 +181,15 @@ $(function () {
         }
 
         html +=
-            '<div class="price"><span>' + $.aptero.price(data.price) + '</span> <i class="fas fa-ruble-sign"></i></div>';
+            '<div class="price"><span>' + $.aptero.price(data.price) + '</span></div>';
         if(!data.child) {
             html +=
-                '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i> за человека</div>';
+                '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <?php echo $this->tr('за человека') ?></div>';
         } else {
             html +=
                 '<div class="notice">' +
-                    'взрослый - <b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i>, ' +
-                    'детский - <b>'  + $.aptero.price(data.child) + '</b> <i class="fas fa-ruble-sign"></i>' +
+                    '<?php echo $this->tr('взрослый') ?> - <b>' + $.aptero.price(data.adult) + '</b>, ' +
+                    '<?php echo $this->tr('детский') ?> - <b>'  + $.aptero.price(data.child) + '</b>' +
                 '</div>';
         }
 

@@ -1,10 +1,10 @@
 <?php
 namespace Aptero\Form\View\Helper\Admin;
 
-use Zend\I18n\View\Helper\AbstractTranslatorHelper;
 use Zend\Form\ElementInterface;
+use Zend\View\Helper\AbstractHelper;
 
-class FormRow extends AbstractTranslatorHelper
+class FormRow extends AbstractHelper
 {
     public function __invoke(ElementInterface $element = null)
     {
@@ -12,12 +12,10 @@ class FormRow extends AbstractTranslatorHelper
             return $this;
         }
 
-        $translator = $this->getTranslator();
-
         $html =
             '<div class="row">';
 
-        $label = $element->getLabel() ? $translator->translate($element->getLabel(), $this->getTranslatorTextDomain()) : '';
+        $label = $element->getLabel();
 
         $options = $element->getOptions();
 
@@ -26,7 +24,7 @@ class FormRow extends AbstractTranslatorHelper
         }
 
         $html .=
-            '<span class="label">' . $translator->translate($label, $this->getTranslatorTextDomain()) . '</span>';
+            '<span class="label">' . $label . '</span>';
 
         $html .=
             $this->getView()->formElement($element);

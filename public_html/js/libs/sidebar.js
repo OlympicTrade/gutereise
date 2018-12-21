@@ -21,11 +21,10 @@
             this.oldScrollTop = 0;
 
             this.update = function() {
-                this.sidebarH = this.container.innerHeight() - parseInt(this.container.css('padding-top')) - parseInt(this.container.css('padding-bottom'));
-
-                this.sidebar.css({
+                //this.sidebarH = this.container.innerHeight() - this.sidebar.outerHeight() - parseInt(this.container.css('padding-top')) - parseInt(this.container.css('padding-bottom'));
+                /*this.sidebar.css({
                     height: this.sidebarH
-                });
+                });*/
 
                 this.slider.css({
                     top: 0,
@@ -39,7 +38,7 @@
                 this.navH    = this.nav.outerHeight();
                 this.windowH = $(window).height();
                 this.sliderH = this.slider.innerHeight();
-                this.botLine = this.sidebar.innerHeight() - this.slider.innerHeight();
+                this.botLine = this.sidebar.innerHeight() - this.slider.innerHeight() - 50;
 
                 $(window).trigger('scroll');
             };
@@ -77,13 +76,6 @@
                     } else {
                         if(newScroll < obj.oldScrollTop) {
                             top = newScroll - (obj.sidebarTop - obj.navH - obj.margin);
-
-                            /*if(newScroll > (obj.sidebarTop + top + obj.sliderH - obj.windowH + obj.margin)) {
-                                obj.oldScrollTop = newScroll;
-                                return;
-                            }
-                            top = newScroll - (obj.sidebarTop + obj.sliderH - obj.windowH + obj.margin);*/
-
                         } else {
                             if(newScroll < (obj.sidebarTop + top - obj.navH - obj.margin)) {
                                 obj.oldScrollTop = newScroll;

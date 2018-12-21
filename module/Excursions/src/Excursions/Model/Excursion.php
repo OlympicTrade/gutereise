@@ -7,6 +7,10 @@ use Sync\Model\Sync;
 
 class Excursion extends Entity
 {
+    const NATIONALITY_ALL = 0;
+    const NATIONALITY_RUS = 1; //Russians
+    const NATIONALITY_FOR = 2; //Foreigners
+
     const TRANSPORT_AUTO = 1;
     const TRANSPORT_WALK = 2;
 
@@ -25,6 +29,7 @@ class Excursion extends Entity
             'header_desc'       => [],
             'text'              => [],
             'preview'           => [],
+            'nationality'       => [],
             'title'             => [],
             'description'       => [],
             'url'               => [],
@@ -45,7 +50,7 @@ class Excursion extends Entity
             return $catalog;
         });
 
-        $this->addPlugin('header', function() {
+        $this->addPlugin('background', function() {
             $image = new \Aptero\Db\Plugin\Image();
             $image->setTable('excursions_headers');
             $image->setFolder('excursions_headers');

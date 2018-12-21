@@ -1,0 +1,274 @@
+<script type="text/javascript" src="/engine/js/ckfinder/ckfinder.js"></script>
+<script type="text/javascript" src="/engine/js/jquery/spellchecker.js"></script>
+<script type="text/javascript" src="/engine/js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/engine/js/form.js"></script>
+
+<?php
+$html = '';
+
+$i = 0;
+foreach ($items as $row) {
+    $i++;
+    if(strpos($row->get('ru'), '<p>') !== false) {
+        $txtClass = 'class="editor"';
+    } else {
+        $txtClass = '';
+    }
+
+    $html .=
+    '<div class="row" data-id="' . $row->getId() . '">'.
+        '<div class="cell"><textarea name="tr-ru-' . $i . '" ' . $txtClass . ' data-lang="ru">' . $row->get('ru') . '</textarea></div>'.
+        '<div class="cell"><textarea name="tr-en-' . $i . '" ' . $txtClass . ' data-lang="en">' . $row->get('en') . '</textarea><span class="btn tr"><i class="fas fa-language"></i></span></div>'.
+        '<div class="cell"><textarea name="tr-de-' . $i . '" ' . $txtClass . ' data-lang="de">' . $row->get('de') . '</textarea><span class="btn tr"><i class="fas fa-language"></i></span></div>';
+
+    if($row->get('url')) {
+        $html .=
+            '<div class="cell ctrls"><a href="' . $row->get('url') . '" class="btn link"><i class="fas fa-link"></i></a></div>';
+    } else {
+        $html .=
+            '<div class="cell ctrls"><span class="btn del"><i class="fas fa-trash-alt"></i></span></div>';
+    }
+
+    $html .=
+    '</div>';
+}
+?>
+
+<div class="panel">
+    <div class="langs-table">
+        <div class="controls">
+            <div class="btn add"><i class="fas fa-plus"></i></div>
+            <div class="btn sync"><i class="fas fa-sync"></i></div>
+            <input type="text" class="search" placeholder="Поиск">
+        </div>
+        <div class="list">
+            <?php echo $html ?>
+        </div>
+    </div>
+</div>
+
+<style>
+    .langs-table .controls {
+        margin-bottom: 14px;
+    }
+
+    .langs-table .btn {
+        padding: 0;
+    }
+
+    .langs-table .btn i {
+        margin: 0;
+        text-align: center;
+    }
+
+    .langs-table .add,
+    .langs-table .sync,
+    .langs-table .search {
+        height: 32px;
+        margin-right: 5px;
+    }
+
+    .langs-table .sync,
+    .langs-table .add {
+        padding: 0;
+        width: 32px;
+        background: #0090d9;
+        text-align: center;
+        line-height: 32px;
+        color: #ffffff;
+        display: inline-block;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .langs-table .search {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .langs-table .row {
+        display: flex;
+        border: 1px solid #c3c3c3;
+        border-top: none;
+    }
+
+    .langs-table .row:first-child {
+        border-top: 1px solid #c3c3c3;
+    }
+
+    .langs-table .cell {
+        position: relative;
+        flex: 1;
+        min-height: 36px;
+        font-size: 15px;
+        border-left: 1px solid #c3c3c3;
+    }
+
+    .langs-table .cell:first-child {
+        border-left: none;
+    }
+
+    .langs-table textarea[data-lang="en"],
+    .langs-table textarea[data-lang="de"] {
+        padding-right: 40px;
+    }
+
+    .langs-table textarea {
+        height: 36px;
+        width: 100%;
+        transition: all ease .2s;
+        border: none;
+    }
+
+    .langs-table .row.focus textarea {
+        height: 150px;
+    }
+
+    .langs-table .cell.ctrls {
+        flex: 0 36px;
+    }
+
+    .langs-table .link,
+    .langs-table .del {
+        color: #ffffff;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        background: #0090d9;
+        cursor: pointer;
+    }
+
+    .langs-table .tr {
+        padding: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: #ffffff;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        background: #0090d9;
+        cursor: pointer;
+    }
+
+</style>
+
+<script>
+$(function () {
+    var tbl = $('.langs-table');
+    var list = $('.list', tbl);
+
+    $('.add', tbl).on('click', function () {
+        $('<div class="row" data-id="0">' +
+            '<div class="cell"><textarea data-lang="ru"></textarea></div>' +
+            '<div class="cell"><textarea data-lang="en"></textarea><span class="btn tr"><i class="fas fa-language"></i></span></div>' +
+            '<div class="cell"><textarea data-lang="de"></textarea><span class="btn tr"><i class="fas fa-language"></i></span></div>' +
+            '<div class="cell ctrls"><span class="btn del"><i class="fas fa-trash-alt"></i></span></div>' +
+        '</div>').prependTo(list);
+    });
+
+    $('.sync', tbl).on('click', function () {
+        $.ajax({
+            url: '/admin/translator/translator/sync/',
+            method: 'post',
+            data: {},
+            success: function (resp) {}
+        });
+    });
+
+    list.on('click', '.del', function () {
+        var row = $(this).closest('.row');
+        var id = row.data('id');
+
+        row.remove();
+
+        if(id === '0') return;
+
+        $.ajax({
+            url: '/admin/translator/translator/delete/',
+            method: 'post',
+            data: {id: id},
+            success: function (resp) {}
+        });
+    });
+
+    list.on('click', '.tr', function () {
+        var row  = $(this).closest('.row');
+        var cell = $(this).closest('.cell');
+        var textarea = cell.children('textarea');
+
+        $.ajax({
+            url: 'https://translate.yandex.net/api/v1.5/tr.json/translate',
+            method: 'get',
+            data: {
+                key:  'trnsl.1.1.20181130T040817Z.adb8b86ba5a5a8e8.4b24ec76a42ddfe567e662d2a5dcd36420d8f599',
+                text: row.find('textarea[data-lang="ru"]').val(),
+                lang: textarea.data('lang'),
+                format: textarea.hasClass('editor') ? 'html' : 'plain'
+            },
+            success: function (resp) {
+                textarea.val(resp.text);
+
+                if(textarea.hasClass('editor')) {
+                    CKEDITOR.instances[textarea.attr('name')].setData(resp.text);
+                }
+
+                textarea.trigger('keyup');
+            }
+        });
+    });
+
+    list.on('focus', 'textarea', function () {
+        $(this).closest('.row').addClass('focus');
+    });
+
+    list.on('focusout', 'textarea', function () {
+        $(this).closest('.row').removeClass('focus');
+    });
+
+    $('textarea.editor', list).each(function () {
+        var textarea = $(this);
+        var editor = CKEDITOR.instances[textarea.attr('name')];
+
+        editor.on('instanceReady', function() {
+            editor.document.on('keyup', function(e) {
+                textarea.val(editor.getData());
+                saveField(textarea);
+            });
+        });
+    });
+
+    list.on('keyup', 'textarea', function () {
+        saveField($(this));
+    });
+
+    var cTimer;
+    function saveField(textarea) {
+        var row = textarea.closest('.row');
+
+        clearTimeout(cTimer);
+        cTimer = setTimeout(function () {
+            if(textarea.hasClass('editor')) {
+                CKEDITOR.instances[textarea.attr('name')].updateElement();
+            }
+
+            var data = {
+                id: row.data('id'),
+                lang: textarea.data('lang'),
+                text: textarea.val()
+            };
+
+            $.ajax({
+                url: '/admin/translator/translator/update/',
+                method: 'post',
+                data: data,
+                success: function (resp) {
+                    row.data('id', resp.id);
+                }
+            });
+        }, 300);
+    }
+});
+</script>

@@ -43,6 +43,14 @@ class TransportsEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'db_transport_id',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'ID в базе данных',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'preview',
             'type'  => 'Zend\Form\Element\Textarea',
             'options' => [

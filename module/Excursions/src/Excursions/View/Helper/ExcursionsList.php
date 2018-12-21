@@ -19,7 +19,7 @@ class ExcursionsList extends AbstractHelper
             $html .=
                 '<div class="item">' .
                     '<a class="pic" href="' . $excursion->getUrl() . '">' .
-                        '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="' . $excursion->get('name') . '">' .
+                        '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="' . $view->tr($excursion->get('name')) . '">' .
                     '</a>';
 
             //if ($form) {
@@ -44,16 +44,16 @@ class ExcursionsList extends AbstractHelper
 
                 $html .=
                     '<div class="desc">'.
-                        '<a  href="' . $excursion->getUrl() . '" class="name">' . $excursion->get('name') . '</a>'.
-                        '<div class="time"><i class="far fa-clock"></i> ' . $view->declension($excursion->get('duration'), ['час', 'часа', 'часов']) . '</div>'.
-                        '<div class="preview">' . $excursion->get('preview') . '</div>'.
+                        '<a  href="' . $excursion->getUrl() . '" class="name">' . $view->tr($excursion->get('name')) . '</a>'.
+                        //'<div class="time"><i class="far fa-clock"></i> ' . $view->tr($view->declension($excursion->get('duration'), ['час', 'часа', 'часов'])) . '</div>'.
+                        '<div class="preview">' . $view->tr($excursion->get('preview')) . '</div>'.
                     '</div>'.
                     '<div class="order">' .
-                        '<div class="price">
-                            от <span>15 000 <i class="fas fa-ruble-sign"></i></span> <br>
-                            за человека
-                        </div>'.
-                        '<div class="btn yellow">Бронировать</div>'.
+                        '<div class="price">'.
+                            $view->tr('от') . ' <span>15 000 <i class="fas fa-ruble-sign"></i></span> <br>'.
+                            $view->tr('за человека').
+                        '</div>'.
+                        '<div class="btn yellow">' . $view->tr('Бронировать') . '</div>'.
                     '</div>'.
                 '</div>';
         }

@@ -18,9 +18,10 @@
         <div class="tabs-body">
             <div class="tab" data-tab="general">
                 <?php
-                echo $this->adminFormRow($form->get('header-image'));
+                echo $this->adminFormRow($form->get('background-image'));
                 echo $this->adminFormRow($form->get('image-image'));
-                echo $this->adminFormRow($form->get('transport'));
+                echo $this->adminFormRow($form->get('nationality'));
+                //echo $this->adminFormRow($form->get('transport'));
                 echo $this->adminFormRow($form->get('name'));
                 echo $this->adminFormRow($form->get('header'));
                 echo $this->adminFormRow($form->get('header_desc'));
@@ -45,6 +46,7 @@
                 <?php
                 echo $this->adminFormRow($form->get('types-collection'));
                 echo $this->adminFormRow($form->get('museums-collection'));
+                echo $this->adminFormRow($form->get('transport-collection'));
                 ?>
             </div>
             <div class="tab" data-tab="text">

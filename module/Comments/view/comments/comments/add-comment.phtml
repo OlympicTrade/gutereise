@@ -1,0 +1,49 @@
+<div class="std-popup comments-popup">
+    <div class="header">
+        <?php echo $this->tr('Задать вопрос') ?>
+    </div>
+    <div class="body">
+        <form action="/comments/add/" class="std-form form-box">
+            <div class="form-box">
+                <?php echo $this->formElement($form->get('depend_id')) ?>
+                <?php echo $this->formElement($form->get('depend_type')) ?>
+                <?php echo $this->formRow($form->get('name')) ?>
+                <?php echo $this->formRow($form->get('contact')) ?>
+                <?php echo $this->formRow($form->get('question')) ?>
+                <div class="btns">
+                    <input type="submit" class="btn" value="Задать вопрос">
+                    <div class="notice">Мы отправим ответ на Ваш<br>E-mail или по SMS</div>
+                </div>
+
+                <div class="rules">
+                    <span>*</span>
+                    <?php echo $this->tr('Мы не рассылаем рекламу и не передаем данные третьим лицам. '.
+                     'Контактные данные используется только для ответов на вопросы и оповещения о заказе.') ?>
+                </div>
+            </div>
+            <div class="success-box">
+                <?php echo $this->tr('Ваш вопрос отправлен. Мы ответим Вам в ближашее время.') ?>
+                <div class="btn" data-fancybox-close>Закрыть</div>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        $(function() {
+            var form = $('.comments-popup form');
+            form.formSubmit({
+                success: function(resp, form){
+                    var commentsList = $('.comments[data-type="<?php echo $type ?>"] .list');
+
+                    $(resp.html).prependTo('.list', commentsList);
+                    $('.empty-list', commentsList).remove();
+
+                    $('.form-box', form).fadeOut(200, function(){
+                        $('.success-box', form).fadeIn(200);
+                    });
+                }
+            });
+        });
+    </script>
+</div>

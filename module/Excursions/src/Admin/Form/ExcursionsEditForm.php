@@ -6,6 +6,7 @@ use Aptero\Form\Form;
 use ExcursionsAdmin\Model\Excursion;
 use ExcursionsAdmin\Model\ExcursionType;
 use Museums\Model\Museum;
+use TransportsAdmin\Model\Transport;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
@@ -19,8 +20,8 @@ class ExcursionsEditForm extends Form
             'model' => $model->getPlugin('image'),
         ]);
 
-        $this->get('header-image')->setOptions([
-            'model' => $model->getPlugin('header'),
+        $this->get('background-image')->setOptions([
+            'model' => $model->getPlugin('background'),
         ]);
 
         $this->get('images-images')->setOptions([
@@ -28,6 +29,7 @@ class ExcursionsEditForm extends Form
             'product' => $model,
         ]);
 
+        $this->get('transport-collection')->setOption('model', $model->getPlugin('transport'));
         $this->get('museums-collection')->setOption('model', $model->getPlugin('museums'));
         $this->get('types-collection')->setOption('model', $model->getPlugin('types'));
         $this->get('plan-collection')->setOption('model', $model->getPlugin('plan'));
@@ -52,12 +54,21 @@ class ExcursionsEditForm extends Form
             ],
         ]);
 
-        $this->add([
+        /*$this->add([
             'name' => 'transport',
             'type'  => 'Zend\Form\Element\Select',
             'options' => [
                 'label'   => 'Тип транспорта',
                 'options' => Excursion::$transportType,
+            ],
+        ]);*/
+
+        $this->add([
+            'name' => 'nationality',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label'   => 'Национальность',
+                'options' => Excursion::$nationalityType,
             ],
         ]);
 
@@ -132,7 +143,7 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'header-image',
+            'name' => 'background-image',
             'type'  => 'Aptero\Form\Element\Admin\Image',
         ]);
 
@@ -150,6 +161,20 @@ class ExcursionsEditForm extends Form
                         'label'   => 'Музеи',
                         'width'   => 150,
                         'options' => new Museum()
+                    ],
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'transport-collection',
+            'type'  => 'Aptero\Form\Element\Admin\Collection',
+            'options' => [
+                'options'      => [
+                    'transport_id' => [
+                        'label'   => 'Транспорт',
+                        'width'   => 150,
+                        'options' => new Transport()
                     ],
                 ]
             ],

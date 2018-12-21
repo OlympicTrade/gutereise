@@ -31,8 +31,8 @@ class Page extends EntityHierarchy
             $image->setFolder('pages');
             $image->addResolutions(array(
                 'bg' => array(
-                    'width'  => 910,
-                    'height' => 320,
+                    'width'  => 1920,
+                    'height' => 400,
                     'crop'   => true,
                 )
             ));

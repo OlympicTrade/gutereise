@@ -3,6 +3,7 @@ namespace ApplicationAdmin\Model;
 
 use Aptero\Db\Entity\EntityHierarchy;
 use Aptero\Db\Entity\Entity;
+use Sync\Model\Sync;
 
 class Settings extends EntityHierarchy
 {
@@ -18,7 +19,7 @@ class Settings extends EntityHierarchy
             'domain'         => [],
             'html_head'      => [],
             'html_body'      => [],
-            'html_css_js_version'   => [],
+            'css_js_version' => ['type' => Entity::PROPERTY_TYPE_JSON],
             'metriks'        => [],
             'robots'         => [],
             'mail_sender'    => [],
@@ -29,6 +30,7 @@ class Settings extends EntityHierarchy
             'admin_phone'    => [],
             'video_summer'   => [],
             'video_winter'   => [],
+            'euro_rate'      => [],
         ]);
 
         $this->getEventManager()->attach(array(Entity::EVENT_PRE_INSERT, Entity::EVENT_PRE_UPDATE), function ($event) {
@@ -36,6 +38,8 @@ class Settings extends EntityHierarchy
 
             return true;
         });
+
+        $this->setId(1)->load();
     }
 
     static protected $instance;
@@ -46,5 +50,15 @@ class Settings extends EntityHierarchy
         }
 
         return self::$instance;
+    }
+
+    public function sync()
+    {
+        $sync = new Sync();
+        $data = $sync->getSettingsData();
+
+        $this->set('euro_rate', $data->euro_rate);
+
+        return $this;
     }
 }

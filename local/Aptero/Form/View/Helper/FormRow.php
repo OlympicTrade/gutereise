@@ -1,70 +1,33 @@
 <?php
 namespace Aptero\Form\View\Helper;
 
-use Aptero\Form\Element\Counter;
-use Zend\I18n\View\Helper\AbstractTranslatorHelper;
+use Zend\Form\Element\Select;
+use Zend\Form\Element\Text;
+use Zend\Form\Element\Textarea;
 use Zend\Form\ElementInterface;
+use Zend\View\Helper\AbstractHelper;
 
-class FormRow extends AbstractTranslatorHelper
+class FormRow extends AbstractHelper
 {
-    public function __invoke(ElementInterface $element = null)
+    public function __invoke(ElementInterface $element)
     {
-        if (!$element) {
-            return $this;
+        $view = $this->getView();
+
+        if($element instanceof Textarea) {
+            $element->setAttribute('class', 'std-textarea');
         }
 
-        $translator = $this->getTranslator();
+        if($element instanceof Text) {
+            $element->setAttribute('class', 'std-input');
+        }
+
+        if($element instanceof Select) {
+            $element->setAttribute('class', 'std-select');
+        }
 
         $html =
-            '<div class="row">';
-
-        $label = $element->getLabel() ? $translator->translate($element->getLabel(), $this->getTranslatorTextDomain()) : '';
-
-        $options = $element->getOptions();
-
-        if(!empty($options['required'])) {
-            $label .= ' <span class="asterisk">*</span>';
-        }
-
-        $html .=
-            '<span class="label">' . $translator->translate($label, $this->getTranslatorTextDomain());
-
-        if(!empty($options['help'])) {
-            $html .=
-                '<div class="tooltip help">'
-                    . '<div class="tooltip">'
-                        . '<div class="tooltip-icon"><i class="fa fa-question-circle"></i></div>'
-                        . '<div class="tooltip-desc">'
-                            . $options['help']
-                        . '</div>'
-                    . '</div>'
-                . '</div>';
-        }
-
-        $html .=
-            '</span>';
-
-        $class = 'element';
-
-        if($element instanceof Counter) {
-            $class .= ' std-counter';
-        }
-
-        $html .=
-            '<div class="' . $class . '">'.
-                $this->getView()->formElement($element).
-            '</div>';
-
-        $messages = $element->getMessages();
-        if($messages) {
-            $html .= '<div class="msgs">';
-            foreach($messages as $message) {
-                $html .= '<div class="error">' . $message . '</div>';
-            }
-            $html .= '</div>';
-        }
-
-        $html .=
+            '<div class="row">'.
+                $view->formElement($element).
             '</div>';
 
         return $html;

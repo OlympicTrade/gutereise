@@ -8,15 +8,13 @@ use Zend\View\Model\ViewModel;
 
 class SyncController extends AbstractActionController
 {
-    public function indexAction()
+    public function syncRequestAction()
     {
-        $this->generate();
+        $type = $this->params()->fromQuery('type');
+        $dbId = $this->params()->fromQuery('db_id');
 
-        $sync = $this->getSyncService();
+        $this->getSyncService()->syncRequest($type, $dbId);
 
-        return [
-            'sync' => $sync
-        ];
     }
 
     /**

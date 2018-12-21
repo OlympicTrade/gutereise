@@ -1,7 +1,7 @@
 <?php
 namespace Excursions\Form;
 
-use Application\Model\Language;
+use Translator\Model\Translator;
 use Aptero\Cookie\Cookie;
 use Aptero\Form\Form;
 
@@ -16,22 +16,12 @@ class CommonForm extends Form
         $this->setAttribute('method', 'post');
         $this->setAttribute('autocomplete', 'off');
 
-        $this->add([
-            'name' => 'excursion_id',
-            'type'  => 'Zend\Form\Element\Hidden',
-        ]);
-        $this->get('excursion_id')->setValue(Language::getInstance()->getLangId());
+        $language = Translator::getInstance();
 
         $this->add([
             'name' => 'db_excursion_id',
             'type'  => 'Zend\Form\Element\Hidden',
         ]);
-
-        $this->add([
-            'name' => 'lang_id',
-            'type'  => 'Zend\Form\Element\Hidden',
-        ]);
-        $this->get('lang_id')->setValue(Language::getInstance()->getLangId());
 
         $this->add([
             'name' => 'date',
@@ -60,23 +50,9 @@ class CommonForm extends Form
             ]
         ]);
 
-        /*$this->add([
-            'name' => 'lang_id',
-            'type'  => 'Zend\Form\Element\Select',
-            'options' => [
-                'label' => 'Язык',
-                'options' => DbConstants::$languages,
-            ],
-            'attributes' => [
-                'class' => 'std-input',
-                'placeholder' => 'Язык',
-            ]
-        ]);*/
-
         $this->add([
             'name' => 'adults',
             'type'  => 'Zend\Form\Element\Number',
-            //'type'  => 'Aptero\Form\Element\Counter',
             'options' => [
                 'label' => 'Взрослых',
             ],
@@ -91,13 +67,12 @@ class CommonForm extends Form
         $this->add([
             'name' => 'children',
             'type'  => 'Zend\Form\Element\Number',
-            //'type'  => 'Aptero\Form\Element\Counter',
             'options' => [
                 'label' => 'Детей',
             ],
             'attributes' => [
                 'class'     => 'std-input',
-                'placeholder' => 'Детей',
+                'placeholder' =>'Детей',
                 'data-min'  => '0',
                 'data-max'  => '200',
             ]
@@ -118,24 +93,6 @@ class CommonForm extends Form
 
         $inputFilter->add($factory->createInput([
             'name'     => 'date',
-            'required' => false,
-            'filters'  => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name'     => 'excursion_id',
-            'required' => true,
-            'filters'  => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-            ],
-        ]));
-
-        $inputFilter->add($factory->createInput([
-            'name'     => 'lang_id',
             'required' => false,
             'filters'  => [
                 ['name' => 'StripTags'],

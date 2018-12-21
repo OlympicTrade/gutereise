@@ -2,6 +2,8 @@
 
 namespace Aptero\Mail;
 
+use Aptero\View\Helper\Translator as TrHelper;
+use Translator\Model\Translator;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
@@ -21,6 +23,11 @@ class Mail
      * @var array
      */
     protected $variables = array();
+
+    /**
+     * @var Translator
+     */
+    protected $translator;
 
     /**
      * @var string
@@ -57,6 +64,14 @@ class Mail
     public function __construct ()
     {
         $this->view = new PhpRenderer();
+
+        $this->view->getHelperPluginManager()
+            ->setFactory('tags', function () {
+                return new \Aptero\View\Helper\Mail();
+            })->setFactory('tr', function () {
+                return new TrHelper();
+            });
+
         $this->message = new Message();
         $this->message->setEncoding('UTF-8');
         $this->message->addFrom(self::$options['sender']['email'], self::$options['sender']['name']);
@@ -94,7 +109,13 @@ class Mail
     public function setHeader($header)
     {
         $this->header = $header;
-        $this->message->setSubject($header);
+
+        return $this;
+    }
+
+    public function setLangCode($langCode)
+    {
+        $this->translator = new Translator($langCode);
 
         return $this;
     }
@@ -127,24 +148,40 @@ class Mail
 
     public function send()
     {
+        if(!$this->translator) {
+            $this->translator = new Translator();
+            $this->translator->setLangCode();
+        }
+
+        $this->message->setSubject($this->translator->translate($this->header));
+
         //Render message
         $viewModel = new ViewModel();
         $viewModel->setTemplate('mailTemplate');
         $viewModel->setVariables($this->variables);
 
-        $content = $this->view->render($viewModel);
+        $domain = \Application\Model\Settings::getInstance()->get('domain');
+
+        $viewModel->setVariables([
+            'domain'     => $domain,
+            'translator' => $this->translator,
+        ]);
+
+        //die($this->view->render($viewModel));
 
         //Render template
         $viewLayout = new ViewModel();
         $viewLayout->setTemplate('mailLayout')
-            ->setVariables(array(
-                'content' => $content,
-                'header'  => $this->header,
-            ));
+            ->setVariables($this->variables)
+            ->setVariables([
+                'domain'     => $domain,
+                'translator' => $this->translator,
+                'content'    => $this->view->render($viewModel),
+            ]);
 
         //Send mail
 		$html = $this->view->render($viewLayout);
-        
+
         //die($html);
 
         $html = new MimePart($html);
@@ -157,8 +194,8 @@ class Mail
 
         $this->message->setBody($body);
         
-        if(MODE != 'dev') {
+        //if(MODE != 'dev') {
             $this->transport->send($this->message);
-        }
+        //}
     }
 }

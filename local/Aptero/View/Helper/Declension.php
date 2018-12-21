@@ -23,6 +23,6 @@ class Declension extends AbstractHelper
             }
         }
 
-        return $number . ' ' . $ending;
+        return $number . ' ' . $this->getView()->tr($ending);
     }
 }

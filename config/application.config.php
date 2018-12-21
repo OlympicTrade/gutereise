@@ -10,6 +10,7 @@ $modules = array(
     'Museums',
     'Excursions',
     'Transports',
+    'Translator',
     'Comments',
     'Sync',
 );

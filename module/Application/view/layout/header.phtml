@@ -4,25 +4,30 @@ $this->generateMeta();
 $version = $settings->get('html_css_js_version');
 
 $this->headLink()
-    ->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css')
-    ->prependStylesheet('/css/compress-' . $version . '.css');
+    ->prependStylesheet(\Aptero\Compressor\Compressor::getPublicLink('css'))
+    ->prependStylesheet('/fonts/fonts.css')
+    ->prependStylesheet('//fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i')
+    ->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css');
 
 $this->headScript()
     ->setAllowArbitraryAttributes(true)
-    ->prependFile('/js/compress-' . $version . '.js')
-    ->prependFile('/engine/js/jquery/jquery-ui.js')
-    ->prependFile('/engine/js/jquery/jquery.js')
+    ->prependFile(\Aptero\Compressor\Compressor::getPublicLink('js'))
+    ->prependFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
+    ->prependFile('//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     ;
 
 if(MODE != 'dev') {
-    $this->headScript()
+    /*$this->headScript()
         ->prependFile('/js/counters/chat.js', null, ['async' => true])
         ->prependFile('/js/counters/yandex.js', null, ['async' => true])
-        ->prependFile('/js/counters/google.js', null, ['async' => true]);
+        ->prependFile('/js/counters/google.js', null, ['async' => true]);*/
 }
+
+$language = \Translator\Model\Translator::getInstance();
+$langCode = $language->getLangCode();
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="<?php echo $langCode ?>">
 <head>
     <meta charset="utf-8">
     <?php echo $this->headTitle() . "\n";
@@ -31,19 +36,42 @@ if(MODE != 'dev') {
     echo $this->headScript()  . "\n";
     echo $this->settings->get('html_head');
     ?>
+    <script>
+        $.languages.setLanguage('<?php echo $langCode ?>');
+        $.config.euroRate = <?php echo $settings->get('euro_rate') ?>;
+    </script>
 </head>
 <body>
 <div class="block" id="header">
-    <div class="wide-wrapper">
+    <div class="wrapper">
         <a href="/" class="logo"></a>
         <ul class="nav">
-            <li class="active"><a href="/">Главная</a></li>
-            <li><a href="/excursions/">Экскурсии</a></li>
-            <li><a href="/tours/">Туры</a></li>
-            <li><a href="/hotels/">Отели</a></li>
-            <li><a href="/transport/">Транспорт</a></li>
-            <li><a href="/about/">О компании</a></li>
+            <li class="active"><a href="/"><?php echo $this->tr('Главная') ?></a></li>
+            <li><a href="/excursions/"><?php echo $this->tr('Экскурсии') ?></a></li>
+            <li><a href="/tours/"><?php echo $this->tr('Туры') ?></a></li>
+            <li><a href="/hotels/"><?php echo $this->tr('Отели') ?></a></li>
+            <li><a href="/transport/"><?php echo $this->tr('Транспорт') ?></a></li>
+            <li><a href="/about/"><?php echo $this->tr('О компании') ?></a></li>
         </ul>
+
+        <div class="language">
+            <div class="label"><?php echo $this->tr('Язык') ?></div>
+            <?php echo $this->languageSelect() ?>
+        </div>
+
+        <script>
+            $(function() {
+                var flags = $('.flags', '#header');
+                $('.flag', flags).on('click', function () {
+                    if($(this).hasClass('active')) return;
+
+                    var lang = $(this).data('lang');
+                    $.cookie('lang', lang, {expires: 365, path: "/"});
+                    location.reload();
+                })
+            });
+        </script>
+
         <div class="contacts">
             <div class="phone"><?php echo $contacts->get('phone_1') ?></div>
             <div class="email"><?php echo $contacts->get('email') ?></div>

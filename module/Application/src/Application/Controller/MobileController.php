@@ -12,22 +12,8 @@ class MobileController extends AbstractMobileActionController
 
         $contacts = $this->layout()->getVariable('contacts');
 
-        $discount = $this->getDiscountsService()->getActiveDiscount();
-
         return array(
             'contacts'         => $contacts,
-            'discount'         => $discount,
-        );
-    }
-
-    public function deliveryAction()
-    {
-        $this->generate('/delivery/');
-
-        $page = $this->layout()->getVariable('page');
-
-        return array(
-            'page'     => $page,
         );
     }
 
@@ -86,37 +72,5 @@ class MobileController extends AbstractMobileActionController
     protected function getSitemapService()
     {
         return $this->getServiceLocator()->get('Application\Service\SitemapService');
-    }
-
-    /**
-     * @return \Catalog\Service\CatalogService
-     */
-    protected function getCatalogService()
-    {
-        return $this->getServiceLocator()->get('Catalog\Service\CatalogService');
-    }
-
-    /**
-     * @return \Catalog\Service\ProductsService
-     */
-    protected function getProductsService()
-    {
-        return $this->getServiceLocator()->get('Catalog\Service\ProductsService');
-    }
-
-    /**
-     * @return \Blog\Service\BlogService
-     */
-    protected function getBlogService()
-    {
-        return $this->getServiceLocator()->get('Blog\Service\BlogService');
-    }
-
-    /**
-     * @return \Discounts\Service\DiscountsService
-     */
-    protected function getDiscountsService()
-    {
-        return $this->getServiceLocator()->get('Discounts\Service\DiscountsService');
     }
 }

@@ -40,14 +40,6 @@ class Header extends AbstractHelper
             $options['headerDesc'] = $view->headerDesc;
         }
 
-        /*if(empty($view->isAjax)) {
-            if (!isset($options['breadcrumbs'])) {
-                $options['breadcrumbs'] = $view->breadcrumbs;
-            }
-
-            $html = $view->breadcrumbs($options['breadcrumbs'], ['delimiter' => ' <i class="fa fa-angle-right"></i> ', 'lastItem' => 'span', 'class' => 'breadcrumbs']);
-        }*/
-
         $html =
             '<div class="block header-block"' .
                 //($options['background'] ? ' style="background-image: url(' . $options['background'] . ')"' : '') .
@@ -65,7 +57,7 @@ class Header extends AbstractHelper
         $html .= '<div class="box">';
 
         if($options['header']) {
-            $html .= '<h1>' . $options['header'] . '</h1>';
+            $html .= '<h1>' . $view->tr($options['header']) . '</h1>';
         }
 
         /*if($options['headerDesc']) {

@@ -16,21 +16,37 @@ class Transport extends Entity
             'preview'      => [],
             'text'         => [],
             'type'         => [],
+            'capacity'     => [],
+            'price'        => ['type' => 'json'],
             'title'        => [],
             'description'  => [],
             'url'          => [],
         ]);
 
         $this->addPlugin('image', function() {
-            $image = new Image();
+            $image = new \Aptero\Db\Plugin\Image();
             $image->setTable('transports_images');
             $image->setFolder('transports');
             $image->addResolutions([
-                'm' => [
-                    'width'  => 600,
-                    'height' => 400,
+                'g' => [
+                    'width'  => 800,
+                    'height' => 500,
                     'crop'   => true,
                 ],
+                'm' => [
+                    'width'  => 505,
+                    'height' => 240,
+                    'crop'   => true,
+                ],
+                'r' => [
+                    'width'  => 965,
+                    'height' => 575,
+                    'crop'   => true,
+                ],
+                'hr' => [
+                    'width'  => 1780,
+                    'height' => 970,
+                ]
             ]);
 
             return $image;
@@ -41,11 +57,20 @@ class Transport extends Entity
             $image->setTable('transports_gallery');
             $image->setFolder('transports_gallery');
             $image->addResolutions([
-                'm' => [
-                    'width'  => 600,
-                    'height' => 400,
+                'g' => [
+                    'width'  => 800,
+                    'height' => 500,
                     'crop'   => true,
                 ],
+                'r' => [
+                    'width'  => 965,
+                    'height' => 575,
+                    'crop'   => true,
+                ],
+                'hr' => [
+                    'width'  => 1780,
+                    'height' => 970,
+                ]
             ]);
 
             $image->select()->order('sort');

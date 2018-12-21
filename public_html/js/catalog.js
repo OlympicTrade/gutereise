@@ -35,7 +35,6 @@ var CommonForm = function(form){
             if(cForm.form.attr('class') === form.attr('class')) return;
 
             $.each(cForm.data, function (key, val) {
-                //dd('[name="' + key + '"]');
                 $('[name="' + key + '"]', form).val(val);
             });
 
@@ -55,7 +54,6 @@ var CommonForm = function(form){
                 children: $('[name="children"]', form).val()
             });
 
-            dd(cForm.data);
             cForm.updateForms();
         }, 200);
     });

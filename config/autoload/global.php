@@ -37,12 +37,12 @@ return array(
             },
             'Sms' => function($sm) use ($develop){
                 \Aptero\Sms\Sms::setOptions([
-                    'login'     => 'myprotein',
-                    'password'  => 'Uriel1Uriel',
-                    'key'       => '2F254C72-6978-3E42-0ACD-C5D57C7FF11F',
+                    'login'     => 'gutereise',
+                    'password'  => 'Gute1Reise',
+                    //'key'       => '2F254C72-6978-3E42-0ACD-C5D57C7FF11F',
                     'sender'    => '79522872998',
                     'flash'     => false,
-                    'viber'     => false,
+                    'viber'     => true,
                 ]);
             },
             'DataCache' => function($sm){

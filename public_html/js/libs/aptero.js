@@ -49,11 +49,19 @@ fn.serializeArray = function(box) {
 };
 
 /* Price
- 10000 -> 10 000
+ 10000 -> 10 000 rub
  */
-fn.price = function(price) {
+fn.price = function(price, sign) {
     price = new String(price);
-    return price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    //price = price.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+
+    if(sign === undefined) sign = true;
+
+    if(sign) {
+        price += $.languages.getLanguage() === 'ru' ? ' <i class="fas fa-ruble-sign"></i>' : ' <i class="fas fa-euro-sign"></i>';
+    }
+
+    return price;
 };
 
 fn.scrollTo = function(el, duration, options) {

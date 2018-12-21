@@ -12,6 +12,8 @@
         "ghislainf/zf2-whoops": "dev-master",
         "nixsolutions/yandex-php-library": "dev-master",
         "phpoffice/phpspreadsheet": "dev-master",
-        "guzzlehttp/guzzle":"*"
+        "guzzlehttp/guzzle":"*",
+        "matthiasmullie/minify":"*",
+        "leafo/scssphp": "0.7.6"
     }
 }

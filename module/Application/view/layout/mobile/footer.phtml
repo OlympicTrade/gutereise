@@ -1,12 +1,6 @@
 </div>
-<div id="footer" class="block">
-    <a  href="<?php echo $this->link($contacts->get('phone')) ?>" class="call">
-        Задать вопрос
-    </a>
-    <a href="<?php echo $contacts->get('vkontakte') ?>" class="social">
-        Vkontakte
-    </a>
-    <div class="clear"></div>
+<div id="footer">
+    <a class="call" href="tel:+78129571765"><i class="fas fa-microphone"></i> <?php echo $this->tr('Сделать звонок') ?></a>
 </div>
 
 <?php
@@ -28,9 +22,9 @@ $jsonLd = [
         'contactType' => 'sales',
         'areaServed'  => ['RU']
     ],
-    'sameAs' => [
+    /*'sameAs' => [
         $contacts->get('vkontakte')
-    ],
+    ],*/
 ];
 ?>
 
@@ -44,13 +38,12 @@ $jsonLd = [
     '@type'     => 'WebSite',
     'url'       => $settings->get('domain'),
     'name'      => $settings->get('site_name'),
-    'potentialAction' => (object) [
+    /*'potentialAction' => (object) [
         '@type'       => 'SearchAction',
         'target'      => $settings->get('domain') . '/catalog/search/?query={search_term}',
         'query-input' => 'required name=search_term',
-    ],
+    ],*/
 ];
 ?>
-<noscript><div><img src="https://mc.yandex.ru/watch/44381401" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </body>
 </html>

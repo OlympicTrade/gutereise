@@ -244,7 +244,7 @@ class AbstractDb implements AdapterAwareInterface, CacheAwareInterface
         return $this->select;
     }
 
-    public function dump($echo = true)
+    public function d($echo = true)
     {
         $dump = $this->getSql()->buildSqlString($this->select());
         

@@ -325,12 +325,18 @@ return [
         ],
     ],
     'translator' => [
-        'locale' => 'ru_RU',
+        'locale' => 'ru',
         'translation_file_patterns' => [
             [
                 'type'     => 'phparray',
                 'base_dir' => __DIR__ . '/../languages',
                 'pattern'  => '%s.php',
+            ],
+            /*[
+                'type'     => 'phparray',
+                'base_dir' => __DIR__ . '/../languages/',
+                'pattern'  => '%s.php',
+                'text_domain' => 'Forms',
             ],
             [
                 'type'     => 'phparray',
@@ -343,7 +349,7 @@ return [
                 'base_dir' => __DIR__ . '/../languages/Forms/',
                 'pattern'  => '%s.php',
                 'text_domain' => 'Forms',
-            ],
+            ],*/
         ],
     ],
     'view_manager' => [

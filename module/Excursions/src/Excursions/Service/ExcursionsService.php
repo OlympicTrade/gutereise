@@ -2,12 +2,12 @@
 
 namespace Excursions\Service;
 
+use Translator\Model\Translator;
 use Aptero\Service\AbstractService;
 use Excursions\Model\Excursion;
 use Excursions\Model\ExcursionType;
 use Sync\Model\DbConstants;
 use Sync\Model\Sync;
-use Zend\Json\Json;
 
 class ExcursionsService extends AbstractService
 {
@@ -22,7 +22,7 @@ class ExcursionsService extends AbstractService
         return $types;
     }
 
-    public function getPaginator($page, $filters = [], $itemsPerPage = 1)
+    public function getPaginator($page, $filters = [], $itemsPerPage = 10)
     {
         $filters['join'] = [
             'image'
@@ -61,6 +61,15 @@ class ExcursionsService extends AbstractService
                 ->where(['etm.museum_id' => $filters['museums']]);
         }
 
+        $language = Translator::getInstance();
+        if($language->isForeigners()) {
+            $select->where
+                ->in('nationality', [Excursion::NATIONALITY_ALL, Excursion::NATIONALITY_FOR]);
+        } else {
+            $select->where
+                ->in('nationality', [Excursion::NATIONALITY_ALL, Excursion::NATIONALITY_RUS]);
+        }
+
         return $select;
     }
 
@@ -87,12 +96,15 @@ class ExcursionsService extends AbstractService
 
     public function getPrice($excursion, $data)
     {
-        if(!$data['date'] || !$data['lang_id'] || !$data['adults']) {
+        if(!$data['date'] || !$data['adults']) {
             return ['errors' => ['Заполните форму для рассчета стоимости']];
         }
 
-        unset($data['excursion_id']);
+        $langs = Translator::getInstance();
+
+        unset($data['id']);
         $data['excursion_id'] = $excursion->get('db_excursion_id');
+        $data['lang_id'] = $langs->getLangId();
 
         $sync = new Sync();
         $resp = $sync->load('get-price', $data);
@@ -108,12 +120,25 @@ class ExcursionsService extends AbstractService
             $error = DbConstants::$errors[$code];
         }
 
-        return [
-            'price'  => $resp->summary->income,
-            'adult'  => $resp->summary->adult,
-            'child'  => $resp->summary->child,
-            'errors' => $errors,
-        ];
+        if($langs->getLangCode() == 'ru') {
+            return [
+                'price'  => $resp->summary->income,
+                'adult'  => $resp->summary->adult,
+                'child'  => $resp->summary->child,
+                'errors' => $errors,
+            ];
+        } else {
+            foreach ($errors as $key => $error) {
+                $errors[$key] = $langs->translate($error);
+            }
+
+            return [
+                'price'  => $resp->summary->euro->income,
+                'adult'  => $resp->summary->euro->adult,
+                'child'  => $resp->summary->euro->child,
+                'errors' => $errors,
+            ];
+        }
     }
 
     public function addOrder($data)
@@ -135,7 +160,6 @@ class ExcursionsService extends AbstractService
         $resp = $sync->load('add-order', $cData);
 
         dd($resp);
-
 
         return $resp->summary->income;
     }

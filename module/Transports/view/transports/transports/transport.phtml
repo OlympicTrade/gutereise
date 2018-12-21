@@ -1,7 +1,101 @@
-<?php /*echo $this->header([
-    'background' => '/images/headers/petergof.jpg'
+<?php echo $this->header([
+    'background' => $page->getPlugin('image')->getImage('bg'),
+    'wrapper'    => true
 ]); ?>
 
+<div class="block gray">
+    <div class="wrapper">
+        <div class="module-item-block transport-block">
+            <div class="content">
+                <?php
+                $html =
+                    '<div class="gallery">'.
+                        '<ul class="list">';
+
+                $html .=
+                    '<li data-thumb="' . $transport->getPlugin('image')->getImage('hr') . '">'.
+                        '<img src="' . $transport->getPlugin('image')->getImage('g') . '" alt="">'.
+                    '</li>';
+
+                foreach ($transport->getPlugin('images') as $image) {
+                    $html .=
+                        '<li data-thumb="' . $image->getImage('hr') . '">'.
+                            '<img src="' . $image->getImage('g') . '" alt=""></li>'.
+                        '</li>';
+                }
+
+                $html .=
+                        '</ul>'.
+                    '</div>';
+                echo $html;
+                ?>
+                <div class="desc-box">
+                    <h2><?php echo $this->tr($transport->get('name')) ?></h2>
+                    <div class="std-text"><?= $this->tr($transport->get('text')) ?></div>
+                </div>
+
+                <div class="attrs-list">
+                    <div class="row">
+                        <i class="far fa-user"></i> <?= $this->tr('Вместимость') . ': ' . $this->tr('до') . ' ' .
+                        $this->declension($transport->get('capacity'), ['человек', 'человека', 'человек']) ?>
+                    </div>
+                    <div class="row">
+                        <i class="far fa-clock"></i> <?= $this->tr('Мин. заказ') . ': 3 + 1 ' . $this->tr('часа') ?>
+                    </div>
+                    <div class="row">
+                        <i class="far fa-money-bill-alt"></i> <?= $this->tr('Стоимость') . ': ' . $this->price($transport->get('price')->price, true, true) . ' ' . $this->tr('в час')?>
+                    </div>
+                    <?php if($transport->get('price')->transfer) { ?>
+                    <div class="row">
+                        <i class="fas fa-exchange-alt"></i> <?= $this->tr('Трансфер') . ': ' . $this->price($transport->get('price')->transfer, true, true) ?>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="slider">
+                    <?php
+                    $html =
+                        '<form action="/transport/get-price/" method="post" class="transport-form common-form">'.
+                            '<input type="hidden" name="id" value="' . $transport->getId() . '">'.
+                            $this->commonForm($commonForm, [
+                                ['field' => 'date', 'icon' => 'far fa-calendar-alt'],
+                                ['field' => 'time', 'icon' => 'far fa-clock'],
+                                ['field' => 'duration', 'icon' => 'fas fa-stopwatch'],
+                                ['field' => 'adults', 'icon' => 'fas fa-user'],
+                            ]).
+                            '<div class="price-box std-errors"></div>'.
+                            '<div class="btns">'.
+                                '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
+                            '</div>'.
+                        '</form>';
+
+                    echo $html;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var gallery = $('.gallery .list', '.transport-block');
+
+        gallery.lightSlider({
+            gallery: true,
+            item: 1,
+            vertical: true,
+            verticalHeight: 500,
+            vThumbWidth: 100,
+            thumbItem: 7,
+            thumbMargin: 4,
+            slideMargin: 0
+        });
+    });
+</script>
+
+<?php /*
 <div class="block transport-block">
     <div class="col-l">
         <div class="gallery">
@@ -15,7 +109,7 @@
         <div class="std-text"><?php echo $transport->get('text') ?></div>
     </div>
     <div class="clear"></div>
-</div>*/ ?>
+</div>
 
 <div class="std-popup order-popup">
     <div class="header">
@@ -25,4 +119,5 @@
         asdasd
     </div>
 </div>
+  */ ?>
 

@@ -25,6 +25,8 @@ class Comment extends Entity
             'question'     => [],
             'answer'       => [],
             'send'         => ['default' => 1],
+            'status'       => [],
+            'lang_code'    => [],
             'time_create'  => [],
         ]);
 
@@ -37,10 +39,11 @@ class Comment extends Entity
             if(strpos($model->get('contact'), '@')) {
                 $mail = new Mail();
                 $mail->setTemplate(MODULE_DIR . '/Comments/view/comments/mail/notice-client.phtml')
-                    ->setHeader('Регистрация на сайте')
+                    ->setLangCode($model->get('lang_code'))
+                    ->setHeader('Ответ на вопрос')
                     ->addTo(Settings::getInstance()->get('admin_email'))
                     ->setVariables([
-                        'comment' => $model,
+                        'comment'  => $model,
                     ])
                     ->send();
             } else {
@@ -50,6 +53,8 @@ class Comment extends Entity
                     'Gute Reise - ' . $model->get('name') . ': ' . $model->get('answer')
                 );
             }
+
+            $model->set('send', 0);
 
             return true;
         });
@@ -61,12 +66,6 @@ class Comment extends Entity
             case self::TYPE_EXCURSION :
                 $parent = new Excursion();
                 break;
-            /*case self::TYPE_TYPE :
-                $parent = new Excursion();
-                break;
-            case self::TYPE_TRANSPORT :
-                $parent = new Excursion();
-                break;*/
             default:
                 return false;
         }

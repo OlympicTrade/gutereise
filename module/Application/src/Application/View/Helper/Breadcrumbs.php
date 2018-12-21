@@ -1,15 +1,17 @@
 <?php
 namespace Application\View\Helper;
 
-use Zend\I18n\View\Helper\AbstractTranslatorHelper;
+use Zend\View\Helper\AbstractHelper;
 use Zend\Json\Json;
 
-class Breadcrumbs extends AbstractTranslatorHelper
+class Breadcrumbs extends AbstractHelper
 {
     public function __invoke($crumbs = null, $options = [])
     {
+        $view = $this->getView();
+
         if($crumbs == null) {
-            $crumbs = $this->getView()->breadcrumbs;
+            $crumbs = $view->breadcrumbs;
         }
 
         $options = array_merge(array(
@@ -18,8 +20,6 @@ class Breadcrumbs extends AbstractTranslatorHelper
             'lastItem'  => 'span',
             'wrapper'   => false,
         ), $options);
-
-        $translator = $this->getTranslator();
 
         $html = '';
 
@@ -40,7 +40,7 @@ class Breadcrumbs extends AbstractTranslatorHelper
             $html .=
                 '<div class="item">'
                     .'<a href="' . $crumbs[$i]['url'] . '">'
-                        . $translator->translate($crumb['name'])
+                        . $view->tr($crumb['name'], false)
                     .'</a>';
 
             if(isset($crumb['options'])) {
@@ -48,7 +48,7 @@ class Breadcrumbs extends AbstractTranslatorHelper
                     '<div class="options">';
 
                 foreach($crumb['options'] as $url => $name) {
-                    $html .= '<a href="' . $url . '">' . $name . '</a>';
+                    $html .= '<a href="' . $url . '">' . $view->tr($name, false) . '</a>';
                 }
 
                 $html .=
@@ -61,7 +61,7 @@ class Breadcrumbs extends AbstractTranslatorHelper
         }
 
         if(!$options['allLinks'] && $options['lastItem']) {
-            $html .= '<div class="sep">' . $options['delimiter'] . '</div><div class="item"><' . $options['lastItem'] . ' class="crumb">' .  $crumbs[$i]['name'] . '</' . $options['lastItem'] . '></div>';
+            $html .= '<div class="sep">' . $options['delimiter'] . '</div><div class="item"><' . $options['lastItem'] . ' class="crumb">' .  $view->tr($crumbs[$i]['name'], false) . '</' . $options['lastItem'] . '></div>';
         }
 
         if($options['wrapper']) {
@@ -81,7 +81,7 @@ class Breadcrumbs extends AbstractTranslatorHelper
                 'position' => ($i + 1),
                 'item' => (object) array(
                     '@id'  => 'http://' . $_SERVER['HTTP_HOST'] . $crumbs[$i]['url'],
-                    'name' => $translator->translate($crumbs[$i]['name'])
+                    'name' => $view->tr($crumbs[$i]['name'], false)
                 )
             );
         }

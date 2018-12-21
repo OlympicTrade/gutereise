@@ -8,20 +8,41 @@ return [
     ],
     'router' => [
         'routes' => [
-            'comments' => [
+            'mobile' => [
+                'type' => 'Hostname',
+                'priority' => 600,
+                'options' => [
+                    'route' => 'm.:domain',
+                    'constraints' => ['domain' => '.*',],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'addComment' => [
+                        'type'    => 'segment',
+                        'priority' => 500,
+                        'options' => [
+                            'route'    => '/comments/add/',
+                            'defaults' => [
+                                'module'     => 'Comments',
+                                'section'    => 'Comments',
+                                'controller' => 'Comments\Controller\Comments',
+                                'action'     => 'addComment',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+
+            'addComment' => [
                 'type'    => 'segment',
                 'priority' => 500,
                 'options' => [
-                    'route'    => '/comments[/:action][/:id]/',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[a-zA-Z0-9_-]+',
-                    ],
+                    'route'    => '/comments/add/',
                     'defaults' => [
                         'module'     => 'Comments',
                         'section'    => 'Comments',
                         'controller' => 'Comments\Controller\Comments',
-                        'action'     => 'index',
+                        'action'     => 'addComment',
                     ],
                 ],
             ],

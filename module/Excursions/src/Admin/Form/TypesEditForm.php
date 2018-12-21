@@ -3,6 +3,7 @@ namespace ExcursionsAdmin\Form;
 
 use Aptero\Form\Form;
 
+use ExcursionsAdmin\Model\ExcursionType;
 use Museums\Model\Museum;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -49,6 +50,18 @@ class TypesEditForm extends Form
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
                 'label' => 'Description',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'type',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label' => 'Тип',
+                'options' => [
+                    ExcursionType::TYPE_MAIN => 'Главные типы',
+                    ExcursionType::TYPE_TAG  => 'Поисковые теги',
+                ]
             ],
         ]);
     }

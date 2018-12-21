@@ -1,3 +1,7 @@
+function dd(data) {
+    console.log(data);
+}
+
 $(function() {
     initWindow();
     initTooltip();

@@ -100,7 +100,7 @@ class ExcursionsController extends AbstractActionController
 
         $filters['type'] = $type;
 
-        $excursions = $this->getExcursionsService()->getExcursions();
+        //$excursions = $this->getExcursionsService()->getExcursions();
 
         return $view->setVariables([
             'filters'     => $filters,
@@ -128,7 +128,7 @@ class ExcursionsController extends AbstractActionController
         $this->addBreadcrumbs([['url' => $excursion->getUrl(), 'name' => $excursion->get('name')]]);
 
         return $view->setVariables([
-            'headerImage'    => $excursion->getPlugin('header')->getImage('h'),
+            'headerImage'    => $excursion->getPlugin('background')->getImage('h'),
             'header'         => $excursion->get('header'),
             'headerDesc'     => $excursion->get('header_desc'),
             'excursion'      => $excursion,
@@ -139,7 +139,7 @@ class ExcursionsController extends AbstractActionController
 
     public function getPriceAction()
     {
-        $exId = $this->params()->fromPost('excursion_id');
+        $exId = $this->params()->fromPost('id');
         $excursion = new Excursion();
         $excursion->setId($exId);
 
@@ -183,6 +183,7 @@ class ExcursionsController extends AbstractActionController
                     ]);
                 }
 
+                die('zxczxc');
                 $this->getExcursionsService()->addOrder($formData);
                 return $jsonModel = new JsonModel([
                     'errors' => $form->getMessages()

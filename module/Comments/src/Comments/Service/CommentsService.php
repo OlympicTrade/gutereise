@@ -2,6 +2,7 @@
 
 namespace Comments\Service;
 
+use Translator\Model\Translator;
 use Application\Model\Settings;
 use Aptero\Mail\Mail;
 use Aptero\Service\AbstractService;
@@ -11,23 +12,27 @@ class CommentsService extends AbstractService
 {
     public function addComment($data)
     {
-        $comment = new Comment();
-        $comment->setVariables($data + ['time_create']);
-        $comment->save();
+        $contact = $data['contact'];
+        if(!strpos($contact, '@')) {
+            $contact = preg_replace('/[^0-9]/', '', $contact);
+        }
+        $data['contact'] = $contact;
 
-        /*$sms = $this->getServiceManager()->get('Sms');
-        $sms->send(
-            Settings::getInstance()->get('admin_phone'),
-            'Новый вопрос на сайте'
-        );*/
+        $comment = new Comment();
+        $comment->setVariables($data + [
+            'status'        => 1,
+            'time_create'   => date('Y-m-d H:i:s'),
+            'lang_code'     => Translator::getInstance()->getLangCode(),
+        ]);
+        $comment->save();
 
         $mail = new Mail();
 
         $mail->setTemplate(MODULE_DIR . '/Comments/view/comments/mail/notice-admin.phtml')
-            ->setHeader('Регистрация на сайте')
+            ->setHeader('Новый вопрос на сайте')
             ->addTo(Settings::getInstance()->get('admin_email'))
             ->setVariables([
-                'comment'    => $comment,
+                'comment'  => $comment,
             ])
             ->send();
 

@@ -515,7 +515,7 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
         return $this;
     }
 
-    public function dump($echo = true)
+    public function d($echo = true)
     {
         $select = clone $this->select();
 
@@ -528,6 +528,10 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
         if($echo) echo $dump;
 
         return $dump;
+    }
+
+    public function dd() {
+        $this->d(true);die();
     }
 
 
@@ -794,24 +798,27 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
         return true;
     }
 
-    /**
-     * @param array $data
-     */
     public function unserializeArray($data)
     {
-        $dataPlugins = array();
+        $dataPlugins = [];
 
-        foreach($data as $name => $value) {
-
+        $i = 0;
+        foreach($data as $name => $value) {$i++;
             $sepPos = strpos($name, '-');
             $pluginName = substr($name, 0, $sepPos);
 
             if($pluginName) {
+                $key = substr($name, $sepPos + 1);
+
+                if($this->hasProperty($pluginName)) {
+                    $this->get($pluginName)->$key = $value;
+                    continue;
+                }
+
                 if(!isset($dataPlugins[$pluginName])) {
                     $dataPlugins[$pluginName] = array();
                 }
 
-                $key = substr($name, $sepPos + 1);
                 $dataPlugins[$pluginName][$key] = $value;
             } else {
                 $this->set($name, $value);
@@ -824,19 +831,18 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
     }
 
     /**
-     * For admin side forms
-     *
      * @param array $result
      * @param string $prefix
      * @param bool $fullSerialize
      * @return array
+     * @throws Exception
      */
     public function serializeArray($result = [], $prefix = '', $fullSerialize = true)
     {
         $this->load();
         $result[$prefix . 'id'] = $this->getId();
         foreach($this->properties as $key => $val) {
-            $result[$prefix . $key] = $this->get($key);
+            $result += $this->properties[$key]['filter']->serializeForForm($prefix . $key);
         }
 
         if($fullSerialize) {
@@ -882,7 +888,7 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
     {
         $prop = current($this->properties);
 
-        return $prop['value'];
+        return $prop['filter']->get();
     }
 
     public function key()
@@ -910,6 +916,23 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
 
         $entity = new $class;
         return $entity->getCollection();
+    }
+
+    /**
+     * @param $options
+     * @return Entity | bool
+     */
+    static public function factory($options)
+    {
+        $class = get_called_class();
+        /** @var Entity $entity */
+        $entity = new $class();
+
+        if($options['id']) {
+            $entity->setId($options['id']);
+        }
+
+        return $entity;
     }
 
     public function serialize($options = []) {

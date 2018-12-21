@@ -11,6 +11,7 @@ class Module implements AutoloaderProviderInterface
         return [
             'invokables' => [
                 'Comments'       => 'Comments\View\Helper\Comments',
+                'CommentsList'   => 'Comments\View\Helper\CommentsList',
             ],
         ];
     }

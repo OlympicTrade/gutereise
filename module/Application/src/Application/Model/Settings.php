@@ -29,6 +29,7 @@ class Settings extends EntityHierarchy
                 'admin_phone'    => [],
                 'video_summer'   => [],
                 'video_winter'   => [],
+                'euro_rate'      => [],
             ]);
 
         $this->setId(1);

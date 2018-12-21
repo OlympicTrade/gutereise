@@ -2,13 +2,88 @@
 return [
     'controllers' => [
         'invokables' => [
-            'Excursions\Controller\Excursions'      => 'Excursions\Controller\ExcursionsController',
-            'ExcursionsAdmin\Controller\Excursions' => 'ExcursionsAdmin\Controller\ExcursionsController',
-            'ExcursionsAdmin\Controller\Types'      => 'ExcursionsAdmin\Controller\TypesController',
+            'Excursions\Controller\Excursions'          => 'Excursions\Controller\ExcursionsController',
+            'Excursions\Controller\MobileExcursions'    => 'Excursions\Controller\MobileExcursionsController',
+            'ExcursionsAdmin\Controller\Excursions'     => 'ExcursionsAdmin\Controller\ExcursionsController',
+            'ExcursionsAdmin\Controller\Types'          => 'ExcursionsAdmin\Controller\TypesController',
         ],
     ],
     'router' => [
         'routes' => [
+            'mobile' => [
+                'type' => 'Hostname',
+                'priority' => 600,
+                'options' => [
+                    'route' => 'm.:domain',
+                    'constraints' => ['domain' => '.*',],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'excursions' => [
+                        'type' => 'literal',
+                        'priority' => 500,
+                        'options' => [
+                            'route' => '/excursions',
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'list' => [
+                                'type'    => 'segment',
+                                'priority' => 500,
+                                'options' => [
+                                    'route'    => '[/:url]/',
+                                    'constraints' => ['url' => '.*'],
+                                    'defaults' => [
+                                        'module'     => 'Excursions',
+                                        'section'    => 'Excursions',
+                                        'controller' => 'Excursions\Controller\MobileExcursions',
+                                        'action'     => 'index',
+                                    ],
+                                ],
+                            ],
+                            /*'item' => [
+                                'type'    => 'segment',
+                                'priority' => 500,
+                                'options' => [
+                                    'route'    => '/excursion[/:url]/',
+                                    'defaults' => [
+                                        'module'     => 'Excursions',
+                                        'section'    => 'Excursions',
+                                        'controller' => 'Excursions\Controller\MobileExcursions',
+                                        'action'     => 'excursion',
+                                    ],
+                                ],
+                            ],*/
+                            'price' => [
+                                'type'    => 'segment',
+                                'priority' => 600,
+                                'options' => [
+                                    'route'    => '/get-price/',
+                                    'defaults' => [
+                                        'module'     => 'Excursions',
+                                        'section'    => 'Excursions',
+                                        'controller' => 'Excursions\Controller\Excursions',
+                                        'action'     => 'getPrice',
+                                    ],
+                                ],
+                            ],
+                            'order' => [
+                                'type'    => 'literal',
+                                'priority' => 600,
+                                'options' => [
+                                    'route'    => '/order/',
+                                    'defaults' => [
+                                        'module'     => 'Excursions',
+                                        'section'    => 'Excursions',
+                                        'controller' => 'Excursions\Controller\Excursions',
+                                        'action'     => 'order',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'excursions' => [
                 'type' => 'literal',
                 'priority' => 500,
@@ -32,7 +107,7 @@ return [
                         ],
                     ],
                     'price' => [
-                        'type'    => 'literal',
+                        'type'    => 'segment',
                         'priority' => 600,
                         'options' => [
                             'route'    => '/get-price/',

@@ -1,15 +1,15 @@
 <?php
 namespace Application;
 
+//use Translator\Model\Translator;
 use Application\Model\Settings;
+use Translator\Model\Translator;
 use Aptero\Compressor\Compressor;
 use Aptero\Mail\Mail;
-use Aptero\Sms\Sms;
 use Zend\Mvc\MvcEvent;
 
-use Zend\Mvc\I18n\Translator;
-use Zend\Mvc\View\Http\ViewManager;
-use Zend\Validator\AbstractValidator;
+//use Zend\Mvc\I18n\Translator;
+//use Zend\Validator\AbstractValidator;
 
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
@@ -79,27 +79,24 @@ class Module
     {
         $compressor = new Compressor();
 
-        $version = Settings::getInstance()->get('html_css_js_version');
-
         $compressor->compress([
-            PUBLIC_DIR . '/fonts/fonts.css',
             PUBLIC_DIR . '/css/libs/reset.css',
             PUBLIC_DIR . '/css/libs/lightslider.css',
             PUBLIC_DIR . '/css/libs/lightgallery.css',
             PUBLIC_DIR . '/css/libs/fancybox.css',
             PUBLIC_DIR . '/css/libs/grid.css',
-            PUBLIC_DIR . '/css/elements.css',
-            PUBLIC_DIR . '/css/main.css',
-        ],  PUBLIC_DIR . '/css/compress-' . $version . '.css');
+            PUBLIC_DIR . '/css/elements.scss',
+            PUBLIC_DIR . '/css/main.scss',
+        ],  'css');
 		
 		 $jsDesktop = [
              0  => PUBLIC_DIR . '/js/config.js',
+             10 => PUBLIC_DIR . '/js/libs/languages.js',
              20 => PUBLIC_DIR . '/js/libs/fancybox/fancybox.js',
              25 => PUBLIC_DIR . '/js/libs/history.js',
              30 => PUBLIC_DIR . '/js/libs/inputmask.js',
              35 => PUBLIC_DIR . '/js/libs/lightslider.js',
              37 => PUBLIC_DIR . '/js/libs/lightgallery.js',
-             //37 => PUBLIC_DIR . '/js/libs/owl.navigation.js',
              45 => PUBLIC_DIR . '/js/libs/aptero.js',
              47 => PUBLIC_DIR . '/js/libs/parallax.js',
              50 => PUBLIC_DIR . '/js/libs/cookie.js',
@@ -112,31 +109,35 @@ class Module
              95 => PUBLIC_DIR . '/js/list.js',
         ];
 
-        $compressor->compress($jsDesktop,  PUBLIC_DIR . '/js/compress-' . $version . '.js');
+        $compressor->compress($jsDesktop,  'js');
 
         //Mobile
         $compressor->compress([
-            PUBLIC_DIR . '/mobile/css/libs/reset.css',
-            PUBLIC_DIR . '/mobile/css/libs/owlcarousel.css',
-            PUBLIC_DIR . '/mobile/css/libs/fancybox.css',
-            PUBLIC_DIR . '/mobile/css/libs/grid.css',
-            PUBLIC_DIR . '/mobile/css/elements.css',
-            PUBLIC_DIR . '/mobile/css/main.css',
-        ],  PUBLIC_DIR . '/mobile/css/compress-' . $version . '.css');
-		
+            PUBLIC_DIR . '/css/libs/reset.css',
+            PUBLIC_DIR . '/css/libs/lightslider.css',
+            PUBLIC_DIR . '/css/libs/lightgallery.css',
+            PUBLIC_DIR . '/css/libs/fancybox.css',
+            PUBLIC_DIR . '/css/libs/grid.css',
+            PUBLIC_DIR . '/mobile/css/elements.scss',
+            PUBLIC_DIR . '/mobile/css/main.scss',
+        ], 'css', 'mobile');
+
 		$jsMobile = [
             0  => PUBLIC_DIR . '/mobile/js/config.js',
+            10 => PUBLIC_DIR . '/js/libs/languages.js',
             20 => PUBLIC_DIR . '/js/libs/fancybox/fancybox.js',
+            23 => PUBLIC_DIR . '/js/libs/lightslider.js',
             25 => PUBLIC_DIR . '/js/libs/history.js',
             30 => PUBLIC_DIR . '/js/libs/inputmask.js',
             40 => PUBLIC_DIR . '/js/libs/aptero.js',
             45 => PUBLIC_DIR . '/js/libs/cookie.js',
+            50 => PUBLIC_DIR . '/mobile/js/libs/touchwipe.js',
             60 => PUBLIC_DIR . '/js/libs/form-validator.js',
             70 => PUBLIC_DIR . '/js/libs/counter.js',
             75 => PUBLIC_DIR . '/mobile/js/main.js',
         ];
 
-        $compressor->compress($jsMobile, PUBLIC_DIR . '/mobile/js/compress-' . $version . '.js');
+        $compressor->compress($jsMobile, 'js', 'mobile');
     }
 
     public function mvcPreDispatch(MvcEvent $mvcEvent)
@@ -154,26 +155,11 @@ class Module
     {
         /** @var \Zend\Mvc\View\Http\ViewManager $viewManager */
         $viewManager = $mvcEvent->getApplication()->getServiceManager()->get('HttpViewManager');
-
-
-        /*$notFoundStrategy = $viewManager->getRouteNotFoundStrategy();
-        $notFoundStrategy->setNotFoundTemplate('error/admin/not-found');
-
-        $exceptionStrategy = $viewManager->getExceptionStrategy();
-        $exceptionStrategy->setExceptionTemplate('error/admin/exception');*/
     }
 
     public function errorDispatcher(MvcEvent $mvcEvent)
     {
-        /*$viewManager = $mvcEvent->getApplication()->getServiceManager()->get('ViewManager');
 
-        $mvcEvent->getViewModel()->setTemplate('layout/error-layout');
-
-        $notFoundStrategy = $viewManager->getRouteNotFoundStrategy();
-        $notFoundStrategy->setNotFoundTemplate('error/not-found');
-
-        $exceptionStrategy = $viewManager->getExceptionStrategy();
-        $exceptionStrategy->setExceptionTemplate('error/exception');*/
     }
 
     public function initMailSms(MvcEvent $mvcEvent)
@@ -197,37 +183,43 @@ class Module
             ]
         ]);
 
-        Sms::setOptions([
+        /*Sms::setOptions([
             'login'     => 'myprotein',
             'password'  => 'Uriel1Uriel',
             'key'       => '2F254C72-6978-3E42-0ACD-C5D57C7FF11F',
             'sender'    => '79522872998',
             'flash'     => false,
             'viber'     => false,
-        ]);
+        ]);*/
     }
 
     public function initTranslate(MvcEvent $mvcEvent)
     {
-        $aliases = array(
-            'ru' => 'ru_RU',
-            'en' => 'en_US',
-        );
-        $locale = $mvcEvent->getRouteMatch()->getParam('locale');
+        Translator::getInstance()->detectLanguage();
 
-        if($locale && isset($aliases[$locale])) {
-            \Locale::setDefault($aliases[$locale]);
-        } else {
-            \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            \Locale::setDefault('ru_RU');
+        /*$translator = new Translator();
+        echo $translator->translate('Экскурсии');
+        die('zxczxc');*/
+        /*$files = array(
+            'en' => 'en',
+            'de' => 'de',
+            'ru' => 'ru',
+        );
+
+        $languages = Translator::getInstance();
+        $lang = $languages->getLangCode();
+
+        if(array_key_exists($lang, $files)) {
+            \Locale::setDefault($files[$lang]);
         }
 
         $translator = $mvcEvent->getApplication()->getServiceManager()->get('translator')->setLocale(\Locale::getDefault());
         $mvcEvent->getApplication()->getServiceManager()->get('ViewHelperManager')->get('translate')->setTranslator($translator);
+        $languages->setTranslator($translator);
 
         $formTranslator = new Translator($translator);
 
-        AbstractValidator::setDefaultTranslator($formTranslator, 'Forms');
+        AbstractValidator::setDefaultTranslator($formTranslator, 'Forms');*/
     }
 
     public function getConfig()
@@ -266,11 +258,12 @@ class Module
                 'AdminContentList'      => 'ApplicationAdmin\View\Helper\ContentList',
                 'ContentRender'         => 'Application\View\Helper\ContentRender',
                 'GenerateMeta'          => 'Application\View\Helper\GenerateMeta',
-                'WidgetNav'             => 'Application\View\Helper\WidgetNav',
-                'TextBlock'             => 'Application\View\Helper\TextBlock',
-                'HtmlBlocks'            => 'Application\View\Helper\HtmlBlocks',
+                //'WidgetNav'             => 'Application\View\Helper\WidgetNav',
+                'LanguageSelect'        => 'Application\View\Helper\LanguageSelect',
+                //'TextBlock'             => 'Application\View\Helper\TextBlock',
+                //'HtmlBlocks'            => 'Application\View\Helper\HtmlBlocks',
                 'Header'                => 'Application\View\Helper\Header',
-                'HeaderBlack'           => 'Application\View\Helper\HeaderBlack',
+                //'HeaderBlack'           => 'Application\View\Helper\HeaderBlack',
                 'Price'                 => 'Aptero\View\Helper\Price',
                 'SubStr'                => 'Aptero\View\Helper\SubStr',
                 'Escape'                => 'Aptero\View\Helper\Escape',
@@ -280,6 +273,7 @@ class Module
                 'Video'                 => 'Aptero\View\Helper\Video',
                 'Stars'                 => 'Aptero\View\Helper\Stars',
                 'Declension'            => 'Aptero\View\Helper\Declension',
+                'Tr'                    => 'Aptero\View\Helper\Translator',
             ),
             'initializers' => array(
                 function ($instance, $helperPluginManager) {

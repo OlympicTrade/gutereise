@@ -258,6 +258,30 @@ h2 {
     content: "\f298";
 }
 
+.module-icon-excursions:before {
+    content: "\f55e";
+}
+
+.module-icon-tours:before {
+    content: "\f55e";
+}
+
+.module-icon-museums:before {
+    content: "\f19c";
+}
+
+.module-icon-translator:before {
+    content: "\f1ab";
+}
+
+.module-icon-comments:before {
+    content: "\f086";
+}
+
+.module-icon-transports:before {
+    content: "\f5b6";
+}
+
 #sidebar .menu .acpr a {
     color: #fff;
     background: #16191F;

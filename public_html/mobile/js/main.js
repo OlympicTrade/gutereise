@@ -2,9 +2,9 @@ var $document = $(window);
 
 $(document).ready(function() {
     initNav();
+    initPopups();
     initElements($('body'));
     initAutocomplete();
-    //initCarousels();
     initDatepicker();
     initMetric();
 });
@@ -25,15 +25,72 @@ function initMetric() {
 
 function initNav() {
     var header = $('#header');
-    var menu = $('.nav .menu', '#header');
+    var nav = $('.nav', header);
+    var menu = $('.menu', nav);
 
-    $('.nav .trigger', header).on('click', function () {
-        $(this).parent().toggleClass('open');
+    $(window).on('resize', function() {
+        $('#container').css({minHeight: $document.height()});
+    }());
+
+    $('.anchor').on('click', function () {
+        var scrollTo = $($(this).attr('href')).offset().top - 100;
+        dd(scrollTo);
+
+        $('html, body').animate({scrollTop: scrollTo}, 300);
+
+        return false;
     });
 
-    $('.nav .box', header).css({
-        height: $document.height() - 51
+    var flags = $('.flags', header);
+    flags.on('click', function () {
+        closeMenu();
     });
+
+    $('.flag', flags).on('click', function () {
+        if($(this).hasClass('active')) return;
+
+        var lang = $(this).data('lang');
+        $.cookie('lang', lang, {expires: 365, path: "/"});
+        location.reload();
+    });
+
+    var openMenu = function () {
+        nav.addClass('open');
+        $('.outer', nav).css({width: '100%'});
+    };
+
+    var timer;
+    var closeMenu = function () {
+        nav.removeClass('open');
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            $('.outer', nav).css({width: '0'});
+        }, 300);
+    };
+
+    $('.trigger', nav).on('click', function () {
+        if(nav.hasClass('open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    $('.outer', nav).touchwipe({
+        wipeLeft: function() {
+            closeMenu();
+        }
+    });
+
+    $('.outer', nav).on('click', function(){
+        closeMenu();
+    });
+
+    $(window).on('resize', function() {
+        $('.outer', nav).css({
+            height: $document.height() - $('#header').height() - $('#footer').height()
+        });
+    }());
 
     var menuH = 0;
     $('.nav ul', header).each(function () {
@@ -164,7 +221,7 @@ function initElements(box) {
         }).trigger('keyup');
     });
 
-    $('.popup', box).on('click', function() {
+    /*$('.popup', box).on('click', function() {
         var el = $(this);
 
         $.fancybox.open({
@@ -178,6 +235,54 @@ function initElements(box) {
                     }
                 },
                 afterLoad: function(e) {
+                    initElements(e.$refs.slider);
+                }
+            }
+        });
+
+        return false;
+    });*/
+}
+
+function initPopups() {
+    $('body').on('click', '.popup, .popup-img', function() {
+        var el = $(this);
+        var type = el.hasClass('popup-img') ? 'image' : 'ajax';
+
+        if(el.hasClass('popup-img')) {
+            $.fancybox.open({
+                src:  el.attr('href'),
+                type: 'image',
+                opts: {
+                    afterLoad: function(e, slide) {
+                        slide.$slide.on('click', function(e) {
+                            if($(e.target).hasClass('fancybox-slide')) {
+                                $.fancybox.close()
+                            }
+                        });
+                    }
+                }
+            });
+
+            return false;
+        }
+
+        $.fancybox.open({
+            src: el.attr('href'),
+            type: type,
+            opts: {
+                ajax: {
+                    settings: {
+                        data: el.data()
+                    }
+                },
+                afterLoad: function(e, slide) {
+                    slide.$slide.on('click', function(e) {
+                        if($(e.target).hasClass('fancybox-slide')) {
+                            $.fancybox.close()
+                        }
+                    });
+
                     initElements(e.$refs.slider);
                 }
             }

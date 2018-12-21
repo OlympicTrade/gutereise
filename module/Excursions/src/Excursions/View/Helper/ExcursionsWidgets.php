@@ -35,16 +35,16 @@ class ExcursionsWidgets extends AbstractHelper
 
         $html =
             '<div class="widget calc">'.
-                '<div class="header">Рассчитать стоимость</div>'.
+                '<div class="header">' . $view->tr('Рассчитать стоимость') . '</div>'.
                 '<div class="row cols">'.
                     '<div class="col-50">'.
-                        '<div class="label">' . $elDate->getLabel() . '</div>'.
+                        '<div class="label">' . $view->tr($elDate->getLabel()) . '</div>'.
                         '<div class="element">'.
                             $view->formElement($elDate).
                         '</div>'.
                     '</div>'.
                     '<div class="col-50">'.
-                        '<div class="label">' . $elLang->getLabel() . '</div>'.
+                        '<div class="label">' . $view->tr($elLang->getLabel()) . '</div>'.
                         '<div class="element">'.
                             $view->formElement($elLang).
                         '</div>'.
@@ -52,13 +52,13 @@ class ExcursionsWidgets extends AbstractHelper
                 '</div>'.
                 '<div class="row cols">'.
                     '<div class="col-50">'.
-                        '<div class="label">' . $elAdults->getLabel() . '</div>'.
+                        '<div class="label">' . $view->tr($elAdults->getLabel()) . '</div>'.
                         '<div class="element std-counter">'.
                             $view->formElement($elAdults).
                         '</div>'.
                     '</div>'.
                     '<div class="col-50">'.
-                        '<div class="label">' . $elChildren->getLabel() . '</div>'.
+                        '<div class="label">' . $view->tr($elChildren->getLabel()) . '</div>'.
                         '<div class="element std-counter">'.
                             $view->formElement($elChildren).
                         '</div>'.
@@ -73,15 +73,17 @@ class ExcursionsWidgets extends AbstractHelper
     {
         $val = $data['value'];
 
+        $view = $this->getView();
+
         $html =
             '<div class="widget types">'.
-                '<div class="header">Тип экскурсии</div>'.
+                '<div class="header">' . $view->tr('Тип экскурсии') . '</div>'.
                 '<div class="body">'.
                     '<div class="links">'.
-                        '<a href="/excursions/"' . (!$val ? ' class="active"' : '') . '>Все экскусрии</a>';
+                        '<a href="/excursions/"' . (!$val ? ' class="active"' : '') . '>' . $view->tr('Все экскусрии') . '</a>';
 
         foreach ($data['data'] as $types) {
-            $html .= '<a href="' . $types->getUrl() . '"' . ($val == $types->getId() ? ' class="active"' : '') . '>' . $types->get('name') . '</a>';
+            $html .= '<a href="' . $types->getUrl() . '"' . ($val == $types->getId() ? ' class="active"' : '') . '>' . $view->tr($types->get('name')) . '</a>';
         }
 
         $html .=
@@ -96,10 +98,12 @@ class ExcursionsWidgets extends AbstractHelper
     {
         $val = $data['value'];
 
+        $view = $this->getView();
+
         $html =
             '<div class="widget search">'.
                 '<i class="fas fa-search"></i>'.
-                '<input type="text" name="search" value="' . $val . '" placeholder="Найти экскурсию">'.
+                '<input type="text" name="search" value="' . $val . '" placeholder="' .  $view->tr('Найти экскурсию') . '">'.
             '</div>';
 
         return $html;
@@ -108,6 +112,8 @@ class ExcursionsWidgets extends AbstractHelper
     public function renderMuseums($data)
     {
         $html = '';
+
+        $view = $this->getView();
 
         $i = 0;
         foreach ($data['data'] as $item) {
@@ -121,21 +127,21 @@ class ExcursionsWidgets extends AbstractHelper
 
             $html .=
                 '<label class="checkbox">'
-                    .'<input type="checkbox" name="museums[]"' . $checked . ' value="' . $item->getId() . '"> ' . $item->get('name')
+                    .'<input type="checkbox" name="museums[]"' . $checked . ' value="' . $item->getId() . '"> ' . $view->tr($item->get('name'))
                 .'</label>';
         }
 
         if($i > 5) {
             $html .=
                 '</div>'
-                .'<span class="show-all">показать все</span>';
+                .'<span class="show-all">' . $view->tr('показать все') . '</span>';
         } elseif($i <= 1) {
             return '';
         }
 
         $html =
             '<div class="widget museums">'
-                .'<div class="header">Достопримечательности</div>'
+                .'<div class="header">' . $view->tr('Достопримечательности') . '</div>'
                 .'<div class="body">' . $html . '</div>'
             .'</div>';
 

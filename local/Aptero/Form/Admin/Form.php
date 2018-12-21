@@ -2,6 +2,8 @@
 namespace Aptero\Form\Admin;
 
 class Form extends \Aptero\Form\Form {
+    protected $translate = false;
+
     public function addMeta($prefix = '', $help = '')
     {
         $this->add(array(

@@ -10,16 +10,22 @@ class CommentsController extends AbstractActionController
     {
         $this->fields = [
             'name' => [
-                'name' => 'Название',
-                'type' => TableService::FIELD_TYPE_LINK,
+                'name'  => 'Название',
+                'type'  => TableService::FIELD_TYPE_LINK,
                 'field' => 'name',
                 'width' => '15',
             ],
-            'question' => [
-                'name' => 'Вопрос',
-                'type' => TableService::FIELD_TYPE_LINK,
+            'contact' => [
+                'name'  => 'Контакты',
+                'type'  => TableService::FIELD_TYPE_LINK,
+                'field' => 'contact',
+                'width' => '15',
+            ],
+            'question'  => [
+                'name'  => 'Вопрос',
+                'type'  => TableService::FIELD_TYPE_LINK,
                 'field' => 'question',
-                'width' => '85',
+                'width' => '70',
             ],
         ];
 

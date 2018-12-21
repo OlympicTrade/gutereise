@@ -1,8 +1,6 @@
 <?php
 namespace Aptero\Db\Entity\Filters;
 
-use Aptero\Db\Entity\Entity;
-
 class AbstractFilter
 {
     /**
@@ -84,19 +82,11 @@ class AbstractFilter
         return $result;
     }
 
-
-    /*
-    protected $parent = null;
-
-    public function getParent()
+    /**
+     * @return array
+     */
+    public function serializeForForm($prefix)
     {
-        return $this->parent;
+        return [$prefix => $this->source];
     }
-
-    public function setParent(Entity $parent)
-    {
-        $this->parent = $parent;
-        return $this;
-    }
-    */
 }

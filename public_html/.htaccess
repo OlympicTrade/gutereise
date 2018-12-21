@@ -1,7 +1,6 @@
 RewriteEngine On
 RewriteBase /
 
-
 RewriteCond %{REQUEST_URI}  !\.(php|html?|jpg|gif|png|xlc|docx|js|css|otf|ttf|svg|ico|json|xml|mp4)$
 RewriteRule ^(.*)([^/])$ http://%{HTTP_HOST}/$1$2/ [L,R=301]
 

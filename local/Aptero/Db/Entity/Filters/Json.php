@@ -50,4 +50,17 @@ class Json extends AbstractFilter
 
         return $this->source;
     }
+
+    /**
+     * @return array
+     */
+    public function serializeForForm($prefix)
+    {
+        $result = [];
+        foreach ($this->get() as $key => $value) {
+            $result[$prefix . '-' . $key] = $value;
+        }
+
+        return $result;
+    }
 }

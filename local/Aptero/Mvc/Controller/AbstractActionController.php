@@ -31,23 +31,21 @@ abstract class AbstractActionController extends ZendActionController
 
         $page->load();
 
-
-
         switch($page->get('layout')) {
             case 3:
                 $this->layout('layout/article');
-                $layoutType = 'article';
+                //$layoutType = 'article';
                 break;
             default:
                 $this->layout('layout/main');
-                $layoutType = 'article';
+                //$layoutType = 'article';
                 break;
         }
 
 
         if($url == '/') {
             $this->layout('layout/index');
-            $layoutType = 'index';
+            //$layoutType = 'index';
         }
 
         $header = $page->get('header') ? $page->get('header') : $page->get('name');
@@ -73,17 +71,8 @@ abstract class AbstractActionController extends ZendActionController
             //'page'         => $page,
             'header'       => $header,
             'meta'         => $meta,
-            'layoutType'   => $layoutType,
+            //'layoutType'   => $layoutType,
         ]);
-
-        $uf = [
-            'title'       => '',
-            'description' => '',
-            'type'        => '',
-            'url'         => '',
-            'image'       => '',
-            'site_name'   => '',
-        ];
 
         return new ViewModel([
             'breadcrumbs'  => $this->getBreadcrumbs($page),

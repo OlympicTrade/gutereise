@@ -21,6 +21,8 @@ class Comment extends Entity
             'question'     => [],
             'answer'       => [],
             'send'         => ['default' => 1],
+            'lang_code'    => [],
+            'status'       => [],
             'time_create'  => [],
         ]);
     }

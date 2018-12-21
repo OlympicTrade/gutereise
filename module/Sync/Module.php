@@ -18,6 +18,9 @@ class Module implements AutoloaderProviderInterface
     public function getServiceConfig()
     {
         return [
+            'invokables' => [
+                'Sync\Service\SyncService'  => 'Sync\Service\SyncService',
+            ],
             'initializers' => [
                 function ($instance, $sm) {
                     if ($instance instanceof \Zend\ServiceManager\ServiceLocatorAwareInterface) {

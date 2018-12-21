@@ -5,8 +5,6 @@ use Zend\Json\Json;
 
 class Sync
 {
-    const DB_DOMAIN = 'http://gutereise-db';
-
     public function getExcursionPrice($params)
     {
         return $this->load('get-price', $params);
@@ -17,10 +15,20 @@ class Sync
         return $this->load('get-excursion-data', $params);
     }
 
+    public function getSettingsData($params = [])
+    {
+        return $this->load('get-settings-data', $params);
+    }
+
+    public function getTransportData($params)
+    {
+        return $this->load('get-transport-data', $params);
+    }
+
     public function load($urlFunc, $params)
     {
-        $url = self::DB_DOMAIN . '/sync/' . $urlFunc . '/?' . http_build_query($params);
-        $resp = (new \GuzzleHttp\Client())->request('GET', $url);
+        $url = SYNC_DOMAIN . '/sync/' . $urlFunc . '/?' . http_build_query($params);
+        $resp = (new \GuzzleHttp\Client(['verify' => false]))->request('GET', $url);
 
         try {
             $data = Json::decode($resp->getBody());

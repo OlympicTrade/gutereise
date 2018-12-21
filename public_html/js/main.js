@@ -1,16 +1,22 @@
-$(function() {
-    var body = $('body');
-    initPopups();
-    initElements(body);
-    initComments(body);
-    initSidebar();
-    //initMetric();
+$document = $(document);
+
+$(window).ready(function() {
+    setTimeout(function() {
+        var body = $('body');
+        initPopups();
+        initElements(body);
+        initComments(body);
+        initSidebar();
+        //initMetric();
+    }, 1);
 });
 
 function initSidebar() {
-    var sidebar = $('.sidebar').sidebar({
-        margin: 20,
-        nav: $('#header')
+    $('.sidebar').each(function () {
+        var sidebar = $(this).sidebar({
+            margin: 20,
+            nav: $('#header')
+        });
     });
 }
 

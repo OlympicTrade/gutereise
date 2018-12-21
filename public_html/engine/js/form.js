@@ -271,25 +271,16 @@ function initAttrsList() {
 var editors = [];
 
 function initTextEditor(context) {
-    //var finder = new CKFinder();
-
     $('textarea.editor', context).each(function(i){
         var textarea = $(this);
         var editor = CKEDITOR.replace(this, {
             language: 'ru',
             toolbar: [
                 { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source']},
-                { name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-                { name: 'spellcheck', items: [ 'jQuerySpellChecker' ]},
-                { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
-                { name: 'links', items: ['Link', 'Unlink', 'Anchor' ]},
-                { name: 'insert', items: ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'PageBreak', 'Iframe']},
-                '/',
-                { name: 'styles', items: ['Format']},
-                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-                { name: 'colors', items: ['TextColor', 'BGColor']},
                 { name: 'tools', items: ['Maximize']},
-                { name: 'others', items: ['-']}
+                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline']},
+                { name: 'paragraph', groups: ['list', 'indent'], items: ['NumberedList', 'BulletedList',]},
+                { name: 'styles', items: ['Format']},
             ],
             contentsCss: '/engine/css/jquery/spellchecker.css'
         });
