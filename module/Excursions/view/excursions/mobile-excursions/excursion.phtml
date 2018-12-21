@@ -18,7 +18,7 @@ $duration = $excursion->get('db_data')->duration;
         </a>
     </div>
 
-    <h1><?php echo $header ?></h1>
+    <h1><?= $this->tr($header) ?></h1>
 
     <?php
     $html =
@@ -151,14 +151,14 @@ $duration = $excursion->get('db_data')->duration;
 
         $document.on('scroll', function() {
             var scrollTop = $(window).scrollTop();
-
             var flag = true;
+
             $.each(itemsArr, function (key, item) {
                 if(!flag || scrollTop < item.top) {
                     return;
                 } else {
                     item.obj.addClass('active').siblings().removeClass('active');
-                    flag = false;
+                    //flag = false;
                 }
             });
 
