@@ -1,7 +1,7 @@
 <?php
 $develop = getenv('APPLICATION_ENV') == 'dev';
 
-$modules = array(
+$modules = [
     'Zf2Whoops',
     'Application',
     'User',
@@ -13,29 +13,29 @@ $modules = array(
     'Translator',
     'Comments',
     'Sync',
-);
+];
 
-return array(
+return [
     'modules' => $modules,
-    'session' => array(
-        'config' => array(
+    'session' => [
+        'config' => [
             'class' => 'Zend\Session\Config\SessionConfig',
-        ),
+        ],
         'storage' => 'Zend\Session\Storage\SessionArrayStorage',
-        'validators' => array(
-            array(
+        'validators' => [
+            [
                 'Zend\Session\Validator\RemoteAddr',
                 'Zend\Session\Validator\HttpUserAgent',
-            ),
-        ),
-    ),
-    'module_listener_options' => array(
-        'config_glob_paths'    => array(
+            ],
+        ],
+    ],
+    'module_listener_options' => [
+        'config_glob_paths'    => [
             'config/autoload/{,*.}{global,local}.php',
-        ),
-        'module_paths' => array(
+        ],
+        'module_paths' => [
             './module',
             './vendor',
-        ),
-    ),
-);
+        ],
+    ],
+];

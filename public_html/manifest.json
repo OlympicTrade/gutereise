@@ -1,12 +1,12 @@
 {
-    "name": "Olympic Trade",
+    "name": "Gute Reise",
     "lang": "ru-RU",
-    "short_name": "Olympic Trade",
+    "short_name": "Gute Reise",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#d1302d",
-    "theme_color": "#d1302d",
-    "description": "Спортивное питание с доставкой по всей России",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "description": "Индивидуальные экскурсии по санкт-петербургу",
     "icons": [
         {
             "src": "/images/logos/48.png",
