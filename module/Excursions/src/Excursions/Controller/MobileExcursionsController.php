@@ -111,7 +111,7 @@ class MobileExcursionsController extends AbstractMobileActionController
         $this->addBreadcrumbs([['url' => $excursion->getUrl(), 'name' => $excursion->get('name')]]);
 
         return $view->setVariables([
-            'headerImage'    => $excursion->getPlugin('header')->getImage('h'),
+            'headerImage'    => $excursion->getPlugin('background')->getImage('h'),
             'header'         => $excursion->get('header'),
             'headerDesc'     => $excursion->get('header_desc'),
             'excursion'      => $excursion,
