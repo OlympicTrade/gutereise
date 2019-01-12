@@ -1225,6 +1225,35 @@ h1 {
     }
 }
 
+.module-item-block-ajax {
+    .gallery {
+        margin-bottom: 25px;
+    }
+}
+
+.transport-block-ajax {
+    .attrs-list {
+        max-width: 700px;
+        background: $colorGray;
+        margin: 35px auto 0 auto;
+        padding: 20px 35px;
+
+        .row {
+            line-height: 50px;
+            background: url($imgDir + 'border.png') 0 100% repeat-x;
+            font-size: 16px;
+
+            &:last-child {
+                background: none;
+            }
+
+            i:first-child {
+                width: 23px;
+            }
+        }
+    }
+}
+
 .empty-list {
     margin: 30px 0 60px 0;
     color: #595959;
@@ -1498,9 +1527,6 @@ h1 {
     top: 0;
     color: var(--color-1);
 }
-
-
-
 
 @media screen and (max-height: 700px) {
     .main-block-1 {

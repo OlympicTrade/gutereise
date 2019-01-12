@@ -11,7 +11,7 @@ class Breadcrumbs extends AbstractHelper
         $view = $this->getView();
 
         if($crumbs == null) {
-            $crumbs = $view->breadcrumbs;
+            $crumbs = \Aptero\Breadcrumbs\Breadcrumbs::getInstance()->getCrumbs();
         }
 
         $options = array_merge(array(

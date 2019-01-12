@@ -171,36 +171,36 @@ h2 {
             width: 62px;
             height: 62px;
             cursor: pointer;
-        }
 
-        .trigger .icon {
-            width: 27px;
-            height: 18px;
-            position: absolute;
-            left: 20px;
-            top: 21px;
-        }
+            .icon {
+                width: 27px;
+                height: 18px;
+                position: absolute;
+                left: 20px;
+                top: 21px;
 
-        .trigger .icon span {
-            position: absolute;
-            left: 0;
-            display: block;
-            background: #fff;
-            width: 100%;
-            height: 1px;
-            transition: all ease .2s;
-        }
+                span {
+                    position: absolute;
+                    left: 0;
+                    display: block;
+                    background: #fff;
+                    width: 100%;
+                    height: 1px;
+                    transition: all ease .2s;
+                }
 
-        .trigger .icon span:nth-child(1) {
-            top: 0;
-        }
+                span:nth-child(1) {
+                    top: 0;
+                }
 
-        .trigger .icon span:nth-child(2) {
-            top: 45%;
-        }
+                span:nth-child(2) {
+                    top: 45%;
+                }
 
-        .trigger .icon span:nth-child(3) {
-            bottom: 0;
+                span:nth-child(3) {
+                    bottom: 0;
+                }
+            }
         }
 
         .outer {
@@ -211,12 +211,20 @@ h2 {
             width: 0;
             transition: opacity ease .3s;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.3);
             opacity: 0;
         }
 
         &.open .outer {
             opacity: 1;
+        }
+
+        .shadow {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .box {
@@ -232,74 +240,80 @@ h2 {
             opacity: 1;
         }
 
-        &.open .box {
-            left: 0;
-        }
-
-        &.open .trigger .icon span:nth-child(2) {
-            display: none;
-        }
-
-        &.open .trigger .icon span:nth-child(1) {
-            transform: rotate(45deg);
-            top: 9px;
-        }
-
-        &.open .trigger .icon span:nth-child(3) {
-            transform: rotate(-45deg);
-            bottom: 8px;
-        }
-
-        ul {
-            position: relative;
-            right: 0;
-            transition: all ease .3s;
-        }
-
-        li {
-            font-size: 16px;
+        .search input {
+            height: 45px;
+            padding: 0 15px 0 35px;
+            width: 100%;
+            display: block;
+            border: none;
+            background: url($imgDir + 'search-w.svg') 5px 50% no-repeat;
+            background-size: 22px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 200;
             border-bottom: 1px solid #6c6c6c;
-            transition: all ease .3s;
 
-            span,
-            a {
-                font-size: 14px;
-                height: 47px;
-                line-height: 47px;
-                display: block;
-                padding: 0 5px;
-                color: #ffffff;
-
-                i {
-                    margin-right: 6px;
-                }
+            &::placeholder {
+                color: #fff;
             }
+        }
 
-            & > ul {
-                width: 100%;
-                position: absolute;
-                right: -100%;
-                top: 0;
-                opacity: 0;
-            }
+        .menu {
+            position: relative;
+            overflow: scroll;
 
-            & > ul ul {
-                z-index: 20;
-            }
-
-            ul.open {
-                right: 30%;
-            }
-
-            &.open > ul {
-                z-index: 10;
-                right: -30%;
-                display: block;
-                opacity: 100;
-            }
-
-            &.open > ul.open {
+            ul {
+                position: relative;
                 right: 0;
+                transition: all ease .3s;
+            }
+
+            li {
+                font-size: 16px;
+                border-bottom: 1px solid #6c6c6c;
+                transition: all ease .3s;
+
+                span,
+                a {
+                    font-size: 14px;
+                    height: 47px;
+                    line-height: 47px;
+                    display: block;
+                    padding: 0 5px;
+                    color: #ffffff;
+
+                    i {
+                        margin-right: 6px;
+                    }
+                }
+
+                & > ul {
+                    width: 100%;
+                    position: absolute;
+                    right: -100%;
+                    top: 0;
+                    opacity: 0;
+                    background: #1d1d1d;
+                }
+
+                & > ul ul {
+                    z-index: 20;
+                }
+
+                ul.open {
+                    right: 30%;
+                }
+
+                &.open > ul {
+                    z-index: 10;
+                    right: 0;
+                    display: block;
+                    opacity: 100;
+                }
+
+                &.open > ul.open {
+                    right: 0;
+                }
             }
         }
 
@@ -312,8 +326,8 @@ h2 {
 
             .row {
                 position: relative;
-                font-size: 14px;
-                margin-top: 6px;
+                font-size: 13px;
+                margin-top: 2px;
                 padding-left: 25px;
             }
 
@@ -321,17 +335,30 @@ h2 {
                 position: absolute;
                 left: 0;
             }
+
+            .row a {
+                color: #dedede;
+            }
         }
 
-        .search input {
-            height: 45px;
-            padding: 0 15px 0 35px;
-            width: 100%;
-            display: block;
-            border: none;
-            background: url($imgDir + '/search.svg') 5px 50% no-repeat;
-            background-size: 22px;
-            color: #ffffff;
+        &.open {
+            .box {
+                left: 0;
+            }
+
+            .trigger .icon span:nth-child(2) {
+                display: none;
+            }
+
+            .trigger .icon span:nth-child(1) {
+                transform: rotate(45deg);
+                top: 9px;
+            }
+
+            .trigger .icon span:nth-child(3) {
+                transform: rotate(-45deg);
+                bottom: 8px;
+            }
         }
     }
 }
@@ -541,9 +568,10 @@ h2 {
     }
 }
 
-.excursion-block {
+.module-item-block {
     background: #ffffff;
-    padding-top: 65px;
+    padding-top: 14px;
+    padding-bottom: 30px;
 
     .menu {
         position: fixed;
@@ -588,6 +616,33 @@ h2 {
         margin-bottom: 12px;
     }
 
+}
+
+.transport-block {
+    .attrs-list {
+        max-width: 700px;
+        background: #f4f4f4;
+        margin: 35px auto 0 auto;
+        padding: 10px 28px;
+
+        .row {
+            line-height: 50px;
+            background: url($imgDir + 'border.png') 0 100% repeat-x;
+            font-size: 16px;
+
+            &:last-child {
+                background: none;
+            }
+
+            i:first-child {
+                width: 23px;
+            }
+        }
+    }
+}
+
+.excursion-block {
+    padding-top: 65px;
 
     .attrs-list {
         padding-bottom: 45px;
@@ -922,4 +977,45 @@ h2 {
 
 .ui-datepicker {
     z-index: 9999 !important
+}
+
+@media screen and (max-height: 600px) {
+    #header .nav .search input,
+    #header .nav .menu li span,
+    #header .nav .menu li a {
+        height: 44px;
+        line-height: 44px;
+    }
+
+    #footer .call {
+        height: 50px;
+        line-height: 50px;
+    }
+}
+
+@media screen and (max-height: 570px) {
+    #header .nav .search input,
+    #header .nav .menu li span,
+    #header .nav .menu li a {
+        height: 40px;
+        line-height: 40px;
+    }
+}
+
+@media screen and (max-height: 540px) {
+    #header .nav .search input,
+    #header .nav .menu li span,
+    #header .nav .menu li a {
+        height: 37px;
+        line-height: 37px;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    #header .nav .search input,
+    #header .nav .menu li span,
+    #header .nav .menu li a {
+        height: 35px;
+        line-height: 35px;
+    }
 }

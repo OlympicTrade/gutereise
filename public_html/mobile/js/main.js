@@ -82,14 +82,18 @@ function initNav() {
         }
     });
 
-    $('.outer', nav).on('click', function(){
+    $('.outer .shadow', nav).on('click', function(){
         closeMenu();
     });
 
     $(window).on('resize', function() {
-        $('.outer', nav).css({
+        var outer = $('.outer', nav);
+        var box = $('.box', outer);
+        outer.css({
             height: $document.height() - $('#header').height() - $('#footer').height()
         });
+
+        $('.menu', nav).css('height', box.innerHeight() - box.children('.search').height() - 85 - 10);
     }());
 
     var menuH = 0;
@@ -100,7 +104,7 @@ function initNav() {
         }
     });
 
-    $('.nav ul', header).css({height: menuH});
+    //$('.nav ul', header).css({height: menuH});
 
     $('a, span', menu).on('click', function (e) {
         var li = $(this).closest('li');

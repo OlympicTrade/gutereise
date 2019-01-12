@@ -43,7 +43,7 @@
                         <i class="far fa-clock"></i> <?= $this->tr('Мин. заказ') . ': 3 + 1 ' . $this->tr('часа') ?>
                     </div>
                     <div class="row">
-                        <i class="far fa-money-bill-alt"></i> <?= $this->tr('Стоимость') . ': ' . $this->price($transport->get('price')->price, true, true) . ' ' . $this->tr('в час')?>
+                        <i class="far fa-money-bill-alt"></i> <?= $this->tr('Аренда') . ': ' . $this->price($transport->get('price')->price, true, true) . ' ' . $this->tr('в час')?>
                     </div>
                     <?php if($transport->get('price')->transfer) { ?>
                     <div class="row">

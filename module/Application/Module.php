@@ -231,6 +231,7 @@ class Module
         return array(
             'invokables' => array(
                 'IsMobile'              => 'Aptero\View\Helper\IsMobile',
+                'MenuList'              => 'Application\View\Helper\MenuList',
                 'Breadcrumbs'           => 'Application\View\Helper\Breadcrumbs',
                 'BtnSwitcher'           => 'Aptero\View\Helper\BtnSwitcher',
                 'FormRow'               => 'Aptero\Form\View\Helper\FormRow',

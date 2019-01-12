@@ -1,0 +1,69 @@
+<?php
+$duration = $transport->get('db_data')->duration;
+?>
+
+<div class="std-popup">
+    <div class="header">
+        <?= $this->tr($header) ?>
+    </div>
+    <div class="body">
+        <div class="module-item-block-ajax transport-block-ajax">
+            <?php
+            $html =
+                '<div class="gallery">'.
+                '<ul class="list">';
+
+            $html .=
+                '<li data-thumb="' . $transport->getPlugin('image')->getImage('hr') . '">'.
+                '<img src="' . $transport->getPlugin('image')->getImage('g') . '" alt="">'.
+                '</li>';
+
+            foreach ($transport->getPlugin('images') as $image) {
+                $html .=
+                    '<li data-thumb="' . $image->getImage('hr') . '">'.
+                    '<img src="' . $image->getImage('g') . '" alt=""></li>'.
+                    '</li>';
+            }
+
+            $html .=
+                '</ul>'.
+                '</div>';
+            echo $html;
+            ?>
+
+            <div class="std-text"><?php echo $this->tr($transport->get('text')) ?></div>
+
+            <div class="attrs-list">
+                <div class="row">
+                    <i class="far fa-user"></i> <?= $this->tr('Вместимость') . ': ' . $this->tr('до') . ' ' .
+                    $this->declension($transport->get('capacity'), ['человек', 'человека', 'человек']) ?>
+                </div>
+                <div class="row">
+                    <i class="far fa-clock"></i> <?= $this->tr('Мин. заказ') . ': 3 + 1 ' . $this->tr('часа') ?>
+                </div>
+                <div class="row">
+                    <i class="far fa-money-bill-alt"></i> <?= $this->tr('Аренда') . ': ' . $this->price($transport->get('price')->price, true, true) . ' ' . $this->tr('в час')?>
+                </div>
+                <?php if($transport->get('price')->transfer) { ?>
+                    <div class="row">
+                        <i class="fas fa-exchange-alt"></i> <?= $this->tr('Трансфер') . ': ' . $this->price($transport->get('price')->transfer, true, true) ?>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <script>
+                $document.ready(function() {
+                    var $gallery = $('.gallery .list', '.transport-block-ajax');
+
+                    $gallery.lightSlider({
+                        gallery: true,
+                        galleryMargin: 6,
+                        item: 1,
+                        loop: true,
+                        thumbItem: 5
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>

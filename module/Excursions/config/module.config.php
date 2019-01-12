@@ -41,19 +41,6 @@ return [
                                     ],
                                 ],
                             ],
-                            /*'item' => [
-                                'type'    => 'segment',
-                                'priority' => 500,
-                                'options' => [
-                                    'route'    => '/excursion[/:url]/',
-                                    'defaults' => [
-                                        'module'     => 'Excursions',
-                                        'section'    => 'Excursions',
-                                        'controller' => 'Excursions\Controller\MobileExcursions',
-                                        'action'     => 'excursion',
-                                    ],
-                                ],
-                            ],*/
                             'price' => [
                                 'type'    => 'segment',
                                 'priority' => 600,

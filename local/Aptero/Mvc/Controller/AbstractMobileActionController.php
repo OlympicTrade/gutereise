@@ -3,6 +3,7 @@
 namespace Aptero\Mvc\Controller;
 
 use Application\Model\Page;
+use Aptero\Breadcrumbs\Breadcrumbs;
 use Contacts\Model\Contacts;
 use User\Service\AuthService;
 use Zend\Log\Writer\ChromePhp;
@@ -13,6 +14,10 @@ abstract class AbstractMobileActionController extends AbstractActionController
 {
     public function generate($url = null)
     {
+        if($this->isAjax()) {
+            return new ViewModel();
+        }
+
         $sm = $this->getServiceLocator();
 
         $settings = $sm->get('Settings');
@@ -56,30 +61,36 @@ abstract class AbstractMobileActionController extends AbstractActionController
         );
 
         //Micro Formats
-
-        /*$authService = new AuthService();
-        $user = $authService->getIdentity();*/
-
         $contacts = new Contacts();
         $contacts->setId(1);
+
+        Breadcrumbs::getInstance()->initCrumbs($page);
 
         $this->layout()->setVariables(array(
             'route'        => $sm->get('Application')->getMvcEvent()->getRouteMatch(),
             'canonical'    => $canonical,
             'contacts'     => $contacts,
             'settings'     => $settings,
-            'breadcrumbs'  => $this->getBreadcrumbs($page),
-            //'page'         => $page,
             'header'       => $header,
             'meta'         => $meta,
         ));
 
         return new ViewModel(array(
-            'breadcrumbs'  => $this->getBreadcrumbs($page),
             'header'       => $header,
             'page'         => $page,
-            'isAjax'       => $this->getRequest()->isXmlHttpRequest(),
         ));
+    }
+
+    protected function addBreadcrumbs($crumbOptions)
+    {
+        Breadcrumbs::getInstance()->addCrumb($crumbOptions);
+
+        return $this;
+    }
+
+    protected function isAjax()
+    {
+        return $this->getRequest()->isXmlHttpRequest();
     }
 
     protected function send404()

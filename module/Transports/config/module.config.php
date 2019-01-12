@@ -3,11 +3,60 @@ return [
     'controllers' => [
         'invokables' => [
             'Transports\Controller\Transports'      => 'Transports\Controller\TransportsController',
+            'Transports\Controller\MobileTransports'    => 'Transports\Controller\MobileTransportsController',
             'TransportsAdmin\Controller\Transports' => 'TransportsAdmin\Controller\TransportsController',
         ],
     ],
     'router' => [
         'routes' => [
+            'mobile' => [
+                'type' => 'Hostname',
+                'priority' => 600,
+                'options' => [
+                    'route' => 'm.:domain',
+                    'constraints' => ['domain' => '.*',],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'transports' => [
+                        'type' => 'literal',
+                        'priority' => 500,
+                        'options' => [
+                            'route' => '/transport',
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'list' => [
+                                'type'    => 'literal',
+                                'priority' => 500,
+                                'options' => [
+                                    'route'    => '/',
+                                    'defaults' => [
+                                        'module'     => 'Transports',
+                                        'section'    => 'Transports',
+                                        'controller' => 'Transports\Controller\MobileTransports',
+                                        'action'     => 'index',
+                                    ],
+                                ],
+                            ],
+                            'item' => [
+                                'type'    => 'segment',
+                                'priority' => 500,
+                                'options' => [
+                                    'route'    => '/:url/',
+                                    'constraints' => ['url' => '.*'],
+                                    'defaults' => [
+                                        'module'     => 'Transports',
+                                        'section'    => 'Transports',
+                                        'controller' => 'Transports\Controller\MobileTransports',
+                                        'action'     => 'transport',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'transports' => [
                 'type' => 'literal',
                 'priority' => 500,

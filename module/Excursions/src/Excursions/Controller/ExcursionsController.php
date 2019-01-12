@@ -94,7 +94,6 @@ class ExcursionsController extends AbstractActionController
             $this->addBreadcrumbs([['url' => $url, 'name' => $type->get('name')]]);
             $view->setVariables([
                 'header'      => $type->get('name'),
-                'breadcrumbs' => $this->getBreadcrumbs(),
             ]);
         }
 
@@ -132,7 +131,6 @@ class ExcursionsController extends AbstractActionController
             'header'         => $excursion->get('header'),
             'headerDesc'     => $excursion->get('header_desc'),
             'excursion'      => $excursion,
-            'breadcrumbs'    => $this->getBreadcrumbs(),
             'commonForm'     => new CommonForm($excursion),
         ]);
     }

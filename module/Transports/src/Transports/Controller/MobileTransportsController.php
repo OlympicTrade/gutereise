@@ -1,16 +1,18 @@
 <?php
 namespace Transports\Controller;
 
-use Aptero\Mvc\Controller\AbstractActionController;
+use Aptero\Mvc\Controller\AbstractMobileActionController;
 use Transports\Form\CommonForm;
 
-class TransportsController extends AbstractActionController
+class MobileTransportsController extends AbstractMobileActionController
 {
     public function indexAction()
     {
         $view = $this->generate();
 
         $transports = $this->getTransportsService()->getTransports();
+
+        $view->setTemplate('transports/mobile-transports/index');
 
         return $view->setVariables([
             'transports'  => $transports,
@@ -25,11 +27,6 @@ class TransportsController extends AbstractActionController
         $view = $this->generate('/transport/');
 
         $this->addBreadcrumbs([['url' => $transport->getUrl(), 'name' => $transport->get('name')]]);
-
-        if($this->isAjax()) {
-            $view->setTerminal(true);
-            $view->setTemplate('transports/transports/transport-ajax.phtml');
-        }
 
         return $view->setVariables([
             'header'         => $transport->get('name'),

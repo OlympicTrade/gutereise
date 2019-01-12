@@ -11,6 +11,7 @@ class Module implements AutoloaderProviderInterface
         return [
             'invokables' => [
                 'TransportsList'       => 'Transports\View\Helper\TransportsList',
+                'MobileTransportsList' => 'Transports\View\Helper\MobileTransportsList',
             ],
         ];
     }

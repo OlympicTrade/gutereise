@@ -94,12 +94,22 @@ setcookie("greeting", 1, time()+(31104000), '/');
             </div>
         </div>
         <div class="outer">
+            <div class="shadow"></div>
             <div class="box">
+                <div class="search" >
+                    <input class="query" placeholder="Поиск">
+                </div>
+
                 <ul class="menu">
-                    <li class="search" >
-                        <input class="query" placeholder="Поиск">
+                    <li>
+                        <a href="/excursions/"><i class="fas fa-university"></i> <?php echo $this->tr('Экскурсии') ?></a>
+                        <?php
+                        $sub = \Excursions\Model\ExcursionType::getEntityCollection();
+                        $sub->select()->where(['type' => 1]);
+                        echo $this->menuList($sub);
+                        ?>
                     </li>
-                    <li><a href="/excursions/"><i class="fas fa-university"></i> <?php echo $this->tr('Экскурсии') ?></a></li>
+
                     <li><a href="/tours/"><i class="fas fa-university"></i> <?php echo $this->tr('Туры') ?></a></li>
                     <li><a href="/hotels/"><i class="far fa-building"></i> <?php echo $this->tr('Отели') ?></a></li>
                     <li><a href="/transport/"><i class="fas fa-bus"></i> <?php echo $this->tr('Транспорт') ?></a></li>

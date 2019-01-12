@@ -4,6 +4,7 @@ namespace Aptero\Mvc\Controller;
 
 use Application\Model\Page;
 use Application\Model\Settings;
+use Aptero\Breadcrumbs\Breadcrumbs;
 use Contacts\Model\Contacts;
 use Zend\Mvc\Controller\AbstractActionController as ZendActionController;
 use Zend\View\Model\ViewModel;
@@ -16,6 +17,10 @@ abstract class AbstractActionController extends ZendActionController
      */
     public function generate($url = null)
     {
+        if($this->isAjax()) {
+            return new ViewModel();
+        }
+
         $sm = $this->getServiceLocator();
 
         $page = new Page();
@@ -62,24 +67,26 @@ abstract class AbstractActionController extends ZendActionController
         $contacts = new Contacts();
         $contacts->setId(1);
 
+        Breadcrumbs::getInstance()->initCrumbs($page);
+
         $this->layout()->setVariables([
             'route'        => $sm->get('Application')->getMvcEvent()->getRouteMatch(),
             'canonical'    => $canonical,
             'contacts'     => $contacts,
             'settings'     => Settings::getInstance(),
-            'breadcrumbs'  => $this->getBreadcrumbs($page),
-            //'page'         => $page,
             'header'       => $header,
             'meta'         => $meta,
-            //'layoutType'   => $layoutType,
         ]);
 
         return new ViewModel([
-            'breadcrumbs'  => $this->getBreadcrumbs($page),
             'header'       => $header,
             'page'         => $page,
-            'isAjax'       => $this->getRequest()->isXmlHttpRequest(),
         ]);
+    }
+
+    protected function isAjax()
+    {
+        return $this->getRequest()->isXmlHttpRequest();
     }
 
     protected function send404()
@@ -149,34 +156,11 @@ abstract class AbstractActionController extends ZendActionController
         return $meta;
     }
 
-    protected function addBreadcrumbs($crumbs)
+    protected function addBreadcrumbs($crumbOptions)
     {
-        $breadcrumbs = array_merge($this->getBreadcrumbs(), $crumbs);
+        Breadcrumbs::getInstance()->addCrumb($crumbOptions);
 
-        $this->layout()->setVariable('breadcrumbs', $breadcrumbs);
-
-        return $breadcrumbs;
-    }
-
-    /**
-     * @param Page $page
-     * @return array
-     */
-    protected function getBreadcrumbs($page = null)
-    {
-        if(!$page) {
-            return $this->layout()->getVariable('breadcrumbs');
-        }
-
-        $breadcrumbs = array();
-
-        do {
-            $breadcrumbs[] = array('url' => $page->get('url'), 'name' => $page->get('name'));
-        } while ($page = $page->getParent());
-
-        $breadcrumbs[] = array('url' => '/', 'name' => 'Home');
-
-        return array_reverse($breadcrumbs);
+        return $this;
     }
 
     /**
