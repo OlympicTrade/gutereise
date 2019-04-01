@@ -1,22 +1,27 @@
-<form action="" class="edit-form content-editor">
+<form action="" class="edit-form std-form content-editor">
     <div class="tabs tabs-class" data-name="edit-tabs">
         <div class="tabs-header">
             <div class="tab" data-tab="text">Текст</div>
             <div class="tab" data-tab="photo">Картинки</div>
+            <div class="tab" data-tab="panorama">Панорамы</div>
         </div>
         <div class="tabs-body">
             <div class="tab" data-tab="text">
-                <div class="row">
-                    <?php echo $this->adminFormRow($form->get('id')); ?>
-                    <?php echo $this->adminFormRow($form->get('depend')); ?>
-                    <?php echo $this->adminFormRow($form->get('module')); ?>
-                    <?php echo $this->adminFormRow($form->get('text')); ?>
-                </div>
+                <?php echo $this->formElement($form->get('id')); ?>
+                <?php echo $this->formElement($form->get('depend')); ?>
+                <?php echo $this->formElement($form->get('module')); ?>
+                <?php echo $this->adminFormRow($form->get('attrs-header')); ?>
+                <?php echo $this->adminFormRow($form->get('text')); ?>
             </div>
             <div class="tab" data-tab="photo">
                 <div class="images">
+                    <?php echo $this->adminFormRow($form->get('attrs-gallery_type')); ?>
                     <?php echo $this->adminFormRow($form->get('images-images')); ?>
                 </div>
+            </div>
+            <div class="tab" data-tab="panorama">
+                <?php echo $this->adminFormRow($form->get('attrs-panorama_1')); ?>
+                <?php echo $this->adminFormRow($form->get('attrs-panorama_2')); ?>
             </div>
         </div>
     </div>

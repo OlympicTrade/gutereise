@@ -9,24 +9,29 @@ $duration = $excursion->get('db_data')->duration;
 
 <div class="block gray">
     <div class="wrapper">
-    <div class="module-item-block excursion-block">
+    <div class="module-item-block menu-aware excursion-block">
     <div class="content">
         <div class="menu">
             <a href="" class="item active">
                 <i class="far fa-file-alt"></i>
                 <?php echo $this->tr('Описание') ?>
             </a>
-            <a href=".excursion-block .gallery" class="item anchor">
-                <i class="fas fa-camera"></i>
-                <?php echo $this->tr('Фотографии') ?>
+            <a href=".anchor-plan" class="item anchor">
+                <i class="far fa-map"></i>
+                <?php echo $this->tr('План') ?>
+            </a>
+            <a href=".anchor-attractions" class="item anchor">
+                <i class="fas fa-university"></i>
+                <?php echo $this->tr('Достопримечательности') ?>
             </a>
             <a href=".excursion-block .comments" class="item anchor">
-                <i class="far fa-comment"></i>
-                <?php echo $this->tr('Комментарии') ?>
+                <i class="far fa-comments"></i>
+                <?php echo $this->tr('Вопросы') ?>
             </a>
         </div>
 
-        <?php
+        <?php echo $this->gallery($excursion) ?>
+        <?php /*
         $html =
             '<div class="gallery">'.
                 '<ul class="list">';
@@ -47,7 +52,7 @@ $duration = $excursion->get('db_data')->duration;
                 '</ul>'.
             '</div>';
         echo $html;
-        ?>
+        */ ?>
 
         <div class="desc-box">
             <h2><?php echo $this->tr($excursion->get('name')) ?></h2>
@@ -60,18 +65,41 @@ $duration = $excursion->get('db_data')->duration;
                 </div>
                 <div class="row">
                     <div class="label"><?php echo $this->tr('В стоимость включено') ?></div>
-                    <div class="row"><i class="fas fa-check"></i> <?php echo $this->tr('Аренда') ?>
-                        <a class="popup" href="/transport/mercedes-benz-e-class/"><?= $this->tr('Мерседеса Е 211') ?></a>/
-                        <a class="popup" href=""><?= $this->tr('Мерседеса Виано') ?></a>/
-                        <a class="popup" href=""><?= $this->tr('Мерседеса Спринтера') ?></a>
-                    </div>
-                    <div class="row"><i class="fas fa-check"></i> <?php echo $this->tr('Входные билеты в Екатерининский дворец и Екатерининский парк') ?></div>
-                    <div class="row"><i class="fas fa-check"></i> <?php echo $this->tr('Услуги персонального гида') ?></div>
+
+                    <?php
+                    $html = '';
+
+                    foreach ($excursion->getPlugin('pricetable') as $row) {
+                        $text = $row->get('text');
+
+                        if($text == '%TRANSPORT%') {
+                            $transports = \Transports\Model\Transport::getEntityCollection();
+                            $transports->select()->where(['type' => \Transports\Model\Transport::TYPE_AUTO, 'id' => [1, 2, 3]]);
+
+                            $text = $this->tr('Аренда') . ' ';
+                            foreach ($transports as $transport) {
+                                $text .=
+                                    '<a class="popup" href="' . $transport->getUrl() . '">' . $this->tr($transport->get('name')) . '</a> / ';
+                            }
+                            $text = rtrim($text, ' /');
+                        } else {
+                            $text = $this->tr($text);
+                        }
+
+                        $html .=
+                            '<div class="row">'.
+                                '<i class="fas fa-check"></i> '.
+                                $text.
+                            '</div>';
+                    }
+
+                    echo $html;
+                    ?>
                 </div>
             </div>
         </div>
-        <div class="std-header">
-            <h2><?php echo $excursion->get('План экскурсии') ?></h2>
+        <div class="std-header anchor-plan">
+            <h2><?php echo $this->tr('План экскурсии') ?></h2>
             <div class="separ"></div>
         </div>
 
@@ -104,6 +132,13 @@ $duration = $excursion->get('db_data')->duration;
             ?>
         </div>
 
+        <div class="std-header anchor-attractions">
+            <h2><?php echo $this->tr('В ходе экскурсии вы увидите') ?></h2>
+            <div class="separ"></div>
+        </div>
+
+        <?php echo $this->shortList($excursion->getPlugin('museums')) ?>
+
         <?php echo $this->comments([
             'depend_id' => $excursion->getId(),
             'depend_type' => \Comments\Model\Comment::TYPE_EXCURSION,
@@ -113,7 +148,7 @@ $duration = $excursion->get('db_data')->duration;
         <div class="slider">
             <?php
             $html =
-                '<form action="/excursions/get-price/" method="post" class="excursion-form common-form">'.
+                '<form action="/excursions/get-price/" method="post" class="widget excursion-form common-form">'.
                     '<input type="hidden" name="id" value="' . $excursion->getId() . '">'.
                     $this->commonForm($commonForm, [
                         ['field' => 'date', 'icon' => 'far fa-calendar-alt'],
@@ -129,6 +164,8 @@ $duration = $excursion->get('db_data')->duration;
 
             echo $html;
             ?>
+
+            <?php echo $this->excursionsRecoWidget($excursion->getPlugin('reco')) ?>
         </div>
     </div>
     </div>
@@ -137,19 +174,6 @@ $duration = $excursion->get('db_data')->duration;
 
 <script>
 $(function () {
-    var gallery = $('.gallery .list', '.excursion-block');
-
-    gallery.lightSlider({
-        gallery: true,
-        item: 1,
-        vertical: true,
-        verticalHeight: 500,
-        vThumbWidth: 100,
-        thumbItem: 7,
-        thumbMargin: 4,
-        slideMargin: 0
-    });
-
     var form = $('.excursion-form');
     var timer = null;
 

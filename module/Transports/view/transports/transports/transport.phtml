@@ -1,5 +1,5 @@
 <?php echo $this->header([
-    'background' => $page->getPlugin('image')->getImage('bg'),
+    'background' => $headerBg,
     'wrapper'    => true
 ]); ?>
 
@@ -7,8 +7,8 @@
     <div class="wrapper">
         <div class="module-item-block transport-block">
             <div class="content">
-                <?php
-                $html =
+                <?php echo $this->gallery($transport) ?>
+                <?php /*$html =
                     '<div class="gallery">'.
                         '<ul class="list">';
 
@@ -27,7 +27,7 @@
                 $html .=
                         '</ul>'.
                     '</div>';
-                echo $html;
+                echo $html;*/
                 ?>
                 <div class="desc-box">
                     <h2><?php echo $this->tr($transport->get('name')) ?></h2>
@@ -35,6 +35,17 @@
                 </div>
 
                 <div class="attrs-list">
+                    <?php
+                    foreach ($transport->getPlugin('props') as $row) {
+                        echo
+                        '<div class="row">'.
+                            $row->get('name').
+                        '</div>';
+                    }
+                    ?>
+
+                    <?php /*
+
                     <div class="row">
                         <i class="far fa-user"></i> <?= $this->tr('Вместимость') . ': ' . $this->tr('до') . ' ' .
                         $this->declension($transport->get('capacity'), ['человек', 'человека', 'человек']) ?>
@@ -50,6 +61,7 @@
                         <i class="fas fa-exchange-alt"></i> <?= $this->tr('Трансфер') . ': ' . $this->price($transport->get('price')->transfer, true, true) ?>
                     </div>
                     <?php } ?>
+ */ ?>
                 </div>
             </div>
             <div class="sidebar">
@@ -77,23 +89,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(function () {
-        var gallery = $('.gallery .list', '.transport-block');
-
-        gallery.lightSlider({
-            gallery: true,
-            item: 1,
-            vertical: true,
-            verticalHeight: 500,
-            vThumbWidth: 100,
-            thumbItem: 7,
-            thumbMargin: 4,
-            slideMargin: 0
-        });
-    });
-</script>
 
 <?php /*
 <div class="block transport-block">

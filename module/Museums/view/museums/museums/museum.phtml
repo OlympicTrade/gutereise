@@ -1,22 +1,20 @@
 <?php echo $this->header([
-    'background' => '/images/headers/petergof.jpg'
+    'background' => $headerImage,
+    'wrapper'    => true
 ]); ?>
 
-<div class="block std-container-right museum-block">
-    <div class="col-l">
-        <div class="desc-box">
-            <h2><?php echo $museum->get('name') ?></h2>
-            <div class="std-text"><?php echo $museum->get('text') ?></div>
-        </div>
-        <h2><?php echo $museum->get('header2') ?></h2>
-        <div class="items-list items-3">
-            <?php echo $this->museumsPointsList($museum->getPlugin('points')) ?>
-        </div>
-    </div>
-    <div class="col-r">
-        <div class="items-list items-1 excursions-list">
-            <?php echo $this->excursionsList($museum->getPlugin('excursions')) ?>
+<div class="block gray">
+    <div class="wrapper">
+        <div class="module-item-block museum-block">
+            <div class="content pt">
+                <?php echo $this->contentRender($museum->getPlugin('content')) ?>
+                <?php echo $this->shortList($museum->getChildren(false), ['header' => 'Достопримечательности']); ?>
+            </div>
+            <div class="sidebar">
+                <div class="slider">
+                    <?php echo $this->excursionsRecoWidget($museum->getPlugin('excursions')) ?>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="clear"></div>
 </div>

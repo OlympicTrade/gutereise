@@ -34,6 +34,13 @@ class ContentList extends AbstractHelper {
                     .'<a data-id="' . $item->getId() . '" class="del">Удалить</a>'
                 .'</div>';
 
+
+        $attrs = $item->getPlugin('attrs');
+
+        if($attrs->get('header')) {
+            $html .= '<h2>' . $attrs->get('header') . '</h2>';
+        }
+
         if($item->get('text')) {
             $html .=
                 '<div class="text">'
@@ -56,8 +63,24 @@ class ContentList extends AbstractHelper {
         }
 
         $html .=
-                '<div class="clear"></div>'
-            .'</div>';
+            '<div class="clear"></div>';
+
+        $panoramaHtml = '';
+        if($attrs->get('panorama_1')) {
+            $panoramaHtml .= '<div class="item"><iframe src="' . $attrs->get('panorama_1') . '" style="width: 300px; height: 200px" frameborder="0" allowfullscreen="true"></iframe></div>';
+        }
+
+        if($attrs->get('panorama_2')) {
+            $panoramaHtml .= '<div class="item"><iframe src="' . $attrs->get('panorama_2') . '" style="width: 300px; height: 200px" frameborder="0" allowfullscreen="true"></iframe></div>';
+        }
+
+        if($panoramaHtml) {
+            $html .=
+                '<div class="panorama">' . $panoramaHtml . '</div>';
+        }
+
+        $html .=
+            '</div>';
 
         $html .=
             '</div>';

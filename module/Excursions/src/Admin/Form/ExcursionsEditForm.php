@@ -5,7 +5,7 @@ use Aptero\Form\Form;
 
 use ExcursionsAdmin\Model\Excursion;
 use ExcursionsAdmin\Model\ExcursionType;
-use Museums\Model\Museum;
+use MuseumsAdmin\Model\Museum;
 use TransportsAdmin\Model\Transport;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -29,8 +29,10 @@ class ExcursionsEditForm extends Form
             'product' => $model,
         ]);
 
-        $this->get('transport-collection')->setOption('model', $model->getPlugin('transport'));
+        //$this->get('transport-collection')->setOption('model', $model->getPlugin('transport'));
+        $this->get('pricetable-collection')->setOption('model', $model->getPlugin('pricetable'));
         $this->get('museums-collection')->setOption('model', $model->getPlugin('museums'));
+        $this->get('reco-collection')->setOption('model', $model->getPlugin('reco'));
         $this->get('types-collection')->setOption('model', $model->getPlugin('types'));
         $this->get('plan-collection')->setOption('model', $model->getPlugin('plan'));
     }
@@ -158,7 +160,7 @@ class ExcursionsEditForm extends Form
             'options' => [
                 'options'      => [
                     'museum_id' => [
-                        'label'   => 'Музеи',
+                        'label'   => 'Достопримечательность',
                         'width'   => 150,
                         'options' => new Museum()
                     ],
@@ -167,6 +169,20 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'reco-collection',
+            'type'  => 'Aptero\Form\Element\Admin\Collection',
+            'options' => [
+                'options'      => [
+                    'excursion_id' => [
+                        'label'   => 'Экскурсия',
+                        'width'   => 150,
+                        'options' => new Excursion()
+                    ],
+                ]
+            ],
+        ]);
+
+        /*$this->add([
             'name' => 'transport-collection',
             'type'  => 'Aptero\Form\Element\Admin\Collection',
             'options' => [
@@ -175,6 +191,19 @@ class ExcursionsEditForm extends Form
                         'label'   => 'Транспорт',
                         'width'   => 150,
                         'options' => new Transport()
+                    ],
+                ]
+            ],
+        ]);*/
+
+        $this->add([
+            'name' => 'pricetable-collection',
+            'type'  => 'Aptero\Form\Element\Admin\Collection',
+            'options' => [
+                'options'      => [
+                    'text' => [
+                        'label'   => 'В стоимость включено',
+                        'width'   => 250,
                     ],
                 ]
             ],
@@ -206,11 +235,11 @@ class ExcursionsEditForm extends Form
                     ],
                     'header' => [
                         'label'   => 'Заголовок',
-                        'width'   => 150,
+                        'width'   => 200,
                     ],
                     'text' => [
                         'label'   => 'Описание',
-                        'width'   => 400,
+                        'width'   => 600,
                         'type'    => 'textarea'
                     ],
                 ]

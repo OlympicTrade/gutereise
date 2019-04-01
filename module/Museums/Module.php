@@ -3,7 +3,7 @@
 namespace Museums;
 
 use MuseumsAdmin\Model\Museum;
-use MuseumsAdmin\Model\Point;
+use MuseumsAdmin\Model\Attraction;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
 class Module implements AutoloaderProviderInterface
@@ -12,7 +12,7 @@ class Module implements AutoloaderProviderInterface
         return [
             'invokables' => [
                 'MuseumsList'   => 'Museums\View\Helper\MuseumsList',
-                'MuseumsPointsList' => 'Museums\View\Helper\MuseumsPointsList',
+                'MuseumsAttractionsList' => 'Museums\View\Helper\MuseumsAttractionsList',
             ],
         ];
     }
@@ -34,8 +34,8 @@ class Module implements AutoloaderProviderInterface
                 'MuseumsAdmin\Service\MuseumsService' => function ($sm) {
                     return new \MuseumsAdmin\Service\MuseumsService(new Museum());
                 },
-                'MuseumsAdmin\Service\PointsService' => function ($sm) {
-                    return new \MuseumsAdmin\Service\PointsService(new Point());
+                'MuseumsAdmin\Service\AttractionsService' => function ($sm) {
+                    return new \MuseumsAdmin\Service\AttractionsService(new Attraction());
                 },
             ]
         );

@@ -125,10 +125,10 @@
         var infoWindows = [];
 
         $.ajax({
-            url: '/museums/get-map-points/',
+            url: '/museums/get-map-attractions/',
             method: 'post',
-            success: function (points) {
-                $.each(points, function (key, val) {
+            success: function (attractions) {
+                $.each(attractions, function (key, val) {
                     var infoWindow = new google.maps.InfoWindow({
                         content: val.html
                     });

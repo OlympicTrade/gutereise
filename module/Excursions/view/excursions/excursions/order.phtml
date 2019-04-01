@@ -4,20 +4,27 @@
     </div>
     <div class="body std-form">
         <form action="/excursions/order/?id=<?php echo $excursion->getId(); ?>" class="form-box common-form">
-            <?php echo $this->formElement($form->get('excursion_id')); ?>
-            <?php echo $this->formElement($form->get('lang_id')); ?>
+            <?php echo $this->formElement($form->get('db_excursion_id')); ?>
             <div class="cols">
                 <div class="col-25">
-                    <?php echo $this->formRow($form->get('date')); ?>
+                    <div class="row">
+                        <?php echo $this->formRow($form->get('date')); ?>
+                    </div>
                 </div>
                 <div class="col-25 ">
+                    <div class="row">
                     <?php echo $this->formRow($form->get('time')); ?>
+                    </div>
                 </div>
                 <div class="col-25 ">
+                    <div class="row">
                     <?php echo $this->formRow($form->get('adults')); ?>
+                    </div>
                 </div>
                 <div class="col-25 ">
+                    <div class="row">
                     <?php echo $this->formRow($form->get('children')); ?>
+                    </div>
                 </div>
             </div>
             <div class="cols">

@@ -114,6 +114,23 @@ class Image extends PluginAbstract
         return $this->image['filename'] ? true : false;
     }
 
+    public function getDesc()
+    {
+        $this->load();
+
+        return $this->image['desc'];
+    }
+
+    public function getImageSize($prefix)
+    {
+        list($width, $height) = getimagesize(PUBLIC_DIR . $this->getImage($prefix));
+
+        return [
+            'width'  => $width,
+            'height' => $height,
+        ];
+    }
+
     /**
      * @param $prefix
      * @return string

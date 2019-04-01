@@ -1,0 +1,17 @@
+<div class="std-popup museum-popup">
+    <div class="header">
+        <?= $this->tr($header) ?>
+    </div>
+    <div class="body">
+        <div class="module-item-block-ajax museum-block-ajax">
+            <?php echo $this->contentRender($museum->getPlugin('content')) ?>
+            <?php echo $this->shortList($museum->getChildren(false), ['header' => 'Достопримечательности']); ?>
+        </div>
+    </div>
+
+    <style>
+        .museum-popup {
+            width: 900px;
+        }
+    </style>
+</div>

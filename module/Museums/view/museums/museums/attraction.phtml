@@ -1,0 +1,83 @@
+<?php echo $this->header([
+    'background' => $headerImage,
+    'wrapper'    => true
+]); ?>
+
+<div class="block gray">
+    <div class="wrapper">
+        <div class="module-item-block attraction-block">
+            <div class="content" style="overflow-y: hidden;">
+                <div class="menu">
+                    <a href="" class="item active">
+                        <i class="far fa-file-alt"></i>
+                        <?php echo $this->tr('Описание') ?>
+                    </a>
+                    <a href=".attraction-block .gallery" class="item anchor">
+                        <i class="fas fa-camera"></i>
+                        <?php echo $this->tr('Фотографии') ?>
+                    </a>
+                    <a href=".attraction-block .comments" class="item anchor">
+                        <i class="far fa-comment"></i>
+                        <?php echo $this->tr('Комментарии') ?>
+                    </a>
+                </div>
+
+
+                <?php
+                $html =
+                    '<div class="gallery">'.
+                    '<ul class="list">';
+
+                $html .=
+                    '<li data-thumb="' . $attraction->getPlugin('image')->getImage('hr') . '">'.
+                        '<iframe src="https://yandex.ru/map-widget/v1/-/CCQm7-1v" style="width: 100%; height: 500px" frameborder="0" allowfullscreen="true"></iframe>'.
+                    '</li>';
+                $html .=
+                    '<li data-thumb="' . $attraction->getPlugin('image')->getImage('hr') . '">'.
+                    '<img src="' . $attraction->getPlugin('image')->getImage('g') . '" alt="">'.
+                    '</li>';
+
+                foreach ($attraction->getPlugin('images') as $image) {
+                    $html .=
+                        '<li data-thumb="' . $image->getImage('hr') . '">'.
+                        '<img src="' . $image->getImage('g') . '" alt=""></li>'.
+                        '</li>';
+                }
+
+                $html .=
+                    '</ul>'.
+                    '</div>';
+                echo $html;
+                ?>
+
+                <div class="desc-box">
+                    <h2><?php echo $this->tr($attraction->get('name')) ?></h2>
+                    <div class="std-text"><?php echo $this->tr($attraction->get('text')) ?></div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="slider">
+                    фывфыва
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var gallery = $('.gallery .list', '.attraction-block');
+
+        gallery.lightSlider({
+            gallery: true,
+            item: 1,
+            vertical: false,
+            verticalHeight: 500,
+            vThumbWidth: 100,
+            thumbItem: 7,
+            thumbMargin: 4,
+            slideMargin: 0
+        });
+
+    });
+</script>

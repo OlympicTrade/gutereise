@@ -7,6 +7,10 @@ use Aptero\Db\Plugin\Images;
 
 class Transport extends Entity
 {
+    const TYPE_AUTO   = 1;
+    const TYPE_BOAT   = 2;
+    const TYPE_COPTER = 3;
+
     public function __construct()
     {
         $this->setTable('transports');
@@ -23,13 +27,27 @@ class Transport extends Entity
             'url'          => [],
         ]);
 
+        $this->addPlugin('props', function($model) {
+            $item = new Entity();
+            $item->setTable('transports_props');
+            $item->addProperties([
+                'depend'     => [],
+                'name'       => [],
+                'icon'       => [],
+            ]);
+            $catalog = $item->getCollection()->getPlugin();
+            $catalog->setParentId($model->getId());
+
+            return $catalog;
+        });
+
         $this->addPlugin('image', function() {
             $image = new \Aptero\Db\Plugin\Image();
             $image->setTable('transports_images');
             $image->setFolder('transports');
             $image->addResolutions([
                 'g' => [
-                    'width'  => 800,
+                    'width'  => 900,
                     'height' => 500,
                     'crop'   => true,
                 ],
@@ -58,7 +76,7 @@ class Transport extends Entity
             $image->setFolder('transports_gallery');
             $image->addResolutions([
                 'g' => [
-                    'width'  => 800,
+                    'width'  => 900,
                     'height' => 500,
                     'crop'   => true,
                 ],

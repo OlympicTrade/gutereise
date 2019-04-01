@@ -3,7 +3,8 @@ namespace MuseumsAdmin\Form;
 
 use Aptero\Form\Form;
 
-use MuseumsAdmin\Model\Point;
+use ExcursionsAdmin\Model\Excursion;
+use MuseumsAdmin\Model\Attraction;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
@@ -17,12 +18,19 @@ class MuseumsEditForm extends Form
             'model' => $model->getPlugin('image'),
         ]);
 
+        $this->get('background-image')->setOptions([
+            'model' => $model->getPlugin('background'),
+        ]);
+
         $this->get('images-images')->setOptions([
             'model'   => $model->getPlugin('images'),
             'product' => $model,
         ]);
 
-        $this->get('points-collection')->setOption('model', $model->getPlugin('points'));
+        $this->get('parent')->setOption('model', $this->getModel());
+        $this->get('excursions-collection')->setOption('model', $model->getPlugin('excursions'));
+
+        //$this->get('attractions-collection')->setOption('model', $model->getPlugin('attractions'));
     }
 
     public function __construct()
@@ -34,6 +42,29 @@ class MuseumsEditForm extends Form
         $this->add([
             'name' => 'id',
             'type'  => 'Zend\Form\Element\Hidden',
+        ]);
+
+        $this->add(array(
+            'name' => 'parent',
+            'type'  => 'Aptero\Form\Element\TreeSelect',
+            'options' => array(
+                'label'   => 'Прикрепить к музею',
+                'empty'   => '',
+            ),
+        ));
+
+        $this->add([
+            'name' => 'excursions-collection',
+            'type'  => 'Aptero\Form\Element\Admin\Collection',
+            'options' => [
+                'options'      => [
+                    'excursion_id' => [
+                        'label'   => 'Экскурсия',
+                        'width'   => 150,
+                        'options' => new Excursion()
+                    ],
+                ]
+            ],
         ]);
 
         $this->add([
@@ -97,14 +128,16 @@ class MuseumsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'header2',
+            'name' => 'header',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
-                'label' => 'Заголовок 2',
+                'label' => 'Заголовок',
             ],
-            'attributes' => [
-                'placeholder' => 'Что можно увидеть в ...',
-            ],
+        ]);
+
+        $this->add([
+            'name' => 'background-image',
+            'type'  => 'Aptero\Form\Element\Admin\Image',
         ]);
 
         $this->add([
@@ -127,18 +160,30 @@ class MuseumsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'points-collection',
+            'name' => 'active',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label' => 'Показать на сайте',
+                'options' => [
+                    1 => 'Да',
+                    0 => 'Нет',
+                ],
+            ],
+        ]);
+
+        /*$this->add([
+            'name' => 'attractions-collection',
             'type'  => 'Aptero\Form\Element\Admin\Collection',
             'options' => [
                 'options'      => [
-                    'point_id' => [
+                    'attraction_id' => [
                         'label'   => 'Достопримечательности',
-                        'width'   => 150,
-                        'options' => new Point()
+                        'width'   => 200,
+                        'options' => new Attraction()
                     ],
                 ]
             ],
-        ]);
+        ]);*/
     }
 
     public function setFilters()

@@ -3,16 +3,16 @@ namespace Museums\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-class MuseumsPointsList extends AbstractHelper
+class MuseumsAttractionsList extends AbstractHelper
 {
-    public function __invoke($points)
+    public function __invoke($attractions)
     {
         $view = $this->getView();
 
         $html =
            '';
 
-        foreach ($points as $point) {
+        foreach ($attractions as $point) {
             $html .=
                 '<div class="item">'.
                     '<a class="pic" href="' . $point->getUrl() . '">'.

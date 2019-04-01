@@ -23,11 +23,10 @@
                 echo $this->adminFormRow($form->get('db_transport_id'));
                 echo $this->adminFormRow($form->get('url'));
                 ?>
+                <?php echo $this->adminFormRow($form->get('props-collection')); ?>
             </div>
             <div class="tab" data-tab="photo">
-                <?php
-                echo $this->adminFormRow($form->get('images-images'));
-                ?>
+                <?php echo $this->adminFormRow($form->get('images-images')); ?>
             </div>
             <div class="tab" data-tab="seo">
                 <?php

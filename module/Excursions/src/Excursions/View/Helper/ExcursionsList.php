@@ -15,10 +15,11 @@ class ExcursionsList extends AbstractHelper
            '';
 
         foreach ($excursions as $excursion) {
+            $url = $excursion->getUrl();
 
             $html .=
                 '<div class="item">' .
-                    '<a class="pic" href="' . $excursion->getUrl() . '">' .
+                    '<a class="pic" href="' . $url . '">' .
                         '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="' . $view->tr($excursion->get('name')) . '">' .
                     '</a>';
 
@@ -44,16 +45,26 @@ class ExcursionsList extends AbstractHelper
 
                 $html .=
                     '<div class="desc">'.
-                        '<a  href="' . $excursion->getUrl() . '" class="name">' . $view->tr($excursion->get('name')) . '</a>'.
+                        '<a  href="' . $url . '" class="name">' . $view->tr($excursion->get('name')) . '</a>'.
                         //'<div class="time"><i class="far fa-clock"></i> ' . $view->tr($view->declension($excursion->get('duration'), ['час', 'часа', 'часов'])) . '</div>'.
                         '<div class="preview">' . $view->tr($excursion->get('preview')) . '</div>'.
                     '</div>'.
-                    '<div class="order">' .
+                    '<div class="order">';
+
+                /*if($dt = Time::getDT($excursion->get('db_data')->days[0]->duration)) {
+                    $html .=
+                        '<div class="duration">'.
+                            $view->tr('Длительность') . '<br>'.
+                            '<div><i class="far fa-clock"></i> ' . $view->declension($dt->format('H'), ['час', 'часа', 'часов']) . '</div>'.
+                        '</div>';
+                }*/
+
+                $html .=
                         '<div class="price">'.
-                            $view->tr('от') . ' <span>15 000 <i class="fas fa-ruble-sign"></i></span> <br>'.
+                            $view->tr('от') . ' <span>' . $view->price($excursion->get('db_data')->price->rub->adult) . '</span><br>'.
                             $view->tr('за человека').
                         '</div>'.
-                        '<div class="btn yellow">' . $view->tr('Бронировать') . '</div>'.
+                        '<a href="' . $url . '" class="btn yellow">' . $view->tr('Узнать подробнее') . '</a>'.
                     '</div>'.
                 '</div>';
         }

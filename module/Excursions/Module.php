@@ -11,10 +11,11 @@ class Module implements AutoloaderProviderInterface
     public function getViewHelperConfig() {
         return [
             'invokables' => [
-                'MobileExcursionsList' => 'Excursions\View\Helper\MobileExcursionsList',
-                'ExcursionsList'       => 'Excursions\View\Helper\ExcursionsList',
-                'ExcursionsWidgets'    => 'Excursions\View\Helper\ExcursionsWidgets',
-                'CommonForm'           => 'Excursions\View\Helper\CommonForm',
+                'CommonForm'            => 'Excursions\View\Helper\CommonForm',
+                'MobileExcursionsList'  => 'Excursions\View\Helper\MobileExcursionsList',
+                'ExcursionsList'        => 'Excursions\View\Helper\ExcursionsList',
+                'ExcursionsWidgets'     => 'Excursions\View\Helper\ExcursionsWidgets',
+                'ExcursionsRecoWidget'  => 'Excursions\View\Helper\ExcursionsRecoWidget',
             ],
         ];
     }

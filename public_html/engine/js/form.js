@@ -277,10 +277,10 @@ function initTextEditor(context) {
             language: 'ru',
             toolbar: [
                 { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source']},
-                { name: 'tools', items: ['Maximize']},
-                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline']},
+                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Link', 'Bold', 'Italic', 'Underline']},
                 { name: 'paragraph', groups: ['list', 'indent'], items: ['NumberedList', 'BulletedList',]},
                 { name: 'styles', items: ['Format']},
+                { name: 'tools', items: ['Maximize']},
             ],
             contentsCss: '/engine/css/jquery/spellchecker.css'
         });

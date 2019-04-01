@@ -1,38 +1,80 @@
 <?php
 namespace MuseumsAdmin\Model;
 
+use ApplicationAdmin\Model\Content;
 use Aptero\Db\Entity\Entity;
-use Zend\Session\Container as SessionContainer;
+use Aptero\Db\Entity\EntityHierarchy;
 
-class Museum extends Entity
+class Museum extends EntityHierarchy
 {
     public function __construct()
     {
         $this->setTable('museums');
 
         $this->addProperties([
-            'name'    => [],
-            'url'     => [],
-            'header2' => [],
-            'preview' => [],
-            'text'    => [],
-            'lat'     => ['default' => '59.927725'],
-            'lng'     => ['default' => '30.325141'],
-            'title'   => [],
-            'description'   => [],
+            'parent'    => [],
+            'name'      => [],
+            'header'    => [],
+            'url'       => [],
+            'url_path'  => [],
+            'header2'   => [],
+            'preview'   => [],
+            'text'      => [],
+            'lat'       => ['default' => '59.927725'],
+            'lng'       => ['default' => '30.325141'],
+            'title'     => [],
+            'description' => [],
+            'active' => [],
         ]);
 
-        $this->addPlugin('points', function($model) {
+        $this->addPlugin('excursions', function($model) {
             $item = new Entity();
-            $item->setTable('museums_mtp');
+            $item->setTable('museums_excursions');
             $item->addProperties([
-                'depend'      => [],
-                'point_id' => [],
+                'depend'        => [],
+                'excursion_id'  => [],
             ]);
             $catalog = $item->getCollection()->getPlugin();
             $catalog->setParentId($model->getId());
 
             return $catalog;
+        });
+
+        $this->addPlugin('content', function($model) {
+            $content = Content::getEntityCollection();
+            $content->select()->where([
+                'module'    => 'blog',
+                'depend'    => $model->getId(),
+            ])->order('sort');
+
+            return $content;
+        });
+
+        /*$this->addPlugin('attractions', function($model) {
+            $item = new Entity();
+            $item->setTable('museums_mta');
+            $item->addProperties([
+                'depend'      => [],
+                'attraction_id' => [],
+            ]);
+            $catalog = $item->getCollection()->getPlugin();
+            $catalog->setParentId($model->getId());
+
+            return $catalog;
+        });*/
+
+        $this->addPlugin('background', function() {
+            $image = new \Aptero\Db\Plugin\Image();
+            $image->setTable('museums_headers');
+            $image->setFolder('museums_headers');
+            $image->addResolutions([
+                'a' => [
+                    'width'  => 162,
+                    'height' => 162,
+                    'crop'   => true,
+                ],
+            ]);
+            return $image;
         });
 
         $this->addPlugin('image', function() {
@@ -45,10 +87,6 @@ class Museum extends Entity
                     'height' => 162,
                     'crop'   => true,
                 ],
-                'hr' => [
-                    'width'  => 1000,
-                    'height' => 800,
-                ]
             ]);
 
             return $image;
@@ -63,15 +101,22 @@ class Museum extends Entity
                     'width'  => 162,
                     'height' => 162,
                 ],
-                'hr' => [
-                    'width'  => 1000,
-                    'height' => 800,
-                ]
             ]);
 
             return $image;
         });
 
+        $this->addPropertyFilterIn('parent', function($model, $parentId) {
+            $parentId = (int) $parentId;
+            $model->setParentId($parentId);
+            return $parentId;
+        });
+
+        $this->addPropertyFilterIn('parent', function($model, $url) {
+            return \Aptero\String\Translit::url($url);
+        });
+
+        //URL
         $this->getEventManager()->attach(array(Entity::EVENT_PRE_INSERT, Entity::EVENT_PRE_UPDATE), function ($event) {
             $model = $event->getTarget();
 
@@ -81,5 +126,27 @@ class Museum extends Entity
 
             return true;
         });
+
+        $this->getEventManager()->attach(array(Entity::EVENT_PRE_INSERT, Entity::EVENT_PRE_UPDATE), function ($event) {
+            $model = $event->getTarget();
+
+            $url_path = $model->get('url');
+            $parent = $model->getParent();
+            while($parent) {
+                $url_path = $parent->get('url') . '/' . $url_path;
+                $parent = $parent->getParent();
+            }
+
+            $url_path = !$url_path ? '/' : '/' . $url_path . '/';
+
+            $model->set('url_path', trim($url_path));
+
+            return true;
+        });
+    }
+
+    public function getPublicUrl()
+    {
+        return '/attractions' . $this->get('url_path');
     }
 }

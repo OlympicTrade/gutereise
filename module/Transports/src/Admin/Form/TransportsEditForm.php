@@ -21,6 +21,8 @@ class TransportsEditForm extends Form
             'model'   => $model->getPlugin('images'),
             'product' => $model,
         ]);
+
+        $this->get('props-collection')->setOption('model', $model->getPlugin('props'));
     }
 
     public function __construct()
@@ -32,6 +34,30 @@ class TransportsEditForm extends Form
         $this->add([
             'name' => 'id',
             'type'  => 'Zend\Form\Element\Hidden',
+        ]);
+
+        $this->add([
+            'name' => 'props-collection',
+            'type'  => 'Aptero\Form\Element\Admin\Collection',
+            'options' => [
+                'options'      => [
+                    'name' => [
+                        'label'   => 'Название',
+                        'width'   => 400,
+                    ],
+                    'icon' => [
+                        'label'   => 'Иконка',
+                        'width'   => 130,
+                        'options' => [
+                            ''          => 'Без иконки',
+                            'header'    => 'Загловок',
+                            'user'      => 'Человек',
+                            'time'      => 'Часы',
+                            'rub'       => 'Рубль',
+                        ]
+                    ],
+                ]
+            ],
         ]);
 
         $this->add([

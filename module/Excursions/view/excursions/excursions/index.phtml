@@ -14,9 +14,13 @@
                     'value'   => $filters['type'],
                     'data'    => \Excursions\Model\ExcursionType::getEntityCollection()
                 ]);
+
+                $museums = \Museums\Model\Museum::getEntityCollection();
+                $museums->select()->where(['parent' => 0]);
+
                 echo $this->ExcursionsWidgets('museums', [
                     'value'   => $filters['museums'],
-                    'data'    => \Museums\Model\Museum::getEntityCollection()
+                    'data'    => $museums
                 ]);
                 ?>
             </div>

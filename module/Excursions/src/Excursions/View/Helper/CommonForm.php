@@ -11,7 +11,7 @@ class CommonForm extends AbstractHelper
         $view = $this->getView();
 
         $html =
-            '<div class="widget calc">'.
+            '<div class="calc">'.
                 '<div class="header">' . $view->tr('Калькулятор стоимости') . '</div>';
 
         foreach ($fields as $field) {

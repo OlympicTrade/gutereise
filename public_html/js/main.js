@@ -7,9 +7,20 @@ $(window).ready(function() {
         initElements(body);
         initComments(body);
         initSidebar();
-        //initMetric();
     }, 1);
 });
+
+function initGallery(box) {
+    var gallery = $('.gallery .list', box);
+
+    gallery.lightSlider({
+        gallery: true,
+        item: 1,
+        thumbItem: 7,
+        thumbMargin: 4,
+        slideMargin: 0,
+    });
+}
 
 function initSidebar() {
     $('.sidebar').each(function () {
@@ -54,6 +65,8 @@ function initMetric() {
 
 function initElements(box) {
     $('[name="phone"]', box).inputmask('+7 (999) 999-99-99');
+
+    initGallery(box);
 
     $('.anchor', box).on('click', function () {
         var scrollTo = $($(this).attr('href')).offset().top - 100;
@@ -183,20 +196,71 @@ function initElements(box) {
         });
     });
 
-    /*$('.element', box).each(function () {
-        $('input, textarea, select', $(this)).on('focus', function () {
+    $('.std-input, .std-textarea, .std-select', '.element', box).each(function () {
+        var el = $(this);
+        var element = $(this).closest('.element');
+
+        if(el.attr('placeholder') !== undefined && el.attr('placeholder') !== '') {
+            element.addClass('not-empty');
+            return;
+        }
+
+        if(el.hasClass('std-select')) {
+            element.addClass('not-empty');
+            return;
+        }
+
+        el.on('focus', function () {
             $(this).closest('.element').addClass('focus');
-        }).on('focusout', function () {
+        });
+
+        el.on('focusout', function () {
             $(this).closest('.element').removeClass('focus');
-        }).on('keyup', function () {
-            var element = $(this).closest('.element');
+        });
+
+        el.on('keyup check', function () {
             if($(this).val()) {
                 element.addClass('not-empty');
             } else {
                 element.removeClass('not-empty');
             }
-        }).trigger('keyup');
-    });*/
+        });
+
+        el.trigger('keyup');
+    });
+
+    $('.short-list').each(function () {
+        var box = $(this);
+        var slider = $('.slider', box).lightSlider({
+            item:   3,
+            pager:  false,
+            loop:   true,
+            easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+            speed:  600,
+            slideMove: 3,
+            slideMargin: 20,
+            responsive : [
+                {
+                    breakpoint:800,
+                    settings: {
+                        item:3,
+                        slideMove:1,
+                        slideMargin:6,
+                    }
+                },
+                {
+                    breakpoint:480,
+                    settings: {
+                        item:2,
+                        slideMove:1
+                    }
+                }
+            ]
+        });
+
+        $('.prev', box).on('click', function() { slider.goToPrevSlide(3); });
+        $('.next', box).on('click', function() { slider.goToNextSlide(3); });
+    });
 
     $.config.datepicker = {
         clearText: 'Очистить',
@@ -270,7 +334,7 @@ function initPopups() {
                         }
                     });
 
-                    initElements(e.$refs.slider);
+                    initElements(slide.$slide[0]);
                 }
             }
         });

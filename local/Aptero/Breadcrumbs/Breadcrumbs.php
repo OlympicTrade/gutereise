@@ -36,7 +36,7 @@ class Breadcrumbs
             $this->addCrumb(['url' => $page->get('url'), 'name' => $page->get('name')], true);
         } while ($page = $page->getParent());
 
-        $this->addCrumb(['url' => '/', 'name' => 'Home'], true);
+        $this->addCrumb(['url' => '/', 'name' => 'Главная'], true);
 
         return $this;
     }

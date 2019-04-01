@@ -18,7 +18,11 @@ abstract class AbstractActionController extends ZendActionController
     public function generate($url = null)
     {
         if($this->isAjax()) {
-            return new ViewModel();
+            return (new ViewModel())
+                ->setTerminal(true)
+                ->setVariables([
+                    'ajax' => true,
+                ]);
         }
 
         $sm = $this->getServiceLocator();
@@ -46,7 +50,6 @@ abstract class AbstractActionController extends ZendActionController
                 //$layoutType = 'article';
                 break;
         }
-
 
         if($url == '/') {
             $this->layout('layout/index');
@@ -79,8 +82,9 @@ abstract class AbstractActionController extends ZendActionController
         ]);
 
         return new ViewModel([
-            'header'       => $header,
-            'page'         => $page,
+            'header'    => $header,
+            'page'      => $page,
+            'ajax'      => false,
         ]);
     }
 

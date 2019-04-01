@@ -21,7 +21,7 @@ class MuseumsController extends AbstractActionController
 
     public function museumAction()
     {
-        $view = $this->generate('/museums/');
+        $view = $this->generate('/attractions/');
 
         $url = $this->params()->fromRoute('url');
 
@@ -31,44 +31,61 @@ class MuseumsController extends AbstractActionController
             return $this->send404();
         }
 
+        $view->setVariables([
+            'museum'        => $museum,
+            'header'        => $museum->get('header'),
+        ]);
+
+        if($this->isAjax()) {
+            $view->setTemplate('museums/museums/museum-ajax');
+            return $view;
+        }
+
+        $this->layout()->setVariable('canonical', $url);
+        $view->setTemplate('museums/museums/museum');
+
         $this->addBreadcrumbs([['url' => $museum->getUrl(), 'name' => $museum->get('name')]]);
 
         return $view->setVariables([
-            'header'        => $museum->get('header'),
+            'headerImage'   => $museum->getPlugin('background')->getImage('h'),
+            'headerDesc'    => $museum->get('header_desc'),
             'museum'        => $museum,
-            'breadcrumbs'   => $this->getBreadcrumbs(),
         ]);
     }
 
-    public function pointAction()
+    public function attractionAction()
     {
-        $view = $this->generate('/museums/');
+        $view = $this->generate('/attractions/');
 
         $url = $this->params()->fromRoute('url');
 
-        $point = $this->getMuseumsService()->getPoint(['url' => $url]);
+        $attraction = $this->getMuseumsService()->getAttraction(['url' => $url]);
 
-        if(!$point->load()) {
+        if(!$attraction->load()) {
             return $this->send404();
         }
 
-        $this->addBreadcrumbs([['url' => $point->getUrl(), 'name' => $point->get('name')]]);
+        $this->layout()->setVariable('canonical', $url);
+        $view->setTemplate('museums/museums/attraction');
+
+        $this->addBreadcrumbs([['url' => $attraction->getUrl(), 'name' => $attraction->get('name')]]);
 
         return $view->setVariables([
-            'header'        => $point->get('header'),
-            'point'         => $point,
-            'breadcrumbs'   => $this->getBreadcrumbs(),
+            'headerImage'   => $attraction->getPlugin('background')->getImage('h'),
+            'header'        => $attraction->get('header'),
+            'headerDesc'    => $attraction->get('header_desc'),
+            'attraction'    => $attraction,
         ]);
     }
 
-    public function getMapPointsAction()
+    public function getMapAttractionsAction()
     {
         $id = $this->params()->fromPost();
 
         $museum = new Museum();
         $museum->setId($id);
 
-        $points = [];
+        $attractions = [];
 
         foreach (Museum::getEntityCollection() as $museum) {
             $html =
@@ -83,7 +100,7 @@ class MuseumsController extends AbstractActionController
                     '</div>'.
                 '</div>';
 
-            $points[] = [
+            $attractions[] = [
                 'lat'       => $museum->get('lat'),
                 'lng'       => $museum->get('lng'),
                 'name'      => $museum->get('name'),
@@ -93,7 +110,7 @@ class MuseumsController extends AbstractActionController
             ];
         }
 
-        return new JsonModel($points);
+        return new JsonModel($attractions);
     }
 
     /**

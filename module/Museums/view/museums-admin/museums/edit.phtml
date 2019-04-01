@@ -3,30 +3,37 @@
     <?php echo $this->header ?>
 </h1>
 
+<div class="panel">
+    <a href="<?php echo $model->getPublicUrl() ?>" target="_blank">Показать на сайте</a>
+</div>
+
 <?php $form = $this->editForm ?>
 <?php echo $this->form()->openTag($form) ?>
 <div class="edit-form std-form">
     <div class="tabs tabs-class" data-name="edit-tabs">
         <div class="tabs-header">
             <div class="tab" data-tab="general">Основное</div>
-            <div class="tab" data-tab="points">Связи</div>
+            <div class="tab" data-tab="links">Связи</div>
             <div class="tab" data-tab="photo">Фото</div>
             <div class="tab" data-tab="seo">SEO</div>
-            <div class="tab" data-tab="text">Текст</div>
             <div class="tab" data-tab="map">Карта</div>
+            <div class="tab" data-tab="content">Тест</div>
         </div>
         <div class="tabs-body">
             <div class="tab" data-tab="general">
                 <?php
+                echo $this->adminFormRow($form->get('background-image'));
                 echo $this->adminFormRow($form->get('image-image'));
                 echo $this->adminFormRow($form->get('name'));
-                echo $this->adminFormRow($form->get('header2'));
+                echo $this->adminFormRow($form->get('header'));
                 echo $this->adminFormRow($form->get('preview'));
                 echo $this->adminFormRow($form->get('url'));
+                echo $this->adminFormRow($form->get('parent'));
+                echo $this->adminFormRow($form->get('active'));
                 ?>
             </div>
-            <div class="tab" data-tab="points">
-                <?php echo $this->formRow($form->get('points-collection')); ?>
+            <div class="tab" data-tab="links">
+                <?php echo $this->formRow($form->get('excursions-collection')); ?>
             </div>
             <div class="tab" data-tab="photo">
                 <?php echo $this->formRow($form->get('images-images')); ?>
@@ -35,11 +42,6 @@
                 <?php
                 echo $this->adminFormRow($form->get('title'));
                 echo $this->adminFormRow($form->get('description'));
-                ?>
-            </div>
-            <div class="tab" data-tab="text">
-                <?php
-                echo $this->adminFormRow($form->get('text'));
                 ?>
             </div>
             <div class="tab" data-tab="map">
@@ -73,6 +75,11 @@
                         $('[name="lng"]', form).val(pos.lng());
                     });
                 </script>
+            </div>
+
+            <div class="tab" data-tab="content">
+                <a href="/admin/application/content/edit/?module=blog&depend=<?php echo $model->getId() ?>" class="btn popup-form">Добавить</a>
+                <?php echo $this->adminContentList($model->getPlugin('content')); ?>
             </div>
         </div>
     </div>

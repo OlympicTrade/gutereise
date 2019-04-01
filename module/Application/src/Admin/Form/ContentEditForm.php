@@ -37,6 +37,42 @@ class ContentEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'attrs-header',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Заголовок',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'attrs-panorama_1',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Панорама iframe',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'attrs-panorama_2',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Панорама iframe',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'attrs-gallery_type',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label' => 'Тип галереи',
+                'options' => [
+                    1 => 'Фото',
+                    0 => 'Слайдер',
+                ],
+            ],
+        ]);
+
+        $this->add([
             'name' => 'module',
             'type'  => 'Zend\Form\Element\Hidden',
         ]);

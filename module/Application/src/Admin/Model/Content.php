@@ -18,6 +18,13 @@ class Content extends Entity
             'sort'     => [],
         ]);
 
+        $this->addPlugin('attrs', function() {
+            $properties = new \Aptero\Db\Plugin\Attributes();
+            $properties->setTable('content_attrs');
+
+            return $properties;
+        });
+
         $this->addPlugin('images', function() {
             $image = new ContentImages();
             $image->setTable('content_gallery');

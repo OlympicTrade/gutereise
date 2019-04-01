@@ -8,7 +8,7 @@ use Zend\InputFilter\InputFilter;
 
 use User\Model\User;
 
-class PointsFilterForm extends Form
+class AttractionsFilterForm extends Form
 {
     public function __construct()
     {

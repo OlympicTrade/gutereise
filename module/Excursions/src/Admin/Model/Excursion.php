@@ -76,20 +76,6 @@ class Excursion extends Entity
             return $image;
         });
 
-        $this->addPlugin('image', function() {
-            $image = new \Aptero\Db\Plugin\Image();
-            $image->setTable('excursions_images');
-            $image->setFolder('excursions');
-            $image->addResolutions([
-                'a' => [
-                    'width'  => 162,
-                    'height' => 162,
-                    'crop'   => true,
-                ],
-            ]);
-            return $image;
-        });
-
         $this->addPlugin('images', function() {
             $image = new Images();
             $image->setTable('excursions_gallery');
@@ -135,7 +121,34 @@ class Excursion extends Entity
             return $catalog;
         });
 
-        $this->addPlugin('transport', function($model) {
+        $this->addPlugin('reco', function($model) {
+            $item = new Entity();
+            $item->setTable('excursions_reco');
+            $item->addProperties([
+                'depend'     => [],
+                'excursion_id'  => [],
+                'time'       => [],
+            ]);
+            $catalog = $item->getCollection()->getPlugin();
+            $catalog->setParentId($model->getId());
+
+            return $catalog;
+        });
+
+        $this->addPlugin('pricetable', function($model) {
+            $item = new Entity();
+            $item->setTable('excursions_pricetable');
+            $item->addProperties([
+                'depend'     => [],
+                'text'       => [],
+            ]);
+            $catalog = $item->getCollection()->getPlugin();
+            $catalog->setParentId($model->getId());
+
+            return $catalog;
+        });
+
+        /*$this->addPlugin('transport', function($model) {
             $item = new Entity();
             $item->setTable('excursions_transport');
             $item->addProperties([
@@ -146,7 +159,7 @@ class Excursion extends Entity
             $catalog->setParentId($model->getId());
 
             return $catalog;
-        });
+        });*/
 
         $this->addPlugin('types', function($model) {
             $item = new Entity();
@@ -230,13 +243,15 @@ class Excursion extends Entity
         $sync = new Sync();
         $data = $sync->getExcursionData(['id' => $dbId]);
 
-        $dbData = new \StdClass();
-        $dbData->min_time    = $data->min_time;
-        $dbData->max_time    = $data->max_time;
-        $dbData->duration    = $data->duration;
-        $dbData->price = $data->price;
+        if(count($data->days) == 1) {
+            $firstDay = $data->days[0];
+            $data->duration = $firstDay->duration;
+            $data->min_time = $firstDay->min_time;
+            $data->max_time = $firstDay->max_time;
+            unset($data->days);
+        }
 
-        $this->set('db_data', $dbData);
+		$this->set('db_data', $data);
 
         return $this;
     }

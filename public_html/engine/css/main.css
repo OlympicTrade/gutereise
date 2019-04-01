@@ -164,6 +164,55 @@ h2 {
     transform: rotate(90deg);
 }
 
+.content-list .item {
+    background: #f2f2f2;
+    border-radius: 2px;
+    padding: 10px 10px 5px 10px;
+    margin-top: 15px;
+    max-width: 900px;
+}
+
+.content-list .text {
+    position: relative;
+    margin-bottom: 10px;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.content-list .text:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(transparent, #f2f2f2);
+}
+
+.content-list .pics .pic {
+    width: 120px;
+    margin: 0 6px 6px 0;
+    float: left;
+}
+
+.content-list .btns {
+    margin-bottom: 5px;
+}
+
+.content-list .btns a {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.content-list .panorama {
+    display: flex;
+}
+
+.content-list .panorama .item {
+
+}
+
 .module-icon-user:before {
     content: "\f007";
 }
@@ -1364,6 +1413,7 @@ span.wrap.pink {
 }
 
 .collection-list .list td {
+    vertical-align: top;
     padding: 0;
 }
 

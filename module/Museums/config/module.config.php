@@ -4,7 +4,7 @@ return [
         'invokables' => [
             'Museums\Controller\Museums'      => 'Museums\Controller\MuseumsController',
             'MuseumsAdmin\Controller\Museums' => 'MuseumsAdmin\Controller\MuseumsController',
-            'MuseumsAdmin\Controller\Points'  => 'MuseumsAdmin\Controller\PointsController',
+            'MuseumsAdmin\Controller\Attractions'  => 'MuseumsAdmin\Controller\AttractionsController',
         ],
     ],
     'router' => [
@@ -13,7 +13,7 @@ return [
                 'type' => 'literal',
                 'priority' => 500,
                 'options' => [
-                    'route' => '/museums',
+                    'route' => '/attractions',
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
@@ -34,27 +34,27 @@ return [
                         'type'    => 'segment',
                         'priority' => 600,
                         'options' => [
-                            'route'    => '/point/:url/',
+                            'route'    => '/attraction/:url/',
                             'constraints' => ['url' => '.*'],
                             'defaults' => [
                                 'module'     => 'Museums',
                                 'section'    => 'Museums',
                                 'controller' => 'Museums\Controller\Museums',
-                                'action'     => 'point',
+                                'action'     => 'attraction',
                             ],
                         ],
                     ],
-                    'pointsMap' => [
+                    'attractionsMap' => [
                         'type'    => 'segment',
                         'priority' => 600,
                         'options' => [
-                            'route'    => '/get-map-points/',
+                            'route'    => '/get-map-attractions/',
                             'constraints' => ['url' => '.*'],
                             'defaults' => [
                                 'module'     => 'Museums',
                                 'section'    => 'Museums',
                                 'controller' => 'Museums\Controller\Museums',
-                                'action'     => 'getMapPoints',
+                                'action'     => 'getMapAttractions',
                             ],
                         ],
                     ],
@@ -107,19 +107,19 @@ return [
                             ],
                         ],
                     ],
-                    'points' => [
+                    'attractions' => [
                         'type'    => 'segment',
                         'priority' => 500,
                         'options' => [
-                            'route'    => '/points[/:action][/:id]/',
+                            'route'    => '/attractions[/:action][/:id]/',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id'     => '[0-9]+',
                             ],
                             'defaults' => [
                                 'module'     => 'Museums',
-                                'section'    => 'Points',
-                                'controller' => 'MuseumsAdmin\Controller\Points',
+                                'section'    => 'Attractions',
+                                'controller' => 'MuseumsAdmin\Controller\Attractions',
                                 'action'     => 'index',
                                 'side'       => 'admin'
                             ],

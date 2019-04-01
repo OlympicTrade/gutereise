@@ -348,6 +348,7 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
     /**
      * @param bool $transaction
      * @return bool
+     * @throws Exception
      */
     public function remove($transaction = true)
     {

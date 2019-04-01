@@ -46,7 +46,7 @@ class Collection extends AbstractHelper
                     $html .= $this->getView()->formElement($select);
                 } else {
                     if($opts['type'] == 'textarea') {
-                        $html .= '<textarea name="' . $name . '">' . htmlspecialchars($row->get($field)) . '</textarea>';
+                        $html .= '<textarea class="editor" name="' . $name . '">' . htmlspecialchars($row->get($field)) . '</textarea>';
                     } else {
                         $html .= '<input type="text" name="' . $name . '" value="' . htmlspecialchars($row->get($field)) . '">';
                     }

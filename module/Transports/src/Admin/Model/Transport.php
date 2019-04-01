@@ -35,6 +35,20 @@ class Transport extends Entity
             'url'          => [],
         ]);
 
+        $this->addPlugin('props', function($model) {
+            $item = new Entity();
+            $item->setTable('transports_props');
+            $item->addProperties([
+                'depend'     => [],
+                'name'       => [],
+                'icon'       => [],
+            ]);
+            $catalog = $item->getCollection()->getPlugin();
+            $catalog->setParentId($model->getId());
+
+            return $catalog;
+        });
+
         $this->addPlugin('image', function() {
             $image = new Image();
             $image->setTable('transports_images');

@@ -8,25 +8,27 @@ class Numbers
      *
      * @param $number
      * @param $endingArray
+     * @param $showNbr
      * @return string
      */
-    static public function declension($number, $endingArray)
+    static public function declension($number, $endingArray, $showNbr = true)
     {
-        $number = $number % 100;
+        $str = ($showNbr ? $number . ' ' : '');
 
+        $number = $number % 100;
         if ($number >= 11 && $number <= 19) {
-            $ending = $endingArray[2];
+            $str .= $endingArray[2];
         } else {
-            $i = $number % 10;
-            switch ($i) {
-                case (1): $ending = $endingArray[0]; break;
+            switch ($number % 10)
+            {
+                case (1): $str .= $endingArray[0]; break;
                 case (2):
                 case (3):
-                case (4): $ending = $endingArray[1]; break;
-                default: $ending = $endingArray[2];
+                case (4): $str .= $endingArray[1]; break;
+                default: $str .= $endingArray[2];
             }
         }
 
-        return $ending;
+        return $str;
     }
 }

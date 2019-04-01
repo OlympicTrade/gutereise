@@ -1,43 +1,72 @@
 <?php
 namespace Museums\Model;
 
-use Aptero\Db\Entity\Entity;
+use Application\Model\Content;
+use Aptero\Db\Entity\EntityHierarchy;
+use Aptero\Db\Plugin\Images;
 use Excursions\Model\Excursion;
 
-class Museum extends Entity
+class Museum extends EntityHierarchy
 {
     public function __construct()
     {
         $this->setTable('museums');
 
         $this->addProperties([
-            'name'    => [],
-            'header2' => [],
-            'url'     => [],
-            'preview' => [],
-            'text'    => [],
-            'lat'     => [],
-            'lng'     => [],
-            'title'   => [],
+            'parent'   => [],
+            'name'     => [],
+            'header'   => [],
+            'url'      => [],
+            'url_path' => [],
+            'preview'  => [],
+            'text'     => [],
+            'lat'      => [],
+            'lng'      => [],
+            'title'    => [],
             'description'   => [],
+            'active' => [],
         ]);
 
-        $this->addPlugin('points', function($model) {
-            $points = Point::getEntityCollection();
-            $points->select()
-                ->join(['mtp' => 'museums_mtp'], 'mtp.point_id = t.id', [])
-                ->where(['mtp.depend' => $model->getId()]);
+        $this->addPlugin('content', function($model) {
+            $content = Content::getEntityCollection();
+            $content->select()->where([
+                'module'    => 'blog',
+                'depend'    => $model->getId(),
+            ])->order('sort');
 
-            return $points;
+            return $content;
         });
 
         $this->addPlugin('excursions', function($model) {
+            $items = Excursion::getEntityCollection();
+            $items->select()
+                ->join(['me' => 'museums_excursions'], 'me.excursion_id = t.id', [])
+                ->where(['me.depend' => $model->getId()]);
+
+            return $items;
+        });
+
+        /*$this->addPlugin('excursions', function($model) {
             $excursion = Excursion::getEntityCollection();
             $excursion->select()
                 ->join(['em' => 'excursions_museums'], 'em.depend = t.id', [])
                 ->where(['em.museum_id' => $model->getId()]);
 
             return $excursion;
+        });*/
+
+        $this->addPlugin('background', function() {
+            $image = new \Aptero\Db\Plugin\Image();
+            $image->setTable('museums_headers');
+            $image->setFolder('museums_headers');
+            $image->addResolutions([
+                'h' => [
+                    'width'  => 1920,
+                    'height' => 440,
+                    'crop'   => true,
+                ],
+            ]);
+            return $image;
         });
 
         $this->addPlugin('image', function() {
@@ -45,17 +74,52 @@ class Museum extends Entity
             $image->setTable('museums_images');
             $image->setFolder('museums');
             $image->addResolutions([
+                'g' => [
+                    'width'  => 900,
+                    'height' => 500,
+                    'crop'   => true,
+                ],
                 'm' => [
-                    'width'  => 400,
-                    'height' => 300,
+                    'width'  => 500,
+                    'height' => 320,
                     'crop'   => true,
                 ],
-                's' => [
-                    'width'  => 160,
-                    'height' => 110,
+                'r' => [
+                    'width'  => 965,
+                    'height' => 575,
                     'crop'   => true,
                 ],
+                'hr' => [
+                    'width'  => 1780,
+                    'height' => 970,
+                ]
             ]);
+
+            return $image;
+        });
+
+        $this->addPlugin('images', function() {
+            $image = new Images();
+            $image->setTable('museums_gallery');
+            $image->setFolder('museums_gallery');
+            $image->addResolutions([
+                'g' => [
+                    'width'  => 900,
+                    'height' => 500,
+                    'crop'   => true,
+                ],
+                'r' => [
+                    'width'  => 965,
+                    'height' => 575,
+                    'crop'   => true,
+                ],
+                'hr' => [
+                    'width'  => 1780,
+                    'height' => 970,
+                ]
+            ]);
+
+            $image->select()->order('sort');
 
             return $image;
         });
@@ -63,6 +127,6 @@ class Museum extends Entity
 
     public function getUrl()
     {
-        return '/museums/' . $this->get('url') . '/';
+        return '/attractions/' . trim($this->get('url_path'), '/') . '/';
     }
 }

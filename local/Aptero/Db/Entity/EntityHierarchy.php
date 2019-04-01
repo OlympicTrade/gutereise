@@ -56,6 +56,7 @@ class EntityHierarchy extends Entity
     /**
      * @param bool $transaction
      * @return bool
+     * @throws \Aptero\Exception\Exception
      */
     public function remove($transaction = true)
     {

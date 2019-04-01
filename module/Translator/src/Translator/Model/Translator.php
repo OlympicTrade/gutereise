@@ -121,7 +121,7 @@ class Translator
 
     public function getLangId()
     {
-        return DbConstants::$languages[self::$codes[$this->langCode]];
+        return /*DbConstants::$languages[*/self::$codes[$this->langCode]/*]*/;
     }
 
     public function setTranslator($translator)

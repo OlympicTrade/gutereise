@@ -3,6 +3,7 @@ namespace Transports\Controller;
 
 use Aptero\Mvc\Controller\AbstractActionController;
 use Transports\Form\CommonForm;
+use Transports\Model\Transport;
 
 class TransportsController extends AbstractActionController
 {
@@ -31,7 +32,20 @@ class TransportsController extends AbstractActionController
             $view->setTemplate('transports/transports/transport-ajax.phtml');
         }
 
+        switch ($transport->get('type')) {
+            case Transport::TYPE_AUTO:
+                $headerBg = '/images/headers/cars.jpg';
+                break;
+            case Transport::TYPE_BOAT:
+                $headerBg = '/images/headers/boats.jpg';
+                break;
+            case Transport::TYPE_COPTER:
+                $headerBg = '/images/headers/copter.jpg';
+                break;
+        }
+
         return $view->setVariables([
+            'headerBg'       => $headerBg,
             'header'         => $transport->get('name'),
             'transport'      => $transport,
             'commonForm'     => new CommonForm($transport),

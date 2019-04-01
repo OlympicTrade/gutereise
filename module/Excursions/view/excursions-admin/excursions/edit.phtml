@@ -3,6 +3,10 @@
     <?php echo $this->header ?>
 </h1>
 
+<div class="panel">
+    <a href="<?php echo $model->getPublicUrl() ?>" target="_blank">Показать на сайте</a>
+</div>
+
 <?php $form = $this->editForm ?>
 <?php echo $this->form()->openTag($form) ?>
 <div class="edit-form std-form">
@@ -31,6 +35,7 @@
                 ?>
             </div>
             <div class="tab" data-tab="plan">
+                <?php echo $this->formRow($form->get('pricetable-collection')); ?>
                 <?php echo $this->formRow($form->get('plan-collection')); ?>
             </div>
             <div class="tab" data-tab="photo">
@@ -43,10 +48,11 @@
                 ?>
             </div>
             <div class="tab" data-tab="links">
-                <?php
-                echo $this->adminFormRow($form->get('types-collection'));
-                echo $this->adminFormRow($form->get('museums-collection'));
-                echo $this->adminFormRow($form->get('transport-collection'));
+                <?php echo $this->adminFormRow($form->get('types-collection')); ?>
+                <div class="separator">Похожие экскурсии</div>
+                <?php echo $this->adminFormRow($form->get('reco-collection')); ?>
+                <div class="separator">Связанные достопримечательности</div>
+                <?php echo $this->adminFormRow($form->get('museums-collection'));
                 ?>
             </div>
             <div class="tab" data-tab="text">

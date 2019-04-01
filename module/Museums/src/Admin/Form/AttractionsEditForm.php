@@ -6,7 +6,7 @@ use Aptero\Form\Form;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
-class PointsEditForm extends Form
+class AttractionsEditForm extends Form
 {
     public function setModel($model)
     {
@@ -14,6 +14,10 @@ class PointsEditForm extends Form
 
         $this->get('image-image')->setOptions([
             'model' => $model->getPlugin('image'),
+        ]);
+
+        $this->get('background-image')->setOptions([
+            'model' => $model->getPlugin('background'),
         ]);
 
         $this->get('images-images')->setOptions([
@@ -81,6 +85,11 @@ class PointsEditForm extends Form
         $this->add([
             'name' => 'images-images',
             'type'  => 'Aptero\Form\Element\Admin\Images',
+        ]);
+
+        $this->add([
+            'name' => 'background-image',
+            'type'  => 'Aptero\Form\Element\Admin\Image',
         ]);
 
         $this->add([

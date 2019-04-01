@@ -13,12 +13,16 @@ class Content extends Entity
         $this->addProperties([
             'depend'      => [],
             'module'      => [],
-            'title'       => [],
             'text'        => [],
-            'video'       => [],
-            'type'        => [],
             'sort'        => [],
         ]);
+
+        $this->addPlugin('attrs', function() {
+            $properties = new \Aptero\Db\Plugin\Attributes();
+            $properties->setTable('content_attrs');
+
+            return $properties;
+        });
 
         $this->addPlugin('images', function() {
             $image = new ContentImages();
@@ -26,9 +30,13 @@ class Content extends Entity
             $image->setFolder('content');
             $image->addResolutions([
                 'm' => [
-                    'width'  => 750,
-                    'height' => 450,
+                    'width'  => 900,
+                    'height' => 500,
                     'crop'   => true,
+                ],
+                'p' => [
+                    'width'  => 900,
+                    'height' => 3000,
                 ],
                 'hr' => array(
                     'width'  => 1920,

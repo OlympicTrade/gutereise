@@ -83,6 +83,7 @@ class Module
             PUBLIC_DIR . '/css/libs/reset.css',
             PUBLIC_DIR . '/css/libs/lightslider.css',
             PUBLIC_DIR . '/css/libs/lightgallery.css',
+            //PUBLIC_DIR . '/css/libs/owlcarousel.css',
             PUBLIC_DIR . '/css/libs/fancybox.css',
             PUBLIC_DIR . '/css/libs/grid.css',
             PUBLIC_DIR . '/css/elements.scss',
@@ -95,6 +96,7 @@ class Module
              20 => PUBLIC_DIR . '/js/libs/fancybox/fancybox.js',
              25 => PUBLIC_DIR . '/js/libs/history.js',
              30 => PUBLIC_DIR . '/js/libs/inputmask.js',
+             //32 => PUBLIC_DIR . '/js/libs/owl.carousel.js',
              35 => PUBLIC_DIR . '/js/libs/lightslider.js',
              37 => PUBLIC_DIR . '/js/libs/lightgallery.js',
              45 => PUBLIC_DIR . '/js/libs/aptero.js',
@@ -231,8 +233,10 @@ class Module
         return array(
             'invokables' => array(
                 'IsMobile'              => 'Aptero\View\Helper\IsMobile',
+                'Gallery'               => 'Application\View\Helper\Gallery',
                 'MenuList'              => 'Application\View\Helper\MenuList',
                 'Breadcrumbs'           => 'Application\View\Helper\Breadcrumbs',
+                'ShortList'             => 'Application\View\Helper\ShortList',
                 'BtnSwitcher'           => 'Aptero\View\Helper\BtnSwitcher',
                 'FormRow'               => 'Aptero\Form\View\Helper\FormRow',
                 'FormErrors'            => 'Aptero\Form\View\Helper\FormErrors',

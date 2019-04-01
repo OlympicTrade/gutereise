@@ -41,6 +41,23 @@ $(function() {
             return false;
         }
     });
+
+    $('.content-list').on('click', '.del', function() {
+        var item = $(this).closest('.item');
+
+        $.ajax({
+            url: '/admin/application/content/delete/',
+            method: 'post',
+            data: {
+                id: item.data('id')
+            },
+            success: function () {
+                item.remove();
+            }
+        });
+
+        item.remove();
+    });
 });
 
 function initTooltip() {

@@ -3,6 +3,8 @@ namespace Excursions\Model;
 
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Plugin\Images;
+use Museums\Model\Attraction;
+use Museums\Model\Museum;
 use Sync\Model\Sync;
 
 class Excursion extends Entity
@@ -35,6 +37,29 @@ class Excursion extends Entity
             'url'               => [],
         ]);
 
+        $this->addPlugin('reco', function($model) {
+            $items = Excursion::getEntityCollection();
+            $items->select()
+                ->join(['er' => 'excursions_reco'], 'er.excursion_id = t.id', [])
+                ->where(['er.depend' => $model->getId()]);
+
+            return $items;
+        });
+
+        $this->addPlugin('pricetable', function($model) {
+            $item = new Entity();
+            $item->setTable('excursions_pricetable');
+            $item->addProperties([
+                'depend'     => [],
+                'text'       => [],
+            ]);
+
+            $list = $item->getCollection();
+            $list->select()->where(['depend' => $model->getId()]);
+
+            return $list;
+        });
+
         $this->addPlugin('plan', function($model) {
             $item = new Entity();
             $item->setTable('excursions_plan');
@@ -48,6 +73,15 @@ class Excursion extends Entity
             $catalog->select()->where(['depend' => $model->getId()]);
 
             return $catalog;
+        });
+
+        $this->addPlugin('museums', function($model) {
+            $items = Museum::getEntityCollection();
+            $items->select()
+                ->join(['em' => 'excursions_museums'], 'em.museum_id = t.id', [])
+                ->where(['em.depend' => $model->getId()]);
+
+            return $items;
         });
 
         $this->addPlugin('background', function() {
@@ -70,13 +104,13 @@ class Excursion extends Entity
             $image->setFolder('excursions');
             $image->addResolutions([
                 'g' => [
-                    'width'  => 800,
+                    'width'  => 900,
                     'height' => 500,
                     'crop'   => true,
                 ],
                 'm' => [
-                    'width'  => 505,
-                    'height' => 240,
+                    'width'  => 500,
+                    'height' => 320,
                     'crop'   => true,
                 ],
                 'r' => [
@@ -99,7 +133,7 @@ class Excursion extends Entity
             $image->setFolder('excursions_gallery');
             $image->addResolutions([
                 'g' => [
-                    'width'  => 800,
+                    'width'  => 900,
                     'height' => 500,
                     'crop'   => true,
                 ],
@@ -119,7 +153,7 @@ class Excursion extends Entity
             return $image;
         });
 
-        $this->addPlugin('museums', function($model) {
+        /*$this->addPlugin('museums', function($model) {
             $item = new Entity();
             $item->setTable('excursions_museums');
             $item->addProperties([
@@ -131,7 +165,7 @@ class Excursion extends Entity
             $catalog->setParentId($model->getId());
 
             return $catalog;
-        });
+        });*/
     }
 
     public function getUrl()
