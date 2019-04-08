@@ -28,14 +28,15 @@ class ContentController extends AbstractActionController
             $content->unserializeArray($this->params()->fromPost());
             $content->save();
 
-            $helper = $this->getServiceLocator()->get('ViewHelperManager')->get('adminContentList');
+            return new JsonModel([]);
+            /*$helper = $this->getServiceLocator()->get('ViewHelperManager')->get('adminContentList');
 
             $reps = [
                 'id'   => $content->getId(),
                 'html' => $helper($content),
             ];
 
-            return new JsonModel($reps);
+            return new JsonModel($reps);*/
         }
 
         $view = new ViewModel();
@@ -53,6 +54,7 @@ class ContentController extends AbstractActionController
             $content->setVariables([
                 'module' => $module,
                 'depend' => $depend,
+                'sort'   => $this->params()->fromQuery('sort', 0),
             ]);
         } else {
             throw new \Exception('unknown Content module or Id');

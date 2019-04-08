@@ -43,6 +43,10 @@ $(function() {
     });
 
     $('.content-list').on('click', '.del', function() {
+        if(!confirm('Удалить запись?')) {
+            return;
+        }
+
         var item = $(this).closest('.item');
 
         $.ajax({

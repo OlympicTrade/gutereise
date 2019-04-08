@@ -5,7 +5,7 @@ return [
             'Excursions\Controller\Excursions'          => 'Excursions\Controller\ExcursionsController',
             'Excursions\Controller\MobileExcursions'    => 'Excursions\Controller\MobileExcursionsController',
             'ExcursionsAdmin\Controller\Excursions'     => 'ExcursionsAdmin\Controller\ExcursionsController',
-            'ExcursionsAdmin\Controller\Types'          => 'ExcursionsAdmin\Controller\TypesController',
+            'ExcursionsAdmin\Controller\Tags'           => 'ExcursionsAdmin\Controller\TagsController',
         ],
     ],
     'router' => [
@@ -93,6 +93,20 @@ return [
                             ],
                         ],
                     ],
+                    'tags' => [
+                        'type'    => 'segment',
+                        'priority' => 600,
+                        'options' => [
+                            'route'    => '/category/[:tag]/',
+                            'constraints' => ['url' => '.*'],
+                            'defaults' => [
+                                'module'     => 'Excursions',
+                                'section'    => 'Excursions',
+                                'controller' => 'Excursions\Controller\Excursions',
+                                'action'     => 'tags',
+                            ],
+                        ],
+                    ],
                     'price' => [
                         'type'    => 'segment',
                         'priority' => 600,
@@ -154,19 +168,19 @@ return [
                             ],
                         ],
                     ],
-                    'types' => [
+                    'tags' => [
                         'type'    => 'segment',
                         'priority' => 500,
                         'options' => [
-                            'route'    => '/types[/:action][/:id]/',
+                            'route'    => '/tags[/:action][/:id]/',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id'     => '[0-9]+',
                             ],
                             'defaults' => [
                                 'module'     => 'Excursions',
-                                'section'    => 'Types',
-                                'controller' => 'ExcursionsAdmin\Controller\Types',
+                                'section'    => 'Tags',
+                                'controller' => 'ExcursionsAdmin\Controller\Tags',
                                 'action'     => 'index',
                                 'side'       => 'admin'
                             ],

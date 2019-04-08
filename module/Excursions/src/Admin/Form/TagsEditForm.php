@@ -1,31 +1,15 @@
 <?php
-namespace MuseumsAdmin\Form;
+namespace ExcursionsAdmin\Form;
 
 use Aptero\Form\Form;
 
+use ExcursionsAdmin\Model\Tags;
+use Museums\Model\Museum;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
-class AttractionsEditForm extends Form
+class TagsEditForm extends Form
 {
-    public function setModel($model)
-    {
-        parent::setModel($model);
-
-        $this->get('image-image')->setOptions([
-            'model' => $model->getPlugin('image'),
-        ]);
-
-        $this->get('background-image')->setOptions([
-            'model' => $model->getPlugin('background'),
-        ]);
-
-        $this->get('images-images')->setOptions([
-            'model'   => $model->getPlugin('images'),
-            'product' => $model,
-        ]);
-    }
-
     public function __construct()
     {
         parent::__construct('edit-form');
@@ -46,18 +30,10 @@ class AttractionsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'preview',
-            'type'  => 'Zend\Form\Element\Textarea',
-            'options' => [
-                'label' => 'Кратк. описание',
-            ],
-        ]);
-
-        $this->add([
             'name' => 'url',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
-                'label' => 'url',
+                'label' => 'Url',
             ],
         ]);
 
@@ -77,27 +53,15 @@ class AttractionsEditForm extends Form
             ],
         ]);
 
-        $this->add(array(
-            'name' => 'image-image',
-            'type'  => 'Aptero\Form\Element\Admin\Image',
-        ));
-
         $this->add([
-            'name' => 'images-images',
-            'type'  => 'Aptero\Form\Element\Admin\Images',
-        ]);
-
-        $this->add([
-            'name' => 'background-image',
-            'type'  => 'Aptero\Form\Element\Admin\Image',
-        ]);
-
-        $this->add([
-            'name' => 'text',
-            'type'  => 'Zend\Form\Element\Textarea',
-            'attributes' => [
-                'class' => 'editor',
-                'id'    => 'page-text'
+            'name' => 'type',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label' => 'Тип',
+                'options' => [
+                    Tags::TYPE_MAIN => 'Главные типы',
+                    Tags::TYPE_TAG  => 'Поисковые теги',
+                ]
             ],
         ]);
     }
@@ -109,12 +73,12 @@ class AttractionsEditForm extends Form
 
         $inputFilter->add($factory->createInput([
             'name'     => 'name',
-            'required' => true,
+            'required' => false,
             'filters'  => [
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
-       ]));
+        ]));
 
         $this->setInputFilter($inputFilter);
     }

@@ -4,7 +4,7 @@ namespace MuseumsAdmin\Form;
 use Aptero\Form\Form;
 
 use ExcursionsAdmin\Model\Excursion;
-use MuseumsAdmin\Model\Attraction;
+use MuseumsAdmin\Model\Tags;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
@@ -28,9 +28,8 @@ class MuseumsEditForm extends Form
         ]);
 
         $this->get('parent')->setOption('model', $this->getModel());
-        $this->get('excursions-collection')->setOption('model', $model->getPlugin('excursions'));
 
-        //$this->get('attractions-collection')->setOption('model', $model->getPlugin('attractions'));
+        $this->get('tags-collection')->setOption('model', $model->getPlugin('tags'));
     }
 
     public function __construct()
@@ -52,20 +51,6 @@ class MuseumsEditForm extends Form
                 'empty'   => '',
             ),
         ));
-
-        $this->add([
-            'name' => 'excursions-collection',
-            'type'  => 'Aptero\Form\Element\Admin\Collection',
-            'options' => [
-                'options'      => [
-                    'excursion_id' => [
-                        'label'   => 'Экскурсия',
-                        'width'   => 150,
-                        'options' => new Excursion()
-                    ],
-                ]
-            ],
-        ]);
 
         $this->add([
             'name' => 'lat',
@@ -171,19 +156,19 @@ class MuseumsEditForm extends Form
             ],
         ]);
 
-        /*$this->add([
-            'name' => 'attractions-collection',
+        $this->add([
+            'name' => 'tags-collection',
             'type'  => 'Aptero\Form\Element\Admin\Collection',
             'options' => [
                 'options'      => [
-                    'attraction_id' => [
-                        'label'   => 'Достопримечательности',
+                    'tag_id' => [
+                        'label'   => 'Теги',
                         'width'   => 200,
-                        'options' => new Attraction()
+                        'options' => new Tags()
                     ],
                 ]
             ],
-        ]);*/
+        ]);
     }
 
     public function setFilters()

@@ -3,7 +3,7 @@
 namespace Excursions;
 
 use ExcursionsAdmin\Model\Excursion;
-use ExcursionsAdmin\Model\ExcursionType;
+use ExcursionsAdmin\Model\Tags;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
 class Module implements AutoloaderProviderInterface
@@ -37,8 +37,8 @@ class Module implements AutoloaderProviderInterface
                 'ExcursionsAdmin\Service\ExcursionsService' => function ($sm) {
                     return new \ExcursionsAdmin\Service\ExcursionsService(new Excursion());
                 },
-                'ExcursionsAdmin\Service\TypesService' => function ($sm) {
-                    return new \ExcursionsAdmin\Service\TypesService(new ExcursionType());
+                'ExcursionsAdmin\Service\TagsService' => function ($sm) {
+                    return new \ExcursionsAdmin\Service\TagsService(new Tags());
                 },
             ]
         ];

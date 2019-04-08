@@ -1,15 +1,22 @@
 <?php
-namespace ExcursionsAdmin\Form;
+namespace MuseumsAdmin\Form;
 
 use Aptero\Form\Form;
 
-use ExcursionsAdmin\Model\ExcursionType;
-use Museums\Model\Museum;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
-class TypesEditForm extends Form
+class TagsEditForm extends Form
 {
+    public function setModel($model)
+    {
+        parent::setModel($model);
+
+        $this->get('background-image')->setOptions([
+            'model' => $model->getPlugin('background'),
+        ]);
+    }
+
     public function __construct()
     {
         parent::__construct('edit-form');
@@ -33,7 +40,7 @@ class TypesEditForm extends Form
             'name' => 'url',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
-                'label' => 'Url',
+                'label' => 'url',
             ],
         ]);
 
@@ -54,15 +61,8 @@ class TypesEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'type',
-            'type'  => 'Zend\Form\Element\Select',
-            'options' => [
-                'label' => 'Тип',
-                'options' => [
-                    ExcursionType::TYPE_MAIN => 'Главные типы',
-                    ExcursionType::TYPE_TAG  => 'Поисковые теги',
-                ]
-            ],
+            'name' => 'background-image',
+            'type'  => 'Aptero\Form\Element\Admin\Image',
         ]);
     }
 
@@ -73,12 +73,12 @@ class TypesEditForm extends Form
 
         $inputFilter->add($factory->createInput([
             'name'     => 'name',
-            'required' => false,
+            'required' => true,
             'filters'  => [
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
-        ]));
+       ]));
 
         $this->setInputFilter($inputFilter);
     }

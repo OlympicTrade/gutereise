@@ -4,7 +4,7 @@ namespace ExcursionsAdmin\Form;
 use Aptero\Form\Form;
 
 use ExcursionsAdmin\Model\Excursion;
-use ExcursionsAdmin\Model\ExcursionType;
+use ExcursionsAdmin\Model\Tags;
 use MuseumsAdmin\Model\Museum;
 use TransportsAdmin\Model\Transport;
 use Zend\InputFilter\Factory as InputFactory;
@@ -29,11 +29,10 @@ class ExcursionsEditForm extends Form
             'product' => $model,
         ]);
 
-        //$this->get('transport-collection')->setOption('model', $model->getPlugin('transport'));
         $this->get('pricetable-collection')->setOption('model', $model->getPlugin('pricetable'));
         $this->get('museums-collection')->setOption('model', $model->getPlugin('museums'));
         $this->get('reco-collection')->setOption('model', $model->getPlugin('reco'));
-        $this->get('types-collection')->setOption('model', $model->getPlugin('types'));
+        $this->get('tags-collection')->setOption('model', $model->getPlugin('tags'));
         $this->get('plan-collection')->setOption('model', $model->getPlugin('plan'));
     }
 
@@ -210,14 +209,14 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'types-collection',
+            'name' => 'tags-collection',
             'type'  => 'Aptero\Form\Element\Admin\Collection',
             'options' => [
                 'options'      => [
-                    'type_id' => [
+                    'tag_id' => [
                         'label'   => 'Тип',
                         'width'   => 150,
-                        'options' => new ExcursionType()
+                        'options' => new Tags()
                     ],
                 ]
             ],

@@ -4,7 +4,7 @@ return [
         'invokables' => [
             'Museums\Controller\Museums'      => 'Museums\Controller\MuseumsController',
             'MuseumsAdmin\Controller\Museums' => 'MuseumsAdmin\Controller\MuseumsController',
-            'MuseumsAdmin\Controller\Attractions'  => 'MuseumsAdmin\Controller\AttractionsController',
+            'MuseumsAdmin\Controller\Tags'    => 'MuseumsAdmin\Controller\TagsController',
         ],
     ],
     'router' => [
@@ -27,6 +27,20 @@ return [
                                 'section'    => 'Museums',
                                 'controller' => 'Museums\Controller\Museums',
                                 'action'     => 'index',
+                            ],
+                        ],
+                    ],
+                    'tags' => [
+                        'type'    => 'segment',
+                        'priority' => 600,
+                        'options' => [
+                            'route'    => '/category/[:tag]/',
+                            'constraints' => ['url' => '.*'],
+                            'defaults' => [
+                                'module'     => 'Museums',
+                                'section'    => 'Museums',
+                                'controller' => 'Museums\Controller\Museums',
+                                'action'     => 'tags',
                             ],
                         ],
                     ],
@@ -107,19 +121,19 @@ return [
                             ],
                         ],
                     ],
-                    'attractions' => [
+                    'tags' => [
                         'type'    => 'segment',
                         'priority' => 500,
                         'options' => [
-                            'route'    => '/attractions[/:action][/:id]/',
+                            'route'    => '/tags[/:action][/:id]/',
                             'constraints' => [
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id'     => '[0-9]+',
                             ],
                             'defaults' => [
                                 'module'     => 'Museums',
-                                'section'    => 'Attractions',
-                                'controller' => 'MuseumsAdmin\Controller\Attractions',
+                                'section'    => 'Tags',
+                                'controller' => 'MuseumsAdmin\Controller\Tags',
                                 'action'     => 'index',
                                 'side'       => 'admin'
                             ],

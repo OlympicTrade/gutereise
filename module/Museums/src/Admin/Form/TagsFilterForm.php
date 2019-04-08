@@ -8,7 +8,7 @@ use Zend\InputFilter\InputFilter;
 
 use User\Model\User;
 
-class AttractionsFilterForm extends Form
+class TagsFilterForm extends Form
 {
     public function __construct()
     {

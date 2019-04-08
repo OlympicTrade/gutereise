@@ -13,8 +13,6 @@
     <div class="tabs tabs-class" data-name="edit-tabs">
         <div class="tabs-header">
             <div class="tab" data-tab="general">Основное</div>
-            <div class="tab" data-tab="links">Связи</div>
-            <div class="tab" data-tab="photo">Фото</div>
             <div class="tab" data-tab="seo">SEO</div>
             <div class="tab" data-tab="map">Карта</div>
             <div class="tab" data-tab="content">Тест</div>
@@ -31,12 +29,8 @@
                 echo $this->adminFormRow($form->get('parent'));
                 echo $this->adminFormRow($form->get('active'));
                 ?>
-            </div>
-            <div class="tab" data-tab="links">
-                <?php echo $this->formRow($form->get('excursions-collection')); ?>
-            </div>
-            <div class="tab" data-tab="photo">
-                <?php echo $this->formRow($form->get('images-images')); ?>
+
+                <?php echo $this->formRow($form->get('tags-collection')); ?>
             </div>
             <div class="tab" data-tab="seo">
                 <?php
@@ -78,8 +72,7 @@
             </div>
 
             <div class="tab" data-tab="content">
-                <a href="/admin/application/content/edit/?module=blog&depend=<?php echo $model->getId() ?>" class="btn popup-form">Добавить</a>
-                <?php echo $this->adminContentList($model->getPlugin('content')); ?>
+                <?php echo $this->adminContentList($model->getPlugin('content'), $model); ?>
             </div>
         </div>
     </div>

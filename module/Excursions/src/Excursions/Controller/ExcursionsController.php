@@ -6,6 +6,7 @@ use Aptero\Mvc\Controller\AbstractActionController;
 use Excursions\Form\CommonForm;
 use Excursions\Form\OrderForm;
 use Excursions\Model\Excursion;
+use Excursions\Model\Tags;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
@@ -30,26 +31,31 @@ class ExcursionsController extends AbstractActionController
         //$subUrl = substr($url, strrpos($url, '/') + 1);
         //$excursionUrl = substr($url, 0, strrpos($url, '/'));
 
-        $type = $excursionsService->getType(['url' => $url])->load();
-        if($type) {
-            return $this->excursionsAction(['type' => $type]);
-        }
-
         return $this->send404();
+    }
+
+    public function tagsAction()
+    {
+        $url = $this->params()->fromRoute('tag');
+
+        $tag = new Tags();
+        $tag->select()->where(['url' => $url]);
+
+        return $this->excursionsAction(['tag' => $tag]);
     }
 
     public function excursionsAction($options = [])
     {
         $excursionsService = $this->getExcursionsService();
 
-        $type  = $options['type'] ?? null;
+        $tag  = $options['tag'] ?? null;
 
         $view = $this->generate();
         $meta = $this->layout()->getVariable('meta');
 
-        if($type) {
-            $meta->title = $type->get('title');
-            $meta->description = $type->get('description');
+        if($tag) {
+            $meta->title = $tag->get('title');
+            $meta->description = $tag->get('description');
 
             $this->layout()->setVariable('meta', $meta);
         }
@@ -58,8 +64,8 @@ class ExcursionsController extends AbstractActionController
 
         $filters = $this->params()->fromQuery();
 
-        if($type) {
-            $filters['type'] = $type->getId();
+        if($tag) {
+            $filters['tag'] = $tag->getId();
         }
 
         $excursions = $excursionsService->getPaginator($page, $filters);
@@ -68,21 +74,13 @@ class ExcursionsController extends AbstractActionController
             $resp = [];
 
             $resp['html']['items'] = $this->viewHelper('excursionsList', $excursions);
-
-            //$widgetsHelper = $this->getViewHelper('catalogWidgets');
-
-            $resp['html']['filters'] =
-                /*$widgetsHelper('price', ['data' => $filters['price'], 'min' => $priceMinMax['min'], 'max' => $priceMinMax['max']])
-                .$widgetsHelper('sort', ['data' => $filters['sort']])
-                .$widgetsHelper('brands', ['data' => $filters['brands'], 'brands' => $brands]);*/
-
             $resp['meta'] = $meta;
 
             return new JsonModel($resp);
         }
 
-        if($type) {
-            $url = $type->getUrl();
+        if($tag) {
+            $url = $tag->getUrl();
         } else {
             $url = '/excursions/';
         }
@@ -90,16 +88,14 @@ class ExcursionsController extends AbstractActionController
         $this->layout()->setVariable('canonical', $url);
         $view->setTemplate('excursions/excursions/index');
 
-        if($type) {
-            $this->addBreadcrumbs([['url' => $url, 'name' => $type->get('name')]]);
+        if($tag) {
+            $this->addBreadcrumbs([['url' => $url, 'name' => $tag->get('name')]]);
             $view->setVariables([
-                'header'      => $type->get('name'),
+                'header'      => $tag->get('name'),
             ]);
         }
 
-        $filters['type'] = $type;
-
-        //$excursions = $this->getExcursionsService()->getExcursions();
+        $filters['tag'] = $tag;
 
         return $view->setVariables([
             'filters'     => $filters,

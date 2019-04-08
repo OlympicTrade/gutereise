@@ -226,11 +226,13 @@ $.url = function(){
 };
 
 /* Tabs */
-var Tabs = function() {
-    this.el = null;
+var Tabs = function(el) {
+    this.el = el;
+    var tabsName = this.el.data('name');
 
     this.init = function() {
         var header = this.el.children('.tabs-header');
+        //var hash = $.url().getHash();
 
         var tabs = this;
         header.find('.tab').on('click', function(){
@@ -238,12 +240,18 @@ var Tabs = function() {
         });
 
         var active = header.children('.tab.active');
+
+        /*if(tabsName !== undefined && hash[tabsName] !== undefined) {
+            active = header.children('.tab[data-tab="' + hash[tabsName] +  '"]').addClass('active');
+        }*/
+
         if(!active.length) {
-            var tabName = $.url().getHash(this.el.attr('data-name'));
+            var tabName = $.url().getHash(tabsName);
             if(tabName) {
                 active = header.children('.tab[data-tab="' + tabName +  '"]').addClass('active');
             }
         }
+
         if(!active.length) {
             active = header.children('.tab:eq(0)').addClass('active');
         }
@@ -260,7 +268,9 @@ var Tabs = function() {
         body.find('.tab').removeClass('active');
         body.find('.tab[data-tab="' + tab.attr('data-tab') + '"]').addClass('active');
 
-        //$.url().setHash(this.el.attr('data-name'), tab.attr('data-tab'));
+        if(this.el.data('name') !== undefined) {
+            $.url().setHash(tabsName, tab.attr('data-tab'));
+        }
     };
 
     this.setElement = function(el) {
@@ -271,8 +281,8 @@ var Tabs = function() {
 
 $.fn.tabs = function(params){
     $(this).each(function(){
-        var tabs = new Tabs();
-        tabs.setElement($(this)).init();
+        var tabs = new Tabs($(this));
+        tabs.init();
     });
 };
 

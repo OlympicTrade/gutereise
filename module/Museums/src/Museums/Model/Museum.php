@@ -46,15 +46,6 @@ class Museum extends EntityHierarchy
             return $items;
         });
 
-        /*$this->addPlugin('excursions', function($model) {
-            $excursion = Excursion::getEntityCollection();
-            $excursion->select()
-                ->join(['em' => 'excursions_museums'], 'em.depend = t.id', [])
-                ->where(['em.museum_id' => $model->getId()]);
-
-            return $excursion;
-        });*/
-
         $this->addPlugin('background', function() {
             $image = new \Aptero\Db\Plugin\Image();
             $image->setTable('museums_headers');

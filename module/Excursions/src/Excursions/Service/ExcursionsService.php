@@ -5,15 +5,15 @@ namespace Excursions\Service;
 use Translator\Model\Translator;
 use Aptero\Service\AbstractService;
 use Excursions\Model\Excursion;
-use Excursions\Model\ExcursionType;
+use Excursions\Model\Tags;
 use Sync\Model\DbConstants;
 use Sync\Model\Sync;
 
 class ExcursionsService extends AbstractService
 {
-    public function getType($filters = [])
+    public function getTag($filters = [])
     {
-        $types = new ExcursionType();
+        $types = new Tags();
 
         if($filters['url']) {
             $types->select()->where(['url' => $filters['url']]);
@@ -49,17 +49,17 @@ class ExcursionsService extends AbstractService
             $select->where(['t.url' => $filters['url']]);
         }
 
-        if(!empty($filters['type'])) {
+        if(!empty($filters['tag'])) {
             $select
                 ->join(['ett' => 'excursions_ett'], 't.id = ett.depend', [], 'left')
-                ->where(['ett.type_id' => $filters['type']]);
+                ->where(['ett.tag_id' => $filters['tag']]);
         }
 
-        if(!empty($filters['museums'])) {
+        /*if(!empty($filters['museums'])) {
             $select
                 ->join(['etm' => 'excursions_museums'], 't.id = etm.depend', [], 'left')
                 ->where(['etm.museum_id' => $filters['museums']]);
-        }
+        }*/
 
         $language = Translator::getInstance();
         if($language->isForeigners()) {

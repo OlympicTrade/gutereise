@@ -2,7 +2,7 @@
     'background' => '/images/headers/petergof.jpg'
 ]); ?>
 
-<div class="block excursions-block">
+<div class="block module-items-block sidebar-aware">
     <div class="container">
         <div class="col-left sidebar">
             <div class="slider filters">
@@ -10,7 +10,16 @@
                 echo $this->ExcursionsWidgets('search', [
                     'value'   => $filters['search'],
                 ]);
-                echo $this->ExcursionsWidgets('types', [
+
+                $tags = \Excursions\Model\Tags::getEntityCollection();
+                $tags->select()->where
+                    ->greaterThan('count', 0);
+
+                echo $this->ExcursionsWidgets('catalog', [
+                    'value'   => $filters['tags'],
+                    'data'    => $tags
+                ]);
+                /*echo $this->ExcursionsWidgets('types', [
                     'value'   => $filters['type'],
                     'data'    => \Excursions\Model\ExcursionType::getEntityCollection()
                 ]);
@@ -21,7 +30,7 @@
                 echo $this->ExcursionsWidgets('museums', [
                     'value'   => $filters['museums'],
                     'data'    => $museums
-                ]);
+                ]);*/
                 ?>
             </div>
         </div>

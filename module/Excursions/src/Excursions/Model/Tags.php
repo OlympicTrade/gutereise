@@ -3,14 +3,14 @@ namespace Excursions\Model;
 
 use Aptero\Db\Entity\Entity;
 
-class ExcursionType extends Entity
+class Tags extends Entity
 {
     const TYPE_MAIN   = 1;
     const TYPE_TAG    = 2;
 
     public function __construct()
     {
-        $this->setTable('excursions_types');
+        $this->setTable('excursions_tags');
 
         $this->addProperties([
             'name'           => [],
@@ -19,11 +19,12 @@ class ExcursionType extends Entity
             'description'    => [],
             'type'           => [],
             'hits'           => [],
+            'count'          => [],
         ]);
     }
 
     public function getUrl()
     {
-        return '/excursions/' . $this->get('url') . '/';
+        return '/excursions/category/' . $this->get('url') . '/';
     }
 }

@@ -6,6 +6,7 @@ use Aptero\Db\Entity\EntityCollection;
 use Aptero\Db\Plugin\Images;
 use Sync\Model\Sync;
 use TranslatorAdmin\Model\Translator;
+use Zend\Db\Sql\Expression;
 
 class Excursion extends Entity
 {
@@ -161,12 +162,12 @@ class Excursion extends Entity
             return $catalog;
         });*/
 
-        $this->addPlugin('types', function($model) {
+        $this->addPlugin('tags', function($model) {
             $item = new Entity();
             $item->setTable('excursions_ett');
             $item->addProperties([
                 'depend'     => [],
-                'type_id'    => [],
+                'tag_id'     => [],
             ]);
             $catalog = $item->getCollection()->getPlugin();
             $catalog->setParentId($model->getId());
@@ -186,11 +187,22 @@ class Excursion extends Entity
             return true;
         });
 
-        /*$this->getEventManager()->attach(array(Entity::EVENT_POST_INSERT, Entity::EVENT_POST_UPDATE), function ($event) {
-            $model = $event->getTarget();
+        $this->getEventManager()->attach(array(Entity::EVENT_POST_INSERT, Entity::EVENT_POST_UPDATE), function ($event) {
+            $select = $this->getSql()->select();
+            $select->from(['t' => 'excursions_ett'])
+                ->columns(['tag_id', 'count' => new Expression('COUNT(*)')])
+                ->group('tag_id');
+
+            $res = $this->execute($select);
+
+            foreach ($res as $row) {
+                if($tag = (new Tags(['id' => $row['tag_id']]))->load()) {
+                    $tag->set('count', $row['count'])->save();
+                }
+            }
 
             return true;
-        });*/
+        });
 
         $this->addTranslate($this);
     }

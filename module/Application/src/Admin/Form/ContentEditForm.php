@@ -37,6 +37,11 @@ class ContentEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'sort',
+            'type'  => 'Zend\Form\Element\Hidden',
+        ]);
+
+        $this->add([
             'name' => 'attrs-header',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
@@ -88,13 +93,13 @@ class ContentEditForm extends Form
             'options' => [],
         ]);
 
-        $this->add([
+        /*$this->add([
             'name' => 'sort',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
                 'label'  => 'Сортировка',
             ]
-        ]);
+        ]);*/
 
         $this->add([
             'name' => 'text',

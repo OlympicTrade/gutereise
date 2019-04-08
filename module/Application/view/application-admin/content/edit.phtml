@@ -1,5 +1,5 @@
 <form action="" class="edit-form std-form content-editor">
-    <div class="tabs tabs-class" data-name="edit-tabs">
+    <div class="tabs tabs-class">
         <div class="tabs-header">
             <div class="tab" data-tab="text">Текст</div>
             <div class="tab" data-tab="photo">Картинки</div>
@@ -8,6 +8,7 @@
         <div class="tabs-body">
             <div class="tab" data-tab="text">
                 <?php echo $this->formElement($form->get('id')); ?>
+                <?php echo $this->formElement($form->get('sort')); ?>
                 <?php echo $this->formElement($form->get('depend')); ?>
                 <?php echo $this->formElement($form->get('module')); ?>
                 <?php echo $this->adminFormRow($form->get('attrs-header')); ?>
@@ -57,7 +58,8 @@
                     $(resp.html).appendTo(list);
                 }
 
-                $.fancybox.close();
+                //$.fancybox.close();
+                location.reload();
             }
         });
         return false;

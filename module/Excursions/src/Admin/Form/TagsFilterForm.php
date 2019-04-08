@@ -6,7 +6,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
-class TypesFilterForm extends Form
+class TagsFilterForm extends Form
 {
     public function __construct()
     {

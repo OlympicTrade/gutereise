@@ -104,7 +104,7 @@ setcookie("greeting", 1, time()+(31104000), '/');
                     <li>
                         <a href="/excursions/"><i class="fas fa-university"></i> <?php echo $this->tr('Экскурсии') ?></a>
                         <?php
-                        $sub = \Excursions\Model\ExcursionType::getEntityCollection();
+                        $sub = \Excursions\Model\Tags::getEntityCollection();
                         $sub->select()->where(['type' => 1]);
                         echo $this->menuList($sub);
                         ?>

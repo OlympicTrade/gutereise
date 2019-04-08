@@ -3,9 +3,9 @@ namespace ExcursionsAdmin\Controller;
 
 use Aptero\Mvc\Controller\Admin\AbstractActionController;
 use Aptero\Service\Admin\TableService;
-use ExcursionsAdmin\Model\ExcursionType;
+use ExcursionsAdmin\Model\Tags;
 
-class TypesController extends AbstractActionController
+class TagsController extends AbstractActionController
 {
     public function __construct()
     {
@@ -21,7 +21,7 @@ class TypesController extends AbstractActionController
                 'name' => 'Тип',
                 'type' => TableService::FIELD_TYPE_TEXT,
                 'filter' => function ($value, $row) {
-                    return [ExcursionType::TYPE_MAIN => 'Главный', ExcursionType::TYPE_TAG => 'Поисковый'][$value];
+                    return [Tags::TYPE_MAIN => 'Главный', Tags::TYPE_TAG => 'Поисковый'][$value];
                 },
                 'width' => '70',
             ],

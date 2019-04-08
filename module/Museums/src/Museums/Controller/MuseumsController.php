@@ -1,9 +1,11 @@
 <?php
 namespace Museums\Controller;
 
+use Aptero\Breadcrumbs\Breadcrumbs;
 use Aptero\Mvc\Controller\AbstractActionController;
 
 use Museums\Model\Museum;
+use Museums\Model\Tags;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
@@ -11,11 +13,100 @@ class MuseumsController extends AbstractActionController
 {
     public function indexAction()
     {
-        $view = $this->generate();
-        $museums = $this->getMuseumsService()->getMuseums();
+        $url = $this->params()->fromRoute('url');
+
+        $museumsService = $this->getMuseumsService();
+
+        if(!$url) {
+            return $this->museumsAction();
+        }
+
+        $museum = $museumsService->getMuseum(['url' => $url])->load();
+
+        if($museum) {
+            return $this->museumAction($museum);
+        }
+
+        //$subUrl = substr($url, strrpos($url, '/') + 1);
+        //$excursionUrl = substr($url, 0, strrpos($url, '/'));
+
+        return $this->send404();
+    }
+
+    public function tagsAction()
+    {
+        $url = $this->params()->fromRoute('tag');
+
+        $tag = new Tags();
+        $tag->select()->where(['url' => $url]);
+
+        return $this->museumsAction(['tag' => $tag]);
+    }
+
+    public function museumsAction($options = [])
+    {
+        $museumsService = $this->getMuseumsService();
+
+        $tag  = $options['tag'] ?? null;
+
+        $view = $this->generate('/attractions/');
+        $meta = $this->layout()->getVariable('meta');
+
+        if($tag) {
+            $meta->title = $tag->get('title');
+            $meta->description = $tag->get('description');
+
+            $this->layout()->setVariable('meta', $meta);
+        }
+
+        $page = $this->params()->fromQuery('page', 1);
+
+        $filters = $this->params()->fromQuery();
+
+        if($tag) {
+            $filters['tag'] = $tag->getId();
+        }
+
+        $museums = $museumsService->getPaginator($page, $filters);
+
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $resp = [];
+
+            $resp['html']['items'] = $this->viewHelper('excursionsList', $museums);
+            $resp['meta'] = $meta;
+
+            return new JsonModel($resp);
+        }
+
+        if($tag) {
+            $url = $tag->getUrl();
+        } else {
+            $url = '/museums/';
+        }
+
+        $this->layout()->setVariable('canonical', $url);
+        $view->setTemplate('museums/museums/index');
+
+        $headerBg = '/images/headers/petergof.jpg';
+
+        if($tag) {
+            $this->addBreadcrumbs([['url' => $url, 'name' => $tag->get('name')]]);
+            $view->setVariables([
+                'header'      => $tag->get('name'),
+            ]);
+
+            if($tag->getPlugin('background')->hasImage()) {
+                $headerBg = $tag->getPlugin('background')->getImage('hr');
+            }
+        }
+
+        $filters['tag'] = $tag;
 
         return $view->setVariables([
-            'museums'  => $museums,
+            'headerBg'    => $headerBg,
+            'filters'     => $filters,
+            'museums'     => $museums,
+            'page'        => $page,
         ]);
     }
 
@@ -53,7 +144,7 @@ class MuseumsController extends AbstractActionController
         ]);
     }
 
-    public function attractionAction()
+    /*public function attractionAction()
     {
         $view = $this->generate('/attractions/');
 
@@ -76,7 +167,7 @@ class MuseumsController extends AbstractActionController
             'headerDesc'    => $attraction->get('header_desc'),
             'attraction'    => $attraction,
         ]);
-    }
+    }*/
 
     public function getMapAttractionsAction()
     {

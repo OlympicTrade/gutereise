@@ -3,7 +3,7 @@ namespace MuseumsAdmin\Service;
 
 use Aptero\Service\Admin\TableService;
 
-class AttractionsService extends TableService
+class TagsService extends TableService
 {
 
 }

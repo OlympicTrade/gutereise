@@ -5,18 +5,19 @@ use Aptero\Db\Entity\EntityCollection;
 use Zend\View\Helper\AbstractHelper;
 
 class ContentList extends AbstractHelper {
-    public function __invoke($content)
+    public function __invoke($content, $model)
     {
         if(!($content instanceof EntityCollection)) {
-            return $this->renderItem($content);
+            return $this->renderItem($content, $model);
         }
 
         $html =
-            '<div class="content-list">';
+            '<a href="/admin/application/content/edit/?module=blog&depend=' . $model->getId() . '" class="btn popup-form">Добавить</a>'
+.            '<div class="content-list">';
 
         foreach ($content as $item) {
             $html .=
-                $this->renderItem($item);
+                $this->renderItem($item, $model);
         }
 
         $html .=
@@ -25,13 +26,18 @@ class ContentList extends AbstractHelper {
         return $html;
     }
 
-    protected function renderItem($item)
+    protected function renderItem($item, $model)
     {
+        $sort = $item->get('sort');
+        $editUrl = '/admin/application/content/edit/?module=blog&depend=' . $model->getId() . '&sort=';
+
         $html =
             '<div class="item" data-id="' . $item->getId() . '">'
                 .'<div class="btns">'
                     .'<a href="/admin/application/content/edit/?id=' . $item->getId() . '" class="edit popup-form">Редактировать</a>'
                     .'<a data-id="' . $item->getId() . '" class="del">Удалить</a>'
+                    .'Добавить запись: <a class="popup-form" href="' . $editUrl . ($sort - 1) . '">до</a>| '
+                    .'<a class="popup-form" href="' . $editUrl . ($sort + 1) . '">после</a>'
                 .'</div>';
 
 

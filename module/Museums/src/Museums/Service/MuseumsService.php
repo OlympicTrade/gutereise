@@ -4,18 +4,65 @@ namespace Museums\Service;
 
 use Aptero\Service\AbstractService;
 use Museums\Model\Museum;
-use Museums\Model\Attraction;
+use Museums\Model\Tags;
 
 class MuseumsService extends AbstractService
 {
-    public function getMuseums()
+    public function getTag($filters = [])
+    {
+        $types = new Tags();
+
+        if($filters['url']) {
+            $types->select()->where(['url' => $filters['url']]);
+        }
+
+        return $types;
+    }
+
+    public function getPaginator($page, $filters = [], $itemsPerPage = 10)
+    {
+        $filters['join'] = [
+            'image'
+        ];
+
+        $excursions = Museum::getEntityCollection();
+        $excursions->setSelect($this->getMuseumsSelect($filters));
+
+        return $excursions->getPaginator($page, $itemsPerPage);
+    }
+
+    public function getMuseumsSelect($filters = [])
+    {
+        $select = $this->getSql()->select()
+            ->from(['t' => 'museums'])
+            ->group('t.id');
+
+        if (in_array('image', $filters['join'])) {
+            $select
+                ->join(['ei' => 'museums_images'], 't.id = ei.depend', ['image-id' => 'id', 'image-filename' => 'filename'], 'left');
+        }
+
+        if(!empty($filters['url'])) {
+            $select->where(['t.url' => $filters['url']]);
+        }
+
+        if(!empty($filters['tag'])) {
+            $select
+                ->join(['ett' => 'excursions_ett'], 't.id = ett.depend', [], 'left')
+                ->where(['ett.tag_id' => $filters['tag']]);
+        }
+
+        return $select;
+    }
+
+    /*public function getMuseums()
     {
         $museums = Museum::getEntityCollection();
 
         $museums->select()->where(['active' => 1]);
 
         return $museums;
-    }
+    }*/
 
     public function getMuseum($filters = [])
     {

@@ -9,15 +9,18 @@ class ExcursionsWidgets extends AbstractHelper
     public function __invoke($widget, $data = [])
     {
         switch ($widget) {
-            case 'types':
+            /*case 'types':
                 return $this->renderTypes($data);
-                break;
+                break;*/
             case 'search':
                 return $this->renderSearch($data);
                 break;
-            case 'museums':
-                return $this->renderMuseums($data);
+            case 'catalog':
+                return $this->renderCatalog($data);
                 break;
+            /*case 'museums':
+                return $this->renderMuseums($data);
+                break;*/
             default:
                 break;
         }
@@ -77,10 +80,10 @@ class ExcursionsWidgets extends AbstractHelper
 
         $html =
             '<div class="widget types">'.
-                '<div class="header">' . $view->tr('Тип экскурсии') . '</div>'.
+                '<div class="header">' . $view->tr('Теги') . '</div>'.
                 '<div class="body">'.
                     '<div class="links">'.
-                        '<a href="/excursions/"' . (!$val ? ' class="active"' : '') . '>' . $view->tr('Все экскусрии') . '</a>';
+                        '<a href="/excursions/"' . (!$val ? ' class="active"' : '') . '>' . $view->tr('Все') . '</a>';
 
         foreach ($data['data'] as $types) {
             $html .= '<a href="' . $types->getUrl() . '"' . ($val == $types->getId() ? ' class="active"' : '') . '>' . $view->tr($types->get('name')) . '</a>';
@@ -103,7 +106,7 @@ class ExcursionsWidgets extends AbstractHelper
         $html =
             '<div class="widget search">'.
                 '<i class="fas fa-search"></i>'.
-                '<input type="text" name="search" value="' . $val . '" placeholder="' .  $view->tr('Найти экскурсию') . '">'.
+                '<input type="text" name="search" value="' . $val . '" placeholder="' .  $view->tr('Поиск по названию') . '">'.
             '</div>';
 
         return $html;
@@ -142,6 +145,43 @@ class ExcursionsWidgets extends AbstractHelper
         $html =
             '<div class="widget museums">'
                 .'<div class="header">' . $view->tr('Достопримечательности') . '</div>'
+                .'<div class="body">' . $html . '</div>'
+            .'</div>';
+
+        return $html;
+    }
+
+    public function renderCatalog($data)
+    {
+        $html = '';
+
+        $view = $this->getView();
+
+        $i = 0;
+        foreach ($data['data'] as $item) {
+            $i++;
+
+            if($i == 10) {
+                $html .= '<div class="h-box">';
+            }
+
+            $html .=
+                '<div>'.
+                    '<a href="' . $item->getUrl() .'">' . $view->tr($item->get('name')) . ' <span>' . $item->get('count') . '</span></a>' .
+                '</div>';
+        }
+
+        if($i > 9) {
+            $html .=
+                '</div>'
+                .'<span class="show-all">' . $view->tr('показать все') . '</span>';
+        } elseif($i <= 1) {
+            return '';
+        }
+
+        $html =
+            '<div class="widget catalog">'
+                .'<div class="header">' . $view->tr('Категории') . '</div>'
                 .'<div class="body">' . $html . '</div>'
             .'</div>';
 

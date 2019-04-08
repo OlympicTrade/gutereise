@@ -4,6 +4,7 @@ namespace MuseumsAdmin\Model;
 use ApplicationAdmin\Model\Content;
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Entity\EntityHierarchy;
+use Zend\Db\Sql\Expression;
 
 class Museum extends EntityHierarchy
 {
@@ -50,18 +51,18 @@ class Museum extends EntityHierarchy
             return $content;
         });
 
-        /*$this->addPlugin('attractions', function($model) {
+        $this->addPlugin('tags', function($model) {
             $item = new Entity();
-            $item->setTable('museums_mta');
+            $item->setTable('museums_mtt');
             $item->addProperties([
-                'depend'      => [],
-                'attraction_id' => [],
+                'depend'   => [],
+                'tag_id'   => [],
             ]);
             $catalog = $item->getCollection()->getPlugin();
             $catalog->setParentId($model->getId());
 
             return $catalog;
-        });*/
+        });
 
         $this->addPlugin('background', function() {
             $image = new \Aptero\Db\Plugin\Image();
@@ -140,6 +141,23 @@ class Museum extends EntityHierarchy
             $url_path = !$url_path ? '/' : '/' . $url_path . '/';
 
             $model->set('url_path', trim($url_path));
+
+            return true;
+        });
+
+        $this->getEventManager()->attach(array(Entity::EVENT_POST_INSERT, Entity::EVENT_POST_UPDATE), function ($event) {
+            $select = $this->getSql()->select();
+            $select->from(['t' => 'museums_mtt'])
+                ->columns(['tag_id', 'count' => new Expression('COUNT(*)')])
+                ->group('tag_id');
+
+            $res = $this->execute($select);
+
+            foreach ($res as $row) {
+                if($tag = (new Tags(['id' => $row['tag_id']]))->load()) {
+                    $tag->set('count', $row['count'])->save();
+                }
+            }
 
             return true;
         });
