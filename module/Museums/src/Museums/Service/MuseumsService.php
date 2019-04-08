@@ -19,16 +19,16 @@ class MuseumsService extends AbstractService
         return $types;
     }
 
-    public function getPaginator($page, $filters = [], $itemsPerPage = 10)
+    public function getPaginator($page, $filters = [], $itemsPerPage = 999)
     {
         $filters['join'] = [
             'image'
         ];
 
-        $excursions = Museum::getEntityCollection();
-        $excursions->setSelect($this->getMuseumsSelect($filters));
+        $museums = Museum::getEntityCollection();
+        $museums->setSelect($this->getMuseumsSelect($filters));
 
-        return $excursions->getPaginator($page, $itemsPerPage);
+        return $museums->getPaginator($page, $itemsPerPage);
     }
 
     public function getMuseumsSelect($filters = [])
@@ -36,6 +36,8 @@ class MuseumsService extends AbstractService
         $select = $this->getSql()->select()
             ->from(['t' => 'museums'])
             ->group('t.id');
+
+        $select->where(['active' => 1]);
 
         if (in_array('image', $filters['join'])) {
             $select
