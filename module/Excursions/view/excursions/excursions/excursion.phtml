@@ -60,6 +60,10 @@ $duration = $excursion->get('db_data')->duration;
 
             <div class="attrs-list">
                 <div class="row">
+                    <div class="label"><?php echo $this->tr('Место и время начала экскурсии') ?></div>
+                    <?php echo $excursion->get('place_and_time') ? $excursion->get('place_and_time') : $this->tr('по договоренности') ?>
+                </div>
+                <div class="row">
                     <div class="label"><?php echo $this->tr('Длительность экскурсии') ?></div>
                     <?php echo $this->declension($duration, ['час', 'часа', 'часов']) ?>
                 </div>
@@ -113,6 +117,7 @@ $duration = $excursion->get('db_data')->duration;
                 'museum' => '<i class="fas fa-university"></i>',
                 'park'   => '<i class="fas fa-tree"></i>',
                 'marker' => '<i class="fas fa-map-marker-alt"></i>',
+                'cafe'   => '<i class="fas fa-coffee"></i>',
             ];
 
             foreach ($plan as $day) {
