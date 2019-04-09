@@ -142,7 +142,7 @@ $duration = $excursion->get('db_data')->duration;
             <div class="separ"></div>
         </div>
 
-        <?php echo $this->shortList($excursion->getPlugin('museums')) ?>
+        <?php echo $this->shortList($excursion->getPlugin('museums'), ['desc' => false]) ?>
 
         <?php echo $this->comments([
             'depend_id' => $excursion->getId(),
