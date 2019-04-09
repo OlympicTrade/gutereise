@@ -30,7 +30,7 @@ class ShortList extends AbstractHelper
                     '<div class="pic">'.
                         '<img src="' . $img->getImage($options['imgSize']) . '" alt="' . $img->getDesc() . '">'.
                     '</div>'.
-                    '<div class="name">' . $item->get('name') . '</div>'.
+                    '<div class="name">' . $item->get('name') . '</div>' .
                     ($options['desc'] ? '<div class="desc">' . $item->get('preview') . '</div>' : '').
                 '</a>';
         }
