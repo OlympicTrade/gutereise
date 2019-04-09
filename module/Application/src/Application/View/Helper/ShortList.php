@@ -7,11 +7,11 @@ class ShortList extends AbstractHelper
 {
     public function __invoke($items, $options = [])
     {
-        $options = [
+        $options = $options + [
             'header'  => '',
             'imgSize' => 'm',
             'desc'    => true,
-        ] + $options;
+        ];
 
         $html = '';
 
