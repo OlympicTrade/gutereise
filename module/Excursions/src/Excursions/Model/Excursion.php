@@ -31,6 +31,7 @@ class Excursion extends Entity
             'header_desc'       => [],
             'text'              => [],
             'preview'           => [],
+            'place_and_time'    => [],
             'nationality'       => [],
             'title'             => [],
             'description'       => [],

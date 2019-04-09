@@ -32,11 +32,15 @@
                 echo $this->adminFormRow($form->get('preview'));
                 echo $this->adminFormRow($form->get('db_excursion_id'));
                 echo $this->adminFormRow($form->get('url'));
+                echo $this->adminFormRow($form->get('place_and_time'));
                 ?>
             </div>
             <div class="tab" data-tab="plan">
-                <?php echo $this->formRow($form->get('pricetable-collection')); ?>
-                <?php echo $this->formRow($form->get('plan-collection')); ?>
+                <?php
+                echo $this->adminFormRow($form->get('place_and_time'));
+                echo $this->formRow($form->get('pricetable-collection'));
+                echo $this->formRow($form->get('plan-collection'));
+                ?>
             </div>
             <div class="tab" data-tab="photo">
                 <?php echo $this->formRow($form->get('images-images')); ?>

@@ -90,6 +90,14 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'place_and_time',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Время и место начала',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'header_desc',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
