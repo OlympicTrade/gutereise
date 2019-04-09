@@ -12,12 +12,13 @@ class ExcursionsRecoWidget extends AbstractHelper
 
         $html .=
             '<div class="widget reco">'.
-                '<div class="header"> Связанные экскурсии</div>'.
+                '<div class="header">Похожие экскурсии</div>'.
                 '<div class="body">';
 
         foreach ($items as $item) {
             $html .=
                 '<a href="' . $item->getUrl() . '" class="item">'.
+                    '<div class="pic"><img src="' . $item->getPlugin('background')->getImage('s') . '" alt="' . $item->get('name') . '"></div>'.
                     '<div class="name">' . $item->get('name') . '</div>'.
                     '<div class="info">';
 

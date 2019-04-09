@@ -960,8 +960,8 @@ h1 {
         i {
             position: absolute;
             left: 0;
-            top: 13px;
-            font-size: 18px;
+            top: 9px;
+            font-size: 17px;
         }
 
         .errors {
@@ -970,7 +970,7 @@ h1 {
     }
 
     select, input {
-        height: 45px;
+        height: 38px;
         padding-left: 27px;
         font-size: 15px;
         border: none;
@@ -1145,7 +1145,7 @@ h1 {
         .widget {
             background: #ffffff;
             padding: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
 
             &:last-child {
                 margin-bottom: 0;
@@ -1162,7 +1162,7 @@ h1 {
 
             &.reco {
                 .item {
-                    background: url($borderImg) 0 100% repeat-x;
+                    /*background: url($borderImg) 0 100% repeat-x;*/
                     padding-bottom: 14px;
                     margin-bottom: 15px;
                     display: block;
@@ -1171,6 +1171,10 @@ h1 {
                         margin-bottom: 0;
                         padding-bottom: 0;
                         background: none;
+                    }
+
+                    .pic {
+                        margin-bottom: 9px;
                     }
 
                     .name {

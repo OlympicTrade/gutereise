@@ -95,6 +95,11 @@ class Excursion extends Entity
                     'height' => 440,
                     'crop'   => true,
                 ],
+                's' => [
+                    'width'  => 255,
+                    'height' => 74,
+                    'crop'   => true,
+                ],
             ]);
             return $image;
         });
