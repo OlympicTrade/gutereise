@@ -123,7 +123,7 @@ class ExcursionsEditForm extends Form
 
         $this->add([
             'name' => 'title',
-            'type'  => 'Zend\Form\Element\Text',
+            'type'  => 'Zend\Form\Element\Textarea',
             'options' => [
                 'label' => 'Title',
             ],
@@ -131,7 +131,7 @@ class ExcursionsEditForm extends Form
 
         $this->add([
             'name' => 'description',
-            'type'  => 'Zend\Form\Element\Text',
+            'type'  => 'Zend\Form\Element\Textarea',
             'options' => [
                 'label' => 'Description',
             ],

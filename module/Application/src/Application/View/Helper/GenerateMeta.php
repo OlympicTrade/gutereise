@@ -22,7 +22,13 @@ class GenerateMeta extends AbstractHelper
         $meta = $view->meta;
         $settings = Settings::getInstance();
 
-        $view->headTitle($meta->title);
+        $title = str_replace([
+            '%YEAR%',
+        ], [
+            date('Y'),
+        ], $meta->title);
+
+        $view->headTitle($title);
 
         $view->headMeta()
             /*->appendProperty('og:type', 'website')

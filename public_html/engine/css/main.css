@@ -1046,11 +1046,11 @@ span.wrap.pink {
 }
 
 
-.edit-form .row .images-list .list {
+.edit-form .images-list .list {
     margin-bottom: 10px;
 }
 
-.edit-form .row .images-list .img {
+.edit-form .images-list .img {
     position: relative;
     display: inline-block;
     vertical-align: top;
@@ -1063,29 +1063,29 @@ span.wrap.pink {
     padding-top: 8px;
 }
 
-.edit-form .row .images-list .img img {
+.edit-form .images-list .img img {
     max-width: none;
     max-height: 100px;
     display: block;
     margin-bottom: 4px;
 }
 
-.edit-form .row .images-list .img .prop {
+.edit-form .images-list .img .prop {
     font-size: 13px;
     max-height: 18px;
     overflow: hidden;
     padding: 0 5px;
 }
 
-.edit-form .row .images-list .row {
+.edit-form .images-list .row {
     margin: 10px 0 0 0;
 }
 
-.edit-form .row .images-list .row .new-img {
+.edit-form .images-list .row .new-img {
     width: 350px;
 }
 
-.edit-form .row .images-list .delete {
+.edit-form .images-list .delete {
     position: absolute;
     right: 3px;
     top: 0;
@@ -1094,14 +1094,14 @@ span.wrap.pink {
     color: #b10d00;
 }
 
-.edit-form .row .images-list .form .btn,
-.edit-form .row .images-list .form .label {
+.edit-form .images-list .form .btn,
+.edit-form .images-list .form .label {
     display: inline-block;
     width: 110px;
     vertical-align: top;
 }
 
-.edit-form .row .images-list .sort {
+.edit-form .images-list .sort {
     position: absolute;
     left: -1px;
     top: -1px;
