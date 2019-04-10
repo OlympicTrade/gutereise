@@ -7,6 +7,8 @@ class ShortList extends AbstractHelper
 {
     public function __invoke($items, $options = [])
     {
+        $view = $this->getView();
+
         $options = $options + [
             'header'  => '',
             'imgSize' => 'm',
@@ -18,7 +20,7 @@ class ShortList extends AbstractHelper
         if($options['header']) {
             $html .=
                 '<div class="std-header">'.
-                    '<h2>' . $this->tr('Достопримечательности') . '</h2>'.
+                    '<h2>' . $view->tr('Достопримечательности') . '</h2>'.
                     '<div class="separ"></div>'.
                 '</div>';
         }
