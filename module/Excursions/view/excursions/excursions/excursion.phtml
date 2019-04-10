@@ -130,7 +130,7 @@ $duration = $excursion->get('db_data')->duration;
                         '</div>'.
                         '<div class="desc">'.
                             '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
-                            '<div class="text">'. $this->tr($day->get('text')) . '</div>'.
+                            ($day->get('text') ? '<div class="text">'. $this->tr($day->get('text')) . '</div>' : '').
                         '</div>'.
                     '</div>';
             }
