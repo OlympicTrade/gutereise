@@ -230,6 +230,7 @@ class ExcursionsEditForm extends Form
             ],
         ]);
 
+
         $this->add([
             'name' => 'plan-collection',
             'type'  => 'Aptero\Form\Element\Admin\Collection',
