@@ -238,7 +238,14 @@ class ExcursionsEditForm extends Form
                     'icon' => [
                         'label'   => 'Иконка',
                         'width'   => 130,
-                        'options' => ['museum' => 'Музей', 'park' => 'Парк', 'marker' => 'Точка на карте', 'cafe' => 'Кафе']
+                        'options' => [
+                            'museum' => 'Музей',
+                            'park'   => 'Парк',
+                            'marker' => 'Флаг',
+                            'cafe'   => 'Кафе'
+                            'auto'   => 'Авто'
+                            'anchor' => 'Катер'
+                        ],
                     ],
                     'header' => [
                         'label'   => 'Заголовок',
