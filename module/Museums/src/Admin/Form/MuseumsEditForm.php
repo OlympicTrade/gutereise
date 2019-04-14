@@ -97,6 +97,14 @@ class MuseumsEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'sort',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Сортировка',
+            ],
+        ]);
+
+        $this->add([
             'name' => 'title',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [

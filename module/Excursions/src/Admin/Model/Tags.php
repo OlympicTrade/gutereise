@@ -22,6 +22,7 @@ class Tags extends Entity
             'type'           => [],
             'hits'           => [],
             'count'          => [],
+            'sort'           => [],
         ]);
 
         $this->getEventManager()->attach(array(Entity::EVENT_PRE_INSERT, Entity::EVENT_PRE_UPDATE), function ($event) {

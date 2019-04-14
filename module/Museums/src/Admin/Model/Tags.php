@@ -17,6 +17,7 @@ class Tags extends Entity
             'title'     => [],
             'description'   => [],
             'count'     => [],
+            'sort'      => [],
         ]);
 
         $this->addPlugin('background', function() {
