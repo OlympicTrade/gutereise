@@ -114,14 +114,6 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'sort',
-            'type'  => 'Zend\Form\Element\Text',
-            'options' => [
-                'label' => 'Сортировка',
-            ],
-        ]);
-
-        $this->add([
             'name' => 'preview',
             'type'  => 'Zend\Form\Element\Textarea',
             'options' => [
