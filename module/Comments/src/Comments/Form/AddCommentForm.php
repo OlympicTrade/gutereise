@@ -17,25 +17,34 @@ class AddCommentForm extends Form
         $this->add([
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
-            'attributes' => [
+            'options' => [
+                'label' => 'Имя',
+            ],
+            /*'attributes' => [
                 'placeholder' => 'Имя'
-            ]
+            ]*/
         ]);
 
         $this->add([
             'name' => 'contact',
             'type' => 'Zend\Form\Element\Text',
-            'attributes' => [
+            'options' => [
+                'label' => 'Телефон или E-mail',
+            ],
+            /*'attributes' => [
                 'placeholder' => 'Телефон или E-mail'
-            ]
+            ]*/
         ]);
 
         $this->add([
-            'name' => 'question',
-            'type' => 'Zend\Form\Element\Textarea',
-            'attributes' => [
+            'name'  => 'question',
+            'type'  => 'Zend\Form\Element\Textarea',
+            'options' => [
+                'label' => 'Вопрос или отзыв',
+            ],
+            /*'attributes' => [
                 'placeholder' => 'Вопрос или отзыв'
-            ]
+            ]*/
         ]);
 
         $this->add([

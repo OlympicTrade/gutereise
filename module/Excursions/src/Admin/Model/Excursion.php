@@ -273,4 +273,9 @@ class Excursion extends Entity
     {
         return '/excursions/' . $this->get('url') . '/';
     }
+
+    public function getUrl()
+    {
+        return '/admin/excursions/excursions/edit/?id=' . $this->getId();
+    }
 }

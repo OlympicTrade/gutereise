@@ -23,7 +23,9 @@ class Date extends AbstractHelper
 
     public function __invoke($date, $options = [], $pattern = 'Y-m-d H:i:s')
     {
-        $options = array_merge(array(
+        return (new StDate($date))->toStr();
+
+        /*$options = array_merge(array(
             'day'    => true,
             'month'  => true,
             'year'   => true,
@@ -54,7 +56,7 @@ class Date extends AbstractHelper
             if($options['month'] == 'short') {
                 $str .= ' ' . $this->getView()->translate(StDate::$monthsShort[$dt->format('n')]);
             } else {
-                $str .= ' ' . $this->getView()->translate(StDate::months[$dt->format('n')]);
+                $str .= ' ' . $this->getView()->translate(StDate::$months[$dt->format('n')]);
             }
         }
 
@@ -62,6 +64,6 @@ class Date extends AbstractHelper
             $str .= ' ' . $dt->format('Y');
         }
 
-        return $str;
+        return $str;*/
     }
 }

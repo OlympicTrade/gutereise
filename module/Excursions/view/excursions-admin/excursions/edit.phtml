@@ -4,7 +4,8 @@
 </h1>
 
 <div class="panel">
-    <a href="<?php echo $model->getPublicUrl() ?>" target="_blank">Показать на сайте</a>
+    <a href="<?php echo $model->getPublicUrl() ?>" target="_blank">Показать на сайте</a> |
+    <a href="/admin/comments/comments/list/?depend_type=1&depend_id=<?php echo $model->getId() ?>">Комментарии</a>
 </div>
 
 <?php $form = $this->editForm ?>

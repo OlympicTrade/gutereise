@@ -1,6 +1,7 @@
 <?php
 namespace CommentsAdmin\Form;
 
+use CommentsAdmin\Model\Comment;
 use Translator\Model\Translator;
 
 use Zend\InputFilter\Factory as InputFactory;
@@ -47,6 +48,35 @@ class CommentsEditForm extends \Aptero\Form\Admin\Form
             'options' => [
                 'label'   => 'Показать на сайте',
                 'options' =>  [1 => 'Да', 0 => 'Нет']
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'depend_type',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label'   => 'Тип комментария',
+                'options' =>  [
+                    Comment::TYPE_REVIEWS     => 'Отзывы о компании',
+                    Comment::TYPE_EXCURSION   => 'Экскурсии',
+                    Comment::TYPE_TRANSPORT   => 'Транспорт',
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'depend_id',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'ID родительской записи',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'time_create',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Дата',
             ],
         ]);
 

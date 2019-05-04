@@ -12,15 +12,6 @@
         </div>
 
         <div class="tags">
-            <?php /*
-            $types = \Excursions\Model\ExcursionType::getEntityCollection();
-            $types->select()
-                ->where(['type' => \Excursions\Model\ExcursionType::TYPE_TAG]);
-
-            foreach ($types as $type) {
-                echo '<a href="' . $type->getUrl() . '" class="btn">' . $this->tr($type->get('name')) . '</a>';
-            }
-            */ ?>
             <?php
             $types = \Museums\Model\Museum::getEntityCollection();
             $types->select()->limit(14);

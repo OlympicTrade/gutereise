@@ -9,6 +9,7 @@ use ExcursionsAdmin\Model\Excursion;
 
 class Comment extends Entity
 {
+    const TYPE_REVIEWS   = 0;
     const TYPE_EXCURSION = 1;
     const TYPE_TOUR      = 2;
     const TYPE_TRANSPORT = 3;

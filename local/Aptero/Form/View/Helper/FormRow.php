@@ -55,6 +55,9 @@ class FormRow extends AbstractTranslatorHelper
             $html .= $this->renderSmall($label, $element);
         }
 
+        $html =
+            '<div class="row">' . $html . '</div>';
+
         return $html;
     }
 
@@ -62,8 +65,8 @@ class FormRow extends AbstractTranslatorHelper
     {
         $html =
             '<label class="std-checkbox">'.
-            $this->getView()->formElement($element).
-            '<span>' . $label . '</span>'.
+                $this->getView()->formElement($element).
+                '<span>' . $label . '</span>'.
             '</label>';
 
         return $html;
@@ -73,8 +76,8 @@ class FormRow extends AbstractTranslatorHelper
     {
         $html =
             '<div class="element">'
-            .'<div class="label">' . $label . '</div>'
-            . $this->getView()->formElement($element) . $this->getView()->formElementErrors($element)
+                .'<div class="label">' . $label . '</div>'
+                . $this->getView()->formElement($element) . $this->getView()->formElementErrors($element)
             .'</div>';
 
         return $html;
@@ -87,39 +90,3 @@ class FormRow extends AbstractTranslatorHelper
         return $this->getView()->formElement($element) . $this->getView()->formElementErrors($element);
     }
 }
-/*
-<?php
-namespace Aptero\Form\View\Helper;
-
-use Zend\Form\Element\Select;
-use Zend\Form\Element\Text;
-use Zend\Form\Element\Textarea;
-use Zend\Form\ElementInterface;
-use Zend\View\Helper\AbstractHelper;
-
-class FormRow extends AbstractHelper
-{
-    public function __invoke(ElementInterface $element)
-    {
-        $view = $this->getView();
-
-        if($element instanceof Textarea) {
-            $element->setAttribute('class', 'std-textarea');
-        }
-
-        if($element instanceof Text) {
-            $element->setAttribute('class', 'std-input');
-        }
-
-        if($element instanceof Select) {
-            $element->setAttribute('class', 'std-select');
-        }
-
-        $html =
-            '<div class="row">'.
-                $view->formElement($element).
-            '</div>';
-
-        return $html;
-    }
-}*/

@@ -6,11 +6,11 @@
 <?php
 $form = $this->editForm;
 $comment = $model;
+$parent = $comment->getParent();
 ?>
 
-
 <div class="panel">
-    <a href="" target="_blank"><?php echo $comment->getParent()->get('name'); ?></a>
+    <a href="<?php echo $parent->getUrl() ?>" target="_blank"><?php echo $parent->get('name'); ?></a>
 </div>
 
 <?php echo $this->form()->openTag($form) ?>
@@ -29,6 +29,9 @@ $comment = $model;
                 echo $this->adminFormRow($form->get('send'));
                 echo $this->adminFormRow($form->get('lang_code'));
                 echo $this->adminFormRow($form->get('status'));
+                echo $this->adminFormRow($form->get('depend_type'));
+                echo $this->adminFormRow($form->get('depend_id'));
+                echo $this->adminFormRow($form->get('time_create'));
                 ?>
             </div>
         </div>
