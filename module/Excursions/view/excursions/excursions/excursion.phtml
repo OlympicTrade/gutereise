@@ -1,9 +1,39 @@
 <?php echo $this->header([
     'background' => $headerImage,
     'wrapper'    => true
-]); ?>
+]);
 
-<?php
+$blocks = [];
+$menu = [
+    'desc' => [
+        'href'  => '',
+        'class' => 'item active',
+        'name'  => '<i class="far fa-file-alt"></i> ' . $this->tr('Описание'),
+    ],
+];
+
+if($excursion->getPlugin('plan')->count()) {
+    $menu['plan'] = [
+        'href'  => '.anchor-plan',
+        'class' => 'item anchor',
+        'name'  => '<i class="far fa-map"></i> ' . $this->tr('План'),
+    ];
+}
+
+if($excursion->getPlugin('museums')->count()) {
+    $menu['museums'] = [
+        'href'  => '.anchor-attractions',
+        'class' => 'item anchor',
+        'name'  => '<i class="fas fa-university"></i> ' . $this->tr('Достопримечательности'),
+    ];
+}
+
+$menu['comments'] = [
+    'href'  => '.excursion-block .comments',
+    'class' => 'item anchor',
+    'name'  => '<i class="far fa-comments"></i> ' . $this->tr('Вопросы'),
+];
+
 $duration = $excursion->get('db_data')->duration;
 ?>
 
@@ -12,22 +42,12 @@ $duration = $excursion->get('db_data')->duration;
     <div class="module-item-block menu-aware excursion-block">
     <div class="content">
         <div class="menu">
-            <a href="" class="item active">
-                <i class="far fa-file-alt"></i>
-                <?php echo $this->tr('Описание') ?>
-            </a>
-            <a href=".anchor-plan" class="item anchor">
-                <i class="far fa-map"></i>
-                <?php echo $this->tr('План') ?>
-            </a>
-            <a href=".anchor-attractions" class="item anchor">
-                <i class="fas fa-university"></i>
-                <?php echo $this->tr('Достопримечательности') ?>
-            </a>
-            <a href=".excursion-block .comments" class="item anchor">
-                <i class="far fa-comments"></i>
-                <?php echo $this->tr('Вопросы') ?>
-            </a>
+            <?php
+            foreach ($menu as $item) {
+                echo
+                    '<a href="' . $item['href'] . '" class="' . $item['class'] . '">' . $item['name'] . '</a>';
+            }
+            ?>
         </div>
 
         <?php echo $this->gallery($excursion) ?>
@@ -102,6 +122,9 @@ $duration = $excursion->get('db_data')->duration;
                 </div>
             </div>
         </div>
+
+        <?php if(array_key_exists('plan', $menu)) { ?>
+
         <div class="std-header anchor-plan">
             <h2><?php echo $this->tr('План экскурсии') ?></h2>
             <div class="separ"></div>
@@ -139,12 +162,18 @@ $duration = $excursion->get('db_data')->duration;
             ?>
         </div>
 
+        <?php } ?>
+
+        <?php if(array_key_exists('museums', $menu)) { ?>
+
         <div class="std-header anchor-attractions">
             <h2><?php echo $this->tr('В ходе экскурсии вы увидите') ?></h2>
             <div class="separ"></div>
         </div>
 
         <?php echo $this->shortList($excursion->getPlugin('museums'), ['desc' => false]) ?>
+
+        <?php } ?>
 
         <?php echo $this->comments([
             'depend_id' => $excursion->getId(),

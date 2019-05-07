@@ -1457,9 +1457,18 @@ h1 {
             }
         }
 
+        &:first-child {
+            padding-top: 15px;
+            background: none;
+
+            .info {
+                top: 15px;
+            }
+        }
+
         .question {
             font-size: 14px;
-            color: #525252;
+            /*color: #525252;*/
         }
 
         .answer {

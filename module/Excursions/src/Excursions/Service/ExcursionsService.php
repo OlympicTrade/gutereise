@@ -55,12 +55,6 @@ class ExcursionsService extends AbstractService
                 ->where(['ett.tag_id' => $filters['tag']]);
         }
 
-        /*if(!empty($filters['museums'])) {
-            $select
-                ->join(['etm' => 'excursions_museums'], 't.id = etm.depend', [], 'left')
-                ->where(['etm.museum_id' => $filters['museums']]);
-        }*/
-
         $language = Translator::getInstance();
         if($language->isForeigners()) {
             $select->where

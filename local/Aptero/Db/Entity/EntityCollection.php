@@ -14,12 +14,11 @@
 
 namespace Aptero\Db\Entity;
 
-use Aptero\Db\Entity\Entity;
 use Aptero\Db\AbstractDb;
 
 use Aptero\Db\Plugin\Collection;
-use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Expression;
+use Zend\Db\Sql\Select;
 use Zend\Paginator\Adapter\AdapterInterface;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
@@ -184,6 +183,7 @@ class EntityCollection extends AbstractDb implements Iterator, AdapterInterface
 
     /**
      * @return int
+     * @throws \Aptero\Db\Exception\RuntimeException
      */
     public function count()
     {

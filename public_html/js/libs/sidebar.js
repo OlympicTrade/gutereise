@@ -39,8 +39,8 @@ $.fn.sidebar = function (opts) {
                 obj.sidebarTop = obj.sidebar.offset().top;
                 obj.navH    = obj.nav.outerHeight();
                 obj.windowH = $(window).height();
-                obj.sliderH = obj.slider.innerHeight() + 50;
-                obj.botLine = obj.sidebar.innerHeight() - obj.slider.innerHeight() + 20;
+                obj.sliderH = obj.slider.innerHeight() + 20 + obj.margin;
+                obj.botLine = obj.sidebar.innerHeight() - obj.sliderH;
             }, 1);
 
             $(window).trigger('scroll');
@@ -69,7 +69,6 @@ $.fn.sidebar = function (opts) {
                         }
                         top = newScroll - (obj.sidebarTop - obj.navH - obj.margin);
                     } else {
-                        dd(obj.sliderH);
                         if(newScroll < (obj.sidebarTop + top + obj.sliderH - obj.windowH + obj.margin)) {
                             obj.oldScrollTop = newScroll;
                             return;
@@ -87,7 +86,6 @@ $.fn.sidebar = function (opts) {
                         top = newScroll - (obj.sidebarTop - obj.navH - obj.margin);
                     }
                 }
-                //dd(obj.botLine);
 
                 top = Math.min(top, obj.botLine);
                 top = Math.max(top, 0);

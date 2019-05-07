@@ -7,6 +7,10 @@ class ShortList extends AbstractHelper
 {
     public function __invoke($items, $options = [])
     {
+        if(!$items->count()) {
+            return '';
+        }
+
         $view = $this->getView();
 
         $options = $options + [
