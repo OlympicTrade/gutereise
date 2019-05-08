@@ -52,8 +52,8 @@ class Transport extends Entity
                     'crop'   => true,
                 ],
                 'm' => [
-                    'width'  => 505,
-                    'height' => 240,
+                    'width'  => 400,
+                    'height' => 222,
                     'crop'   => true,
                 ],
                 'r' => [
