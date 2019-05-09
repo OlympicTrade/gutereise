@@ -19,11 +19,19 @@ class TransportsList extends AbstractHelper
                         '<img src="' . $transport->getPlugin('image')->getImage('m') . '" alt="' . $transport->get('name') . '">'.
                     '</a>'.
                     '<div class="desc">'.
-                        '<div class="name">' . $transport->get('name') . '</div>'.
-                        '<div class="preview">' . $transport->get('preview') . '</div>'.
-                        '<div class="btns">' .
-                            '<div class="btn gray">Отложить</div>'.
-                            '<div class="btn yellow">Бронировать</div>'.
+                        '<div class="name">' . $transport->get('name') . '</div>' .
+                        '<div class="props">';
+
+            $i = 0;
+            foreach ($transport->getPlugin('props') as $row) {
+                if($i > 4) break;
+                $i++;
+
+                $html .=
+                    '<div class="row">' . $row->get('name') . '</div>';
+            }
+
+            $html .=
                         '</div>'.
                     '</div>'.
                 '</div>';

@@ -839,6 +839,27 @@ h1 {
     }
 }
 
+.transports-list {
+    .item {
+        .name {
+            height: 30px;
+        }
+
+        .row {
+            padding: 8px 0;
+            border-bottom: 1px solid #ededed;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .desc {
+            padding-bottom: 20px;
+        }
+    }
+}
+
 .module-items-block {
     background: #f7f7f7;
     padding-top: 30px;

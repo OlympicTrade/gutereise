@@ -8,27 +8,7 @@
         <div class="module-item-block transport-block">
             <div class="content">
                 <?php echo $this->gallery($transport) ?>
-                <?php /*$html =
-                    '<div class="gallery">'.
-                        '<ul class="list">';
 
-                $html .=
-                    '<li data-thumb="' . $transport->getPlugin('image')->getImage('hr') . '">'.
-                        '<img src="' . $transport->getPlugin('image')->getImage('g') . '" alt="">'.
-                    '</li>';
-
-                foreach ($transport->getPlugin('images') as $image) {
-                    $html .=
-                        '<li data-thumb="' . $image->getImage('hr') . '">'.
-                            '<img src="' . $image->getImage('g') . '" alt=""></li>'.
-                        '</li>';
-                }
-
-                $html .=
-                        '</ul>'.
-                    '</div>';
-                echo $html;*/
-                ?>
                 <div class="desc-box">
                     <h2><?php echo $this->tr($transport->get('name')) ?></h2>
                     <div class="std-text"><?= $this->tr($transport->get('text')) ?></div>
@@ -43,25 +23,6 @@
                         '</div>';
                     }
                     ?>
-
-                    <?php /*
-
-                    <div class="row">
-                        <i class="far fa-user"></i> <?= $this->tr('Вместимость') . ': ' . $this->tr('до') . ' ' .
-                        $this->declension($transport->get('capacity'), ['человек', 'человека', 'человек']) ?>
-                    </div>
-                    <div class="row">
-                        <i class="far fa-clock"></i> <?= $this->tr('Мин. заказ') . ': 3 + 1 ' . $this->tr('часа') ?>
-                    </div>
-                    <div class="row">
-                        <i class="far fa-money-bill-alt"></i> <?= $this->tr('Аренда') . ': ' . $this->price($transport->get('price')->price, true, true) . ' ' . $this->tr('в час')?>
-                    </div>
-                    <?php if($transport->get('price')->transfer) { ?>
-                    <div class="row">
-                        <i class="fas fa-exchange-alt"></i> <?= $this->tr('Трансфер') . ': ' . $this->price($transport->get('price')->transfer, true, true) ?>
-                    </div>
-                    <?php } ?>
- */ ?>
                 </div>
             </div>
             <div class="sidebar">
@@ -89,30 +50,3 @@
         </div>
     </div>
 </div>
-
-<?php /*
-<div class="block transport-block">
-    <div class="col-l">
-        <div class="gallery">
-            <div class="pic">
-                <img src="<?php echo $transport->getPlugin('image')->getImage('m') ?>" alt="<?php echo $transport->get('name') ?>">
-            </div>
-        </div>
-    </div>
-    <div class="col-r">
-        <h2><?php echo $transport->get('name') ?></h2>
-        <div class="std-text"><?php echo $transport->get('text') ?></div>
-    </div>
-    <div class="clear"></div>
-</div>
-
-<div class="std-popup order-popup">
-    <div class="header">
-        <?php echo $transport->get('name'); ?>
-    </div>
-    <div class="body">
-        asdasd
-    </div>
-</div>
-  */ ?>
-
