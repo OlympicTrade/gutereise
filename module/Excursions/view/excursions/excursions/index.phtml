@@ -2,9 +2,9 @@
     'background' => '/images/headers/petergof.jpg'
 ]); ?>
 
-<div class="block module-items-block sidebar-aware">
+<div class="block module-items-block sidebar-aware" id="items-list-anchor">
     <div class="container">
-        <div class="col-left sidebar">
+        <div class="sidebar">
             <div class="slider filters">
                 <?php
                 echo $this->ExcursionsWidgets('search', [
@@ -19,22 +19,10 @@
                     'value'   => $filters['tags'],
                     'data'    => $tags
                 ]);
-                /*echo $this->ExcursionsWidgets('types', [
-                    'value'   => $filters['type'],
-                    'data'    => \Excursions\Model\ExcursionType::getEntityCollection()
-                ]);
-
-                $museums = \Museums\Model\Museum::getEntityCollection();
-                $museums->select()->where(['parent' => 0]);
-
-                echo $this->ExcursionsWidgets('museums', [
-                    'value'   => $filters['museums'],
-                    'data'    => $museums
-                ]);*/
                 ?>
             </div>
         </div>
-        <div class="col-right">
+        <div class="content">
             <div class="items-list items-3 excursions-list">
                 <?php echo $this->excursionsList($excursions, $sidebarForm) ?>
             </div>

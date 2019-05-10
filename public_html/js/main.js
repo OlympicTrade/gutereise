@@ -69,10 +69,7 @@ function initElements(box) {
     initGallery(box);
 
     $('.anchor', box).on('click', function () {
-        var scrollTo = $($(this).attr('href')).offset().top - 100;
-
-        $('html, body').animate({scrollTop: scrollTo}, 300);
-
+        $.aptero.scrollTo($(this).attr('href'), 300);
         return false;
     });
 

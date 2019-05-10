@@ -17,14 +17,6 @@ abstract class AbstractActionController extends ZendActionController
      */
     public function generate($url = null)
     {
-        if($this->isAjax()) {
-            return (new ViewModel())
-                ->setTerminal(true)
-                ->setVariables([
-                    'ajax' => true,
-                ]);
-        }
-
         $sm = $this->getServiceLocator();
 
         $page = new Page();
@@ -80,6 +72,14 @@ abstract class AbstractActionController extends ZendActionController
             'header'       => $header,
             'meta'         => $meta,
         ]);
+
+        if($this->isAjax()) {
+            return (new ViewModel())
+                ->setTerminal(true)
+                ->setVariables([
+                    'ajax' => true,
+                ]);
+        }
 
         return new ViewModel([
             'header'    => $header,

@@ -22,11 +22,6 @@ $.fn.sidebar = function (opts) {
         var obj = this;
 
         this.update = function() {
-            //this.sidebarH = this.container.innerHeight() - this.sidebar.outerHeight() - parseInt(this.container.css('padding-top')) - parseInt(this.container.css('padding-bottom'));
-            /*this.sidebar.css({
-                height: this.sidebarH
-            });*/
-
             setTimeout(function () {
                 obj.slider.css({
                     top: 0,

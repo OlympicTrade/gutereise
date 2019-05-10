@@ -105,6 +105,7 @@ class Module
              65 => PUBLIC_DIR . '/js/libs/form-validator.js',
              75 => PUBLIC_DIR . '/js/libs/counter.js',
              80 => PUBLIC_DIR . '/js/libs/sidebar.js',
+             82 => PUBLIC_DIR . '/js/libs/catalog.js',
              85 => PUBLIC_DIR . '/js/libs/youtube-bg.js',
              90 => PUBLIC_DIR . '/js/main.js',
              93 => PUBLIC_DIR . '/js/catalog.js',

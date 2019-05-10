@@ -106,7 +106,7 @@ class ExcursionsWidgets extends AbstractHelper
         $html =
             '<div class="widget search">'.
                 '<i class="fas fa-search"></i>'.
-                '<input type="text" name="search" value="' . $val . '" placeholder="' .  $view->tr('Поиск по названию') . '">'.
+                '<input class="search-input" type="text" name="search" value="' . $val . '" placeholder="' .  $view->tr('Поиск по названию') . '">'.
             '</div>';
 
         return $html;
@@ -166,7 +166,7 @@ class ExcursionsWidgets extends AbstractHelper
             }
 
             $html .=
-                '<div>'.
+                '<div class="row">'.
                     '<a href="' . $item->getUrl() .'">' . $view->tr($item->get('name')) . ' <span>' . $item->get('count') . '</span></a>' .
                 '</div>';
         }

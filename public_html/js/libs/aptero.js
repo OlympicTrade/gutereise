@@ -64,19 +64,42 @@ fn.price = function(price, sign) {
     return price;
 };
 
-fn.scrollTo = function(el, duration, options) {
+fn.scrollTo = function(ElOrLine, duration, options) {
+    var scrollLine = 0;
+    switch (jQuery.type(ElOrLine)) {
+        case 'number':
+            scrollLine = ElOrLine;
+            break;
+        case 'string':
+            scrollLine = $(ElOrLine).offset().top;
+            break;
+        default:
+            scrollLine = ElOrLine.offset().top;
+            break;
+    }
+
     options = $.extend({
-        offsetTop     : -50,
+        offsetTop   : false,
+        easing      : 'swing',
+    }, options);
+
+    var offsetTop = 0;
+
+    var header = $('#header');
+    if(!options.offsetTop && header.length && header.css('position') === 'fixed') {
+        offsetTop = header.innerHeight();
+        offsetTop += parseInt(header.css('marginBottom'));
+    }
+
+    options = $.extend({
         easing        : 'swing'
     }, options);
 
     if(!duration) {
-        duration = 600;
+        duration = 500;
     }
 
-    $('html, body').animate({
-        scrollTop: el.offset().top + options.offsetTop,
-    }, duration, options.easing);
+    $('html, body').animate({scrollTop: scrollLine - offsetTop}, duration, options.easing);
 };
 
 /* Url
