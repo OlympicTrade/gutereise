@@ -11,7 +11,10 @@ class TransportsController extends AbstractActionController
     {
         $view = $this->generate();
 
-        $transports = $this->getTransportsService()->getTransports();
+        $filters = [];
+        $filters['type'] = $this->params()->fromQuery('type', 0);
+
+        $transports = $this->getTransportsService()->getTransports($filters);
 
         return $view->setVariables([
             'transports'  => $transports,

@@ -10,6 +10,12 @@ class TransportsService extends AbstractService
     public function getTransports($filters = [])
     {
         $transports = Transport::getEntityCollection();
+
+        if($filters['type']) {
+            $transports->select()
+                ->where(['type' => $filters['type']]);
+        }
+
         return $transports;
     }
 

@@ -6,20 +6,14 @@
     <div class="container">
         <div class="col-left sidebar">
             <div class="slider filters">
-                <?php
-                /*echo $this->ExcursionsWidgets('types', [
-                    'value'   => $filters['type'],
-                    'data'    => \Excursions\Model\ExcursionType::getEntityCollection()
-                ]);
-
-                $museums = \Museums\Model\Museum::getEntityCollection();
-                $museums->select()->where(['parent' => 0]);
-
-                echo $this->ExcursionsWidgets('museums', [
-                    'value'   => $filters['museums'],
-                    'data'    => $museums
-                ]);*/
-                ?>
+                <div class="widget menu">
+                    <div class="header">Категории</div>
+                    <div class="body">
+                        <a href="/transport/?type=<?= \Transports\Model\Transport::TYPE_AUTO ?>" class="btn">Автомобили</a>
+                        <a href="/transport/?type=<?= \Transports\Model\Transport::TYPE_BOAT ?>" class="btn">Катера</a>
+                        <a href="/transport/?type=<?= \Transports\Model\Transport::TYPE_COPTER ?>" class="btn">Вертолеты</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-right">
