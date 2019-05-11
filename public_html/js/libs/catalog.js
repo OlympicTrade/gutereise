@@ -4,11 +4,21 @@ $(function () {
     var filtersBox  = $('.filters', box);
     var paginator = $('.paginator', itemsBox);
     var wCtegory = $('.widget.catalog', filtersBox);
+    var search = $('.search-input', filtersBox);
 
     $('a', wCtegory).on('click', function () {
         $(this).toggleClass('active').closest('.row').siblings().find('a').removeClass('active');
+        search.val('');
         updateProducts();
         return false;
+    });
+
+    var searchTimer;
+    search.on('keyup', function () {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(function () {
+            updateProducts();
+        }, 250);
     });
 
     var loadingTimer = null;
@@ -22,16 +32,10 @@ $(function () {
 
     function getFiltersUrl() {
         var url = $.aptero.url();
-        url.setPath('/excursions/');
+        var active = $('.active', wCtegory);
 
-        var search = $('.search-input');
-
-        if(search.val()) {
-            url.setParams({search: search.val()});
-        } else {
-            var active = $('.active', wCtegory);
-            url.setPath(active.length ? active.attr('href') : $('input.update-url', filtersBox).val());
-        }
+        url.setPath(active.length ? active.attr('href') : '/excursions/');
+        url.setParams($.aptero.serializeArray(filtersBox));
 
         return url;
     }
@@ -61,13 +65,6 @@ $(function () {
                 }
 
                 itemsBox.fadeIn(200);
-
-                /*if(options.filtersUpdate) {
-                    var upBox = $('.update-box', filtersBox);
-                    upBox.html(resp.html.filters);
-                    initElements(filtersBox);
-                    initProductsFilters();
-                }*/
 
                 //History.replaceState({}, resp.meta.title, url.getUrl());
             }

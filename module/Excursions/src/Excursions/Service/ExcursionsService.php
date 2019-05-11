@@ -49,7 +49,11 @@ class ExcursionsService extends AbstractService
             $select->where(['t.url' => $filters['url']]);
         }
 
-        if(!empty($filters['tag'])) {
+        if(!empty($filters['query'])) {
+            $select->where->like('t.name',  '%' . $filters['query'] . '%');
+        }
+
+        if(!$filters['query'] && !empty($filters['tag'])) {
             $select
                 ->join(['ett' => 'excursions_ett'], 't.id = ett.depend', [], 'left')
                 ->where(['ett.tag_id' => $filters['tag']]);

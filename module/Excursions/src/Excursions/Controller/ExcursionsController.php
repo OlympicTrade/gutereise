@@ -28,9 +28,6 @@ class ExcursionsController extends AbstractActionController
             return $this->excursionAction($excursion);
         }
 
-        //$subUrl = substr($url, strrpos($url, '/') + 1);
-        //$excursionUrl = substr($url, 0, strrpos($url, '/'));
-
         return $this->send404();
     }
 

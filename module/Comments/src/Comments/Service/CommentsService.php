@@ -12,11 +12,11 @@ class CommentsService extends AbstractService
 {
     public function addComment($data)
     {
-        $contact = $data['contact'];
+        /*$contact = $data['contact'];
         if(!strpos($contact, '@')) {
             $contact = preg_replace('/[^0-9]/', '', $contact);
         }
-        $data['contact'] = $contact;
+        $data['contact'] = $contact;*/
 
         $comment = new Comment();
         $comment->setVariables($data + [

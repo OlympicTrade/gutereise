@@ -436,59 +436,59 @@ h1 {
     background: #f4f4f4;
     padding-top: 80px;
     padding-bottom: 40px;
+
+    .menu {
+        .item {
+            overflow: hidden;
+            position: relative;
+            display: block;
+            float: left;
+            margin-left: 1.5%;
+            width: 15.41%;
+
+            &:after {
+                content: '';
+                height: 40%;
+                width: 100%;
+                position: absolute;
+                z-index: 1;
+                left: 0;
+                bottom: 0;
+                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+            }
+
+            .desc {
+                position: absolute;
+                z-index: 2;
+                left: 10%;
+                bottom: 0;
+                width: 80%;
+                height: 130px;
+                border-top: 2px solid #fff;
+                text-align: center;
+                padding-top: 24px;
+                font-family: $fontHeader, serif;
+                font-style: italic;
+                font-weight: 700;
+                font-size: 25px;
+                color: #ffffff;
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            img {
+                transition: all ease .2s;
+            }
+
+            &:hover img {
+                transform: scale(1.1);
+            }
+        }
+    }
 }
 
-.main-block-2 .menu {
-
-}
-
-.main-block-2 .menu .item {
-    overflow: hidden;
-    position: relative;
-    display: block;
-    float: left;
-    margin-left: 1.5%;
-    width: 15.41%;
-}
-
-.main-block-2 .menu .item:after {
-    content: '';
-    height: 40%;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
-}
-
-.main-block-2 .menu .item .desc {
-    position: absolute;
-    z-index: 2;
-    left: 10%;
-    bottom: 0;
-    width: 80%;
-    height: 130px;
-    border-top: 2px solid #fff;
-    text-align: center;
-    padding-top: 24px;
-    font-family: $fontHeader, serif;
-    font-style: italic;
-    font-weight: 700;
-    font-size: 29px;
-    color: #ffffff;
-}
-
-.main-block-2 .menu .item:first-child {
-    margin-left: 0;
-}
-.main-block-2 .menu .item img {
-    transition: all ease .2s;
-}
-
-.main-block-2 .menu .item:hover img {
-    transform: scale(1.1);
-}
 
 .main-block-3 {
     position: relative;
@@ -1499,7 +1499,7 @@ h1 {
 }
 
 .comments-popup {
-    width: 425px;
+    width: 550px;
 
     .btns {
         display: flex;
