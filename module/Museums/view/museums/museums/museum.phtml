@@ -9,10 +9,19 @@
             <div class="content pt">
                 <?php echo $this->contentRender($museum->getPlugin('content')) ?>
                 <?php echo $this->shortList($museum->getChildren(false), ['header' => 'Достопримечательности']); ?>
+
+                <div class="notice">
+                    Петропавловский собор на протяжении всей своей истории служил усыпальницей русских царей. Здесь
+                    похоронены все русские цари от Петра I до Александра  III, царицы и многие великие князья. Пётр I
+                    похоронен у южного входа. В июле 1998 года сюда были перевезены останки Николая II и членов его семьи.
+                </div>
             </div>
             <div class="sidebar">
                 <div class="slider">
-                    <?php echo $this->excursionsRecoWidget($museum->getPlugin('excursions')) ?>
+                    <?php
+                    $excursions = $museum->getPlugin('excursions');
+                    $excursions->select()->limit(4);
+                    echo $this->excursionsRecoWidget($excursions, ['header' => 'Экскурсии']) ?>
                 </div>
             </div>
         </div>

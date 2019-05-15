@@ -40,8 +40,8 @@ class Museum extends EntityHierarchy
         $this->addPlugin('excursions', function($model) {
             $items = Excursion::getEntityCollection();
             $items->select()
-                ->join(['me' => 'museums_excursions'], 'me.excursion_id = t.id', [])
-                ->where(['me.depend' => $model->getId()]);
+                ->join(['em' => 'excursions_museums'], 'em.depend = t.id', [])
+                ->where(['em.museum_id' => $model->getId()]);
 
             return $items;
         });

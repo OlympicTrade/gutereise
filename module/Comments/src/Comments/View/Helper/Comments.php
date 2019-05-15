@@ -13,6 +13,11 @@ class Comments extends AbstractHelper
             return $this->comment($options);
         }
 
+        $options = $options + [
+            'header' => 'Вопросы и отзывы',
+            'btn'    => 'Задать вопрос',
+        ];
+
         $view = $this->getView();
 
         $comments = Comment::getEntityCollection();
@@ -26,11 +31,11 @@ class Comments extends AbstractHelper
         $html =
             '<div class="comments" data-type="' . $options['depend_type'] . '">'.
                 '<div class="std-header">'.
-                    '<h2>' . $view->tr('Вопросы и отзывы') . '</h2>'.
+                    '<h2>' . $view->tr($options['header']) . '</h2>'.
                     '<div class="separ"></div>'.
                 '</div>'.
                 '<div class="add-question">'.
-                    '<a href="/comments/add/?depend=' . $options['depend_id'] . '&type=' . $options['depend_type'] . '" class="popup btn c2">Задать вопрос</a>'.
+                    '<a href="/comments/add/?depend=' . $options['depend_id'] . '&type=' . $options['depend_type'] . '" class="popup btn c2">' . $view->tr($options['btn']) . '</a>'.
                 '</div>'.
                 '<div class="list">';
 

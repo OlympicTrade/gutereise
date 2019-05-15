@@ -8,6 +8,7 @@ class Comment extends Entity
     const TYPE_EXCURSION = 1;
     const TYPE_TOUR      = 2;
     const TYPE_TRANSPORT = 3;
+    const TYPE_MUSEUM    = 4;
 
     public function __construct()
     {

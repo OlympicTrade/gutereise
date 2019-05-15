@@ -3,7 +3,6 @@ namespace Excursions\Model;
 
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Plugin\Images;
-use Museums\Model\Attraction;
 use Museums\Model\Museum;
 use Sync\Model\Sync;
 

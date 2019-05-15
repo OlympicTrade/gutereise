@@ -6,13 +6,17 @@ use Zend\View\Helper\AbstractHelper;
 
 class ExcursionsRecoWidget extends AbstractHelper
 {
-    public function __invoke($items)
+    public function __invoke($items, $options = [])
     {
         $html = '';
 
+        $options = $options + [
+            'header' => 'Похожие экскурсии'
+        ];
+
         $html .=
             '<div class="widget reco">'.
-                '<div class="header">Похожие экскурсии</div>'.
+                '<div class="header">' . $this->getView()->tr($options['header']) . '</div>'.
                 '<div class="body">';
 
         foreach ($items as $item) {
@@ -21,7 +25,6 @@ class ExcursionsRecoWidget extends AbstractHelper
                     '<div class="pic"><img src="' . $item->getPlugin('background')->getImage('s') . '" alt="' . $item->get('name') . '"></div>'.
                     '<div class="name">' . $item->get('name') . '</div>'.
                     '<div class="info">';
-
 
             if($t = Time::getDT($item->get('db_data')->duration)) {
                 $html .=

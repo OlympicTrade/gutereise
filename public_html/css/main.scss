@@ -1033,6 +1033,12 @@ h1 {
 
 .museum-block {
     padding-bottom: 80px;
+
+    .notice {
+        background: #fafafa;
+        border: 1px solid #ebebeb;
+        padding: 25px 18px;
+    }
 }
 
 .desc-box {
@@ -1107,6 +1113,10 @@ h1 {
     .std-header {
         margin-top: 33px;
         margin-bottom: 15px;
+
+        &:first-child {
+            margin-top: 0;
+        }
     }
 
     .images-list {
