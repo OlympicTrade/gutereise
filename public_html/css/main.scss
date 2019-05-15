@@ -1094,11 +1094,11 @@ h1 {
 
     .widget {
         background: #ffffff;
-        padding: 20px;
-        margin-bottom: 20px;
+        padding: 0 20px;
+        margin-bottom: 30px;
 
         &:last-child {
-            margin-bottom: 0;
+            margin-bottom: 35px;
         }
 
         .header {
@@ -1167,11 +1167,10 @@ h1 {
 
         .widget {
             background: #ffffff;
-            padding: 20px;
+            padding: 0 20px;
             margin-bottom: 25px;
 
             &:last-child {
-                margin-bottom: 0;
             }
 
             .header {

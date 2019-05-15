@@ -34,7 +34,7 @@ $(function () {
         var url = $.aptero.url();
         var active = $('.active', wCtegory);
 
-        url.setPath(active.length ? active.attr('href') : '/excursions/');
+        url.setPath(active.length ? active.attr('href') : $('.base-url', filtersBox).val());
         url.setParams($.aptero.serializeArray(filtersBox));
 
         return url;

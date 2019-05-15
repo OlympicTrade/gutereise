@@ -27,9 +27,6 @@ class MuseumsController extends AbstractActionController
             return $this->museumAction($museum);
         }
 
-        //$subUrl = substr($url, strrpos($url, '/') + 1);
-        //$excursionUrl = substr($url, 0, strrpos($url, '/'));
-
         return $this->send404();
     }
 
@@ -72,7 +69,7 @@ class MuseumsController extends AbstractActionController
         if($this->getRequest()->isXmlHttpRequest()) {
             $resp = [];
 
-            $resp['html']['items'] = $this->viewHelper('excursionsList', $museums);
+            $resp['html']['items'] = $this->viewHelper('museumsList', $museums);
             $resp['meta'] = $meta;
 
             return new JsonModel($resp);

@@ -7,17 +7,20 @@
         <div class="sidebar">
             <div class="slider filters">
                 <?php
-                echo $this->ExcursionsWidgets('search', [
-                    'value'   => $filters['search'],
-                ]);
-
                 $tags = \Excursions\Model\Tags::getEntityCollection();
                 $tags->select()->where
                     ->greaterThan('count', 0);
 
-                echo $this->ExcursionsWidgets('catalog', [
-                    'value'   => $filters['tags'],
-                    'data'    => $tags
+                echo $this->ExcursionsWidgets([
+                    'url'   => '/excursions/',
+                ], [
+                    'search' => [
+                        'value'   => $filters['search'],
+                    ],
+                    'catalog' => [
+                        'value'   => $filters['tags'],
+                        'data'    => $tags
+                    ],
                 ]);
                 ?>
             </div>
