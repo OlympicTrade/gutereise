@@ -1,9 +1,9 @@
-$.fn.sidebar = function (opts) {
+/*$.fn.sidebar = function (opts) {
     opts = $.extend({
         sidebar: this,
         margin: 20,
         nav: $('#nav')
-    }, opts);
+    }, opts);*/
 
     var Sidebar = function () {
         this.container = null;
@@ -36,17 +36,22 @@ $.fn.sidebar = function (opts) {
                 obj.windowH = $(window).height();
                 obj.sliderH = obj.slider.innerHeight() + 20 + obj.margin;
                 obj.botLine = obj.sidebar.innerHeight() - obj.sliderH;
-            }, 1);
+            }, 15);
 
             $(window).trigger('scroll');
         };
 
-        this.init = function(opts) {
+        this.init = function(el, opts) {
+            opts = $.extend({
+                margin: 20,
+                nav: $('#nav')
+            }, opts);
+
             this.margin = opts.margin;
             this.nav = opts.nav;
-            this.sidebar = opts.sidebar;
-            this.container = opts.sidebar.parent();
-            this.slider = opts.sidebar.children();
+            this.sidebar = el;
+            this.container = el.parent();
+            this.slider = el.children();
 
             this.update();
 
@@ -90,9 +95,33 @@ $.fn.sidebar = function (opts) {
             }).trigger('scroll');
         };
     };
-
+/*
     var sidebar = new Sidebar();
     sidebar.init(opts);
 
     return sidebar;
+};*/
+
+$.fn.sidebar = function (options) {
+    var initSB = function(el) {
+        var sl = el.data('ap-sidebar');
+
+        if (sl === undefined || sl === '') {
+            sl = new Sidebar();
+            sl.init(el, options);
+            el.data('ap-sidebar', sl);
+        }
+
+        return sl;
+    };
+
+    if($(this).length === 1) {
+        return initSB($(this));
+    }
+
+    $(this).each(function () {
+        initSB($(this));
+    });
+
+    return this;
 };

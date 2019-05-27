@@ -23,12 +23,16 @@ function initGallery(box) {
 }
 
 function initSidebar() {
-    $('.sidebar').each(function () {
+    $('.sidebar').sidebar({
+        margin: 20,
+        nav: $('#header')
+    });
+    /*$('.sidebar').each(function () {
         var sidebar = $(this).sidebar({
             margin: 20,
             nav: $('#header')
         });
-    });
+    });*/
 }
 
 function initComments(box) {

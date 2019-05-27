@@ -40,7 +40,7 @@ class Collection extends AbstractHelper
                     if(is_array($opts['options'])) {
                         $select = new Select($name, ['options' => $opts['options']]);
                     } else {
-                        $select = new TreeSelect($name, ['collection' => $opts['options']]);
+                        $select = new TreeSelect($name, ['collection' => $opts['options'], 'sort' => $opts['sort']]);
                     }
                     $select->setAttributes(['data-name' => $field])->setValue($row->get($field));
                     $html .= $this->getView()->formElement($select);
@@ -75,7 +75,7 @@ class Collection extends AbstractHelper
                 if(is_array($opts['options'])) {
                     $select = new Select(' ', ['options' => $opts['options']]);
                 } else {
-                    $select = new TreeSelect('', ['collection' => $opts['options']]);
+                    $select = new TreeSelect('', ['collection' => $opts['options'], 'sort' => $opts['sort']]);
                 }
                 $select->setAttributes(['data-name' => $field]);
                 $html .= $this->getView()->formElement($select);

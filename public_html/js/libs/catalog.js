@@ -66,7 +66,7 @@ $(function () {
 
                 itemsBox.fadeIn(200);
 
-                //History.replaceState({}, resp.meta.title, url.getUrl());
+                History.replaceState({}, resp.meta.title, url.getUrl());
             }
         });
     }
@@ -91,6 +91,7 @@ $(function () {
                 paginator = $('.paginator', itemsBox);
                 if(!paginator.length) {
                     paginatorLine = false;
+                    $('.sidebar', box).sidebar().update();
                     return;
                 }
 
@@ -98,6 +99,8 @@ $(function () {
 
                 if(loadLine >= paginatorLine) {
                     loadMoreProducts();
+                } else {
+                    $('.sidebar', box).sidebar().update();
                 }
             }
         });

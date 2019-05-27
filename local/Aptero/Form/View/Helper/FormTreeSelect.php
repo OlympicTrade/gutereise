@@ -64,8 +64,9 @@ class FormTreeSelect extends AbstractHelper
             $catalog = $model->getCollection();
         }
 
-        if($element->getOption('sort') !== null) {
-            $catalog->select()->order($element->getOption('sort'));
+        $order = $element->getOption('sort');
+        if($order) {
+            $catalog->select()->order($order);
         }
 
         $thisId = $model ? $model->getId() : 0;

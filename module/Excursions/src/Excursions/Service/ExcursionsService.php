@@ -22,7 +22,7 @@ class ExcursionsService extends AbstractService
         return $types;
     }
 
-    public function getPaginator($page, $filters = [], $itemsPerPage = 6)
+    public function getPaginator($page, $filters = [], $itemsPerPage = 18)
     {
         $filters['join'] = [
             'image'

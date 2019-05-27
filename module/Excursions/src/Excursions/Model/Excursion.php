@@ -91,7 +91,7 @@ class Excursion extends Entity
             $image->addResolutions([
                 'h' => [
                     'width'  => 1920,
-                    'height' => 440,
+                    'height' => 400,
                     'crop'   => true,
                 ],
                 's' => [

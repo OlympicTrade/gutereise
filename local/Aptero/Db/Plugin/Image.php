@@ -1,8 +1,6 @@
 <?php
 namespace Aptero\Db\Plugin;
 
-use Aptero\Db\Plugin\PluginAbstract;
-
 use Aptero\Exception\Exception;
 use Aptero\File\Image as ApteroImage;
 use Aptero\File\File as ApteroFile;

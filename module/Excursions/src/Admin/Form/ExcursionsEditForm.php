@@ -169,6 +169,7 @@ class ExcursionsEditForm extends Form
                     'museum_id' => [
                         'label'   => 'Достопримечательность',
                         'width'   => 150,
+                        'sort'    => 'name',
                         'options' => new Museum()
                     ],
                 ]
@@ -183,6 +184,7 @@ class ExcursionsEditForm extends Form
                     'excursion_id' => [
                         'label'   => 'Экскурсия',
                         'width'   => 150,
+                        'sort'    => 'name',
                         'options' => new Excursion()
                     ],
                 ]
@@ -224,6 +226,7 @@ class ExcursionsEditForm extends Form
                     'tag_id' => [
                         'label'   => 'Тип',
                         'width'   => 150,
+                        'sort'    => 'name',
                         'options' => new Tags()
                     ],
                 ]
