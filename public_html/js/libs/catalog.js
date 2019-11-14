@@ -1,10 +1,10 @@
 $(function () {
-    var box = $('.module-items-block.sidebar-aware');
-    var itemsBox = $('.items-list', box);
-    var filtersBox  = $('.filters', box);
-    var paginator = $('.paginator', itemsBox);
-    var wCtegory = $('.widget.catalog', filtersBox);
-    var search = $('.search-input', filtersBox);
+    let box = $('.module-items-block.sidebar-aware');
+    let itemsBox = $('.items-list', box);
+    let filtersBox  = $('.filters', box);
+    let paginator = $('.paginator', itemsBox);
+    let wCtegory = $('.widget.catalog', filtersBox);
+    let search = $('.search-input', filtersBox);
 
     $('a', wCtegory).on('click', function () {
         $(this).toggleClass('active').closest('.row').siblings().find('a').removeClass('active');
@@ -13,7 +13,7 @@ $(function () {
         return false;
     });
 
-    var searchTimer;
+    let searchTimer;
     search.on('keyup', function () {
         clearTimeout(searchTimer);
         searchTimer = setTimeout(function () {
@@ -21,7 +21,7 @@ $(function () {
         }, 250);
     });
 
-    var loadingTimer = null;
+    let loadingTimer = null;
     $(window).on('scroll', function () {
         clearTimeout(loadingTimer);
         loadingTimer = setTimeout(function() {
@@ -31,8 +31,8 @@ $(function () {
     loadMoreProducts();
 
     function getFiltersUrl() {
-        var url = $.aptero.url();
-        var active = $('.active', wCtegory);
+        let url = $.aptero.url();
+        let active = $('.active', wCtegory);
 
         url.setPath(active.length ? active.attr('href') : $('.base-url', filtersBox).val());
         url.setParams($.aptero.serializeArray(filtersBox));
@@ -49,12 +49,12 @@ $(function () {
         $.aptero.scrollTo(itemsBox);
         itemsBox.empty();
 
-        var url = getFiltersUrl();
+        let url = getFiltersUrl();
 
         $.ajax({
             url: url.getUrl(),
             success: function (resp) {
-                var products = $(resp.html.items);
+                let products = $(resp.html.items);
                 itemsBox.html(products);
                 loadMoreProducts();
 
@@ -67,18 +67,22 @@ $(function () {
                 itemsBox.fadeIn(200);
 
                 History.replaceState({}, resp.meta.title, url.getUrl());
+
+                setTimeout(function () {
+                    $('.sidebar', box).sidebar().update();
+                }, 500);
             }
         });
     }
 
     function loadMoreProducts() {
-        var loadLine = $(window).scrollTop() + $(window).height() + 300;
+        let loadLine = $(window).scrollTop() + $(window).height() + 300;
 
         if(!paginatorLine || loadLine <= paginatorLine) {
             return;
         }
 
-        var url = getFiltersUrl();
+        let url = getFiltersUrl();
         url.setParams({page: paginator.data('page')});
         paginator.remove();
         paginator = $('.paginator', itemsBox);
@@ -86,7 +90,7 @@ $(function () {
         $.ajax({
             url: url.getUrl(),
             success: function (resp) {
-                var products = $(resp.html.items);
+                let products = $(resp.html.items);
                 products.appendTo(itemsBox);
                 paginator = $('.paginator', itemsBox);
                 if(!paginator.length) {
@@ -102,6 +106,7 @@ $(function () {
                 } else {
                     $('.sidebar', box).sidebar().update();
                 }
+                $('.sidebar', box).sidebar().update();
             }
         });
     }

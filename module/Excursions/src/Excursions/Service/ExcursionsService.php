@@ -2,6 +2,7 @@
 
 namespace Excursions\Service;
 
+use Application\Model\Currency;
 use Translator\Model\Translator;
 use Aptero\Service\AbstractService;
 use Excursions\Model\Excursion;
@@ -38,6 +39,7 @@ class ExcursionsService extends AbstractService
     {
         $select = $this->getSql()->select()
             ->from(['t' => 'excursions'])
+            ->where(['type' => Excursion::TYPE_EXCURSION])
             ->group('t.id');
 
         if (in_array('image', $filters['join'])) {
@@ -98,11 +100,12 @@ class ExcursionsService extends AbstractService
             return ['errors' => ['Заполните форму для рассчета стоимости']];
         }
 
-        $langs = Translator::getInstance();
+        $lang = Translator::getInstance();
+        $currency = Currency::getInstance()->getCurrency();
 
         unset($data['id']);
         $data['excursion_id'] = $excursion->get('db_excursion_id');
-        $data['lang_id'] = $langs->getLangId();
+        $data['currency'] = $currency;
 
         $sync = new Sync();
         $resp = $sync->load('get-price', $data);
@@ -118,32 +121,28 @@ class ExcursionsService extends AbstractService
             $error = DbConstants::$errors[$code];
         }
 
-        if($langs->getLangCode() == 'ru') {
-            return [
-                'price'  => $resp->summary->income,
-                'adult'  => $resp->summary->adult,
-                'child'  => $resp->summary->child,
-                'errors' => $errors,
-            ];
-        } else {
+        if($lang != 'ru') {
             foreach ($errors as $key => $error) {
-                $errors[$key] = $langs->translate($error);
+                $errors[$key] = $lang->translate($error);
             }
-
-            return [
-                'price'  => $resp->summary->euro->income,
-                'adult'  => $resp->summary->euro->adult,
-                'child'  => $resp->summary->euro->child,
-                'errors' => $errors,
-            ];
         }
+
+        $result = [
+            'errors' => $errors,
+            'price'  => $resp->summary->$currency->income,
+            'adult'  => $resp->summary->$currency->adult,
+            'child'  => $resp->summary->$currency->child,
+        ];
+
+        return $result;
     }
 
-    public function addOrder($data)
+    public function addOrder($excursion, $data)
     {
         $cData = [
-            'excursion_id'  => $data['db_excursion_id'],
+            'excursion_id'  => $excursion->get('db_excursion_id'),
             'lang_id'       => $data['lang_id'],
+            'currency'      => Currency::getInstance()->getCurrency(),
             'adults'        => $data['adults'],
             'children'      => $data['children'],
             'date'          => $data['date'],
@@ -156,8 +155,6 @@ class ExcursionsService extends AbstractService
 
         $sync = new Sync();
         $resp = $sync->load('add-order', $cData);
-
-        dd($resp);
 
         return $resp->summary->income;
     }

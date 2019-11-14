@@ -26,26 +26,23 @@ abstract class AbstractActionController extends ZendActionController
             $url = $uriParser->getPath();
         }
 
-        $page->select()->where(array(
+        $page->select()->where([
             'url' => $url
-        ));
+        ]);
 
         $page->load();
 
         switch($page->get('layout')) {
             case 3:
                 $this->layout('layout/article');
-                //$layoutType = 'article';
                 break;
             default:
                 $this->layout('layout/main');
-                //$layoutType = 'article';
                 break;
         }
 
         if($url == '/') {
             $this->layout('layout/index');
-            //$layoutType = 'index';
         }
 
         $header = $page->get('header') ? $page->get('header') : $page->get('name');
@@ -82,6 +79,7 @@ abstract class AbstractActionController extends ZendActionController
         }
 
         return new ViewModel([
+            'contacts'  => $contacts,
             'header'    => $header,
             'page'      => $page,
             'ajax'      => false,

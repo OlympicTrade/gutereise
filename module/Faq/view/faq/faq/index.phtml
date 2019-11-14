@@ -1,0 +1,35 @@
+<?php
+$listHtml =
+    '<div class="faq-list">';
+
+foreach ($faq as $row) {
+    $listHtml .=
+    '<div class="row">'.
+        '<div class="question">' . $row->get('question') . '</div>'.
+        '<div class="answer">' . $row->get('answer') . '</div>'.
+    '</div>';
+}
+
+$listHtml .=
+    '</div>';
+?>
+
+<?php if(!$ajax) { ?>
+    <?php echo $this->header([
+        'background' => '/images/headers/docs.jpg',
+        'wrapper'    => true
+    ]); ?>
+
+    <div class="block first last">
+        <div class="wrapper">
+            <?= $listHtml ?>
+        </div>
+    </div>
+<?php } else { ?>
+    <div class="std-popup">
+        <div class="header"><?= $this->tr('Частые вопросы') ?></div>
+        <div class="body">
+            <?= $listHtml ?>
+        </div>
+    </div>
+<?php } ?>

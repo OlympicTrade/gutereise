@@ -171,17 +171,15 @@ class ExcursionsController extends AbstractActionController
             $form->setData($this->params()->fromPost());
 
             if ($form->isValid()) {
-                return $jsonModel = new JsonModel(['errors' => []]);
                 $formData = $form->getData();
 
-                if($errors = $this->getExcursionsService()->getPrice($excursion, $formData)['errors']) {
+                /*if($errors = $this->getExcursionsService()->getPrice($excursion, $formData)['errors']) {
                     return $jsonModel = new JsonModel([
                         'errors' => ['form' => $errors]
                     ]);
-                }
+                }*/
 
-                die('zxczxc');
-                $this->getExcursionsService()->addOrder($formData);
+                $this->getExcursionsService()->addOrder($excursion, $formData);
                 return $jsonModel = new JsonModel([
                     'errors' => $form->getMessages()
                 ]);

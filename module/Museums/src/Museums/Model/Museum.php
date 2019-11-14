@@ -56,6 +56,11 @@ class Museum extends EntityHierarchy
                     'height' => 440,
                     'crop'   => true,
                 ],
+                's' => [
+                    'width'  => 255,
+                    'height' => 74,
+                    'crop'   => true,
+                ],
             ]);
             return $image;
         });
@@ -71,8 +76,8 @@ class Museum extends EntityHierarchy
                     'crop'   => true,
                 ],
                 'm' => [
-                    'width'  => 500,
-                    'height' => 320,
+                    'width'  => 400,
+                    'height' => 400,
                     'crop'   => true,
                 ],
                 'r' => [

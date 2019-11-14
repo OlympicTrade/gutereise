@@ -14,7 +14,7 @@ class Image extends File
         'height'    => 2000,
         'watermark' => false,
         'crop'      => false,
-        'quality'   => ['jpg' => 100, 'png' => 10],
+        'quality'   => ['jpg' => 100, 'png' => 9],
     );
 
     public function save()

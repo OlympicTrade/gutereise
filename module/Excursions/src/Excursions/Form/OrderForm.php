@@ -5,6 +5,7 @@ use Aptero\Cookie\Cookie;
 use Aptero\Form\Form;
 
 use Sync\Model\DbConstants;
+use Translator\Model\Translator;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
@@ -18,7 +19,7 @@ class OrderForm extends CommonForm
 
         parent::__construct($excursion);
 
-        $this->get('db_excursion_id')->setValue($excursion->get('db_excursion_id'));
+        $this->get('id')->setValue($excursion->getId());
 
         $this->add([
             'name' => 'name',

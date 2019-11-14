@@ -28,6 +28,8 @@ class Sync
     public function load($urlFunc, $params)
     {
         $url = SYNC_DOMAIN . '/sync/' . $urlFunc . '/?' . http_build_query($params);
+        //dd($url);
+
         $resp = (new \GuzzleHttp\Client(['verify' => false]))->request('GET', $url);
 
         try {

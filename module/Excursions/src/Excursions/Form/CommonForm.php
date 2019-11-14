@@ -1,10 +1,10 @@
 <?php
 namespace Excursions\Form;
 
-use Translator\Model\Translator;
 use Aptero\Cookie\Cookie;
 use Aptero\Form\Form;
 
+use Translator\Model\Translator;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 
@@ -16,15 +16,32 @@ class CommonForm extends Form
         $this->setAttribute('method', 'post');
         $this->setAttribute('autocomplete', 'off');
 
-        $language = Translator::getInstance();
-
         $this->add([
-            'name' => 'db_excursion_id',
+            'name'  => 'id',
             'type'  => 'Zend\Form\Element\Hidden',
         ]);
+        $this->get('id')->setValue($excursion->getId());
 
         $this->add([
-            'name' => 'date',
+            'name' => 'lang_id',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label'   => 'Язык',
+                'options' => Translator::getInstance()->getLanguages(),
+            ],
+            'attributes' => [
+                'class' => 'std-select'
+            ]
+        ]);
+        $this->get('lang_id')->setValue(Translator::getInstance()->getLangId());
+
+        /*$this->add([
+            'name'  => 'db_excursion_id',
+            'type'  => 'Zend\Form\Element\Hidden',
+        ]);*/
+
+        $this->add([
+            'name'  => 'date',
             'type'  => 'Zend\Form\Element\Text',
             'options' => [
                 'label' => 'Дата',
@@ -36,7 +53,7 @@ class CommonForm extends Form
         ]);
 
         $this->add([
-            'name' => 'time',
+            'name'  => 'time',
             'type'  => 'Aptero\Form\Element\Time',
             'options' => [
                 'label' => 'Время',
@@ -51,7 +68,7 @@ class CommonForm extends Form
         ]);
 
         $this->add([
-            'name' => 'adults',
+            'name'  => 'adults',
             'type'  => 'Zend\Form\Element\Number',
             'options' => [
                 'label' => 'Взрослых',
@@ -65,7 +82,7 @@ class CommonForm extends Form
         ]);
 
         $this->add([
-            'name' => 'children',
+            'name'  => 'children',
             'type'  => 'Zend\Form\Element\Number',
             'options' => [
                 'label' => 'Детей',

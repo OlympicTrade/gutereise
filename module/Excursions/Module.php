@@ -25,6 +25,7 @@ class Module implements AutoloaderProviderInterface
         return [
             'invokables' => [
                 'Excursions\Service\ExcursionsService'  => 'Excursions\Service\ExcursionsService',
+                'Excursions\Service\ToursService'       => 'Excursions\Service\ToursService',
             ],
             'initializers' => [
                 function ($instance, $sm) {

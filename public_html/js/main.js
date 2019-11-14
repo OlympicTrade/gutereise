@@ -2,16 +2,33 @@ $document = $(document);
 
 $(window).ready(function() {
     setTimeout(function() {
-        var body = $('body');
+        let body = $('body');
         initPopups();
         initElements(body);
         initComments(body);
         initSidebar();
+        initRegionSettings();
     }, 1);
 });
 
+function initRegionSettings() {
+    let flags = $('.language .flags', '#header');
+    $('.flag', flags).on('click', function () {
+        if($(this).hasClass('active')) return;
+
+        let lang = $(this).data('lang');
+        $.cookie('lang', lang, {expires: 365, path: "/"});
+        location.reload();
+    });
+
+    $('.currency select', '#header').on('change', function () {
+        $.cookie('currency', $(this).val(), {expires: 365, path: "/"});
+        location.reload();
+    });
+}
+
 function initGallery(box) {
-    var gallery = $('.gallery .list', box);
+    let gallery = $('.gallery .list', box);
 
     gallery.lightSlider({
         gallery: true,
@@ -23,22 +40,25 @@ function initGallery(box) {
 }
 
 function initSidebar() {
-    $('.sidebar').sidebar({
+    let sidebar = $('.sidebar');
+
+    sidebar.sidebar({
         margin: 20,
         nav: $('#header')
     });
-    /*$('.sidebar').each(function () {
-        var sidebar = $(this).sidebar({
-            margin: 20,
-            nav: $('#header')
+
+    $('.widget.catalog .show-all', sidebar).on('click', function() {
+        $(this).siblings('.h-box').slideDown(300, function () {
+            sidebar.sidebar().update();
         });
-    });*/
+        $(this).remove();
+    });
 }
 
 function initComments(box) {
     box.each(function () {
-        var container = $(this);
-        var form = $('.form', container);
+        let container = $(this);
+        let form = $('.form', container);
 
         form.formSubmit({
             success: function(resp, form){
@@ -54,7 +74,7 @@ function initComments(box) {
 }
 
 function initMetric() {
-    var url = $.aptero.url();
+    let url = $.aptero.url();
     url.init();
 
     $.ajax({
@@ -78,11 +98,11 @@ function initElements(box) {
     });
 
     $('.select-group', box).each(function () {
-        var group = $(this);
-        var vals = $('span', group);
-        var input = $('input', group);
+        let group = $(this);
+        let vals = $('span', group);
+        let input = $('input', group);
 
-        var setActive = function (val) {
+        let setActive = function (val) {
             if(input.val() == val) { return; }
 
             input.val(val).trigger('change');
@@ -96,14 +116,14 @@ function initElements(box) {
             setActive($(this).data('value'));
         });
 
-        var initVal = input.val() ? input.val() : vals.eq(0).data('value');
+        let initVal = input.val() ? input.val() : vals.eq(0).data('value');
         input.val('');
         setActive(initVal);
     });
 
     $('input[type="checkbox"]', box).each(function() {
-        var checkbox = $(this);
-        var label = checkbox.closest('label');
+        let checkbox = $(this);
+        let label = checkbox.closest('label');
 
         label.addClass('checkbox');
 
@@ -121,8 +141,8 @@ function initElements(box) {
     });
 
     $('input[type="radio"]', box).each(function() {
-        var radio = $(this);
-        var label = radio.closest('label');
+        let radio = $(this);
+        let label = radio.closest('label');
 
         label.addClass('radio');
         label.attr('data-name', radio.attr('name'));
@@ -139,10 +159,10 @@ function initElements(box) {
     });
 
     $('.std-counter', box).each(function() {
-        var el = $(this);
-        var input = $('input', el);
-        var incr = $('<div class="incr"></div>').appendTo(el);
-        var decr = $('<div class="decr"></div>').appendTo(el);
+        let el = $(this);
+        let input = $('input', el);
+        let incr = $('<div class="incr"></div>').appendTo(el);
+        let decr = $('<div class="decr"></div>').appendTo(el);
 
         function checkMinMax() {
             if(parseInt(input.val()) >= parseInt(input.data('max'))) {
@@ -161,9 +181,9 @@ function initElements(box) {
         checkMinMax();
 
         incr.on('click', function() {
-            var count = parseInt(input.val());
+            let count = parseInt(input.val());
             count = (isNaN(count) ? 0 : count) + 1;
-            var max = input.data('max') ? parseInt(input.data('max')) : 999;
+            let max = input.data('max') ? parseInt(input.data('max')) : 999;
             if(count > max) {
                 return false;
             }
@@ -173,9 +193,9 @@ function initElements(box) {
         });
 
         decr.on('click', function() {
-            var count = parseInt(input.val());
+            let count = parseInt(input.val());
             count = (isNaN(count) ? 0 : count) - 1;
-            var min = input.data('min') !== '' ? parseInt(input.data('min')) : 1;
+            let min = input.data('min') !== '' ? parseInt(input.data('min')) : 1;
             if(count < min) {
                 return false;
             }
@@ -188,7 +208,7 @@ function initElements(box) {
             checkMinMax();
         });
 
-        var timer = null;
+        let timer = null;
         $('.incr, .decr', el).on('click', function () {
             if(timer) clearTimeout(timer);
             timer = setTimeout(function() {
@@ -198,8 +218,8 @@ function initElements(box) {
     });
 
     $('.std-input, .std-textarea, .std-select', '.element', box).each(function () {
-        var el = $(this);
-        var element = $(this).closest('.element');
+        let el = $(this);
+        let element = $(this).closest('.element');
 
         if(el.attr('placeholder') !== undefined && el.attr('placeholder') !== '') {
             element.addClass('not-empty');
@@ -231,11 +251,11 @@ function initElements(box) {
     });
 
     $('.short-list').each(function () {
-        var box = $(this);
-        var slider = $('.slider', box).lightSlider({
+        let box = $(this);
+        let slider = $('.slider', box).lightSlider({
             item:   3,
             pager:  false,
-            loop:   true,
+            loop:   false,
             easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
             speed:  600,
             slideMove: 3,
@@ -298,8 +318,8 @@ function initElements(box) {
 
 function initPopups() {
     $('body').on('click', '.popup, .popup-img', function() {
-        var el = $(this);
-        var type = el.hasClass('popup-img') ? 'image' : 'ajax';
+        let el = $(this);
+        let type = el.hasClass('popup-img') ? 'image' : 'ajax';
 
         if(el.hasClass('popup-img')) {
             $.fancybox.open({
@@ -329,13 +349,13 @@ function initPopups() {
                     }
                 },
                 afterLoad: function(e, slide) {
-                    slide.$slide.on('click', function(e) {
+                    /*slide.$slide.on('click', function(e) {
                         if($(e.target).hasClass('fancybox-slide')) {
                             $.fancybox.close()
                         }
-                    });
+                    });*/
 
-                    initElements(slide.$slide[0]);
+                    initElements(slide.$slide);
                 }
             }
         });

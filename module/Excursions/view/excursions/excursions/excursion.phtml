@@ -8,7 +8,7 @@ $menu = [
     'desc' => [
         'href'  => '',
         'class' => 'item active',
-        'name'  => '<i class="far fa-file-alt"></i> ' . $this->tr('Описание'),
+        'name'  => '<i class="fal fa-file-alt"></i> ' . $this->tr('Описание'),
     ],
 ];
 
@@ -16,7 +16,7 @@ if($excursion->getPlugin('plan')->count()) {
     $menu['plan'] = [
         'href'  => '.anchor-plan',
         'class' => 'item anchor',
-        'name'  => '<i class="far fa-map"></i> ' . $this->tr('План'),
+        'name'  => '<i class="fal fa-map"></i> ' . $this->tr('План'),
     ];
 }
 
@@ -24,17 +24,18 @@ if($excursion->getPlugin('museums')->count()) {
     $menu['museums'] = [
         'href'  => '.anchor-attractions',
         'class' => 'item anchor',
-        'name'  => '<i class="fas fa-university"></i> ' . $this->tr('Достопримечательности'),
+        'name'  => '<i class="fal fa-university"></i> ' . $this->tr('Достопримечательности'),
     ];
 }
 
 $menu['comments'] = [
     'href'  => '.excursion-block .comments',
     'class' => 'item anchor',
-    'name'  => '<i class="far fa-comments"></i> ' . $this->tr('Вопросы'),
+    'name'  => '<i class="fal fa-comments"></i> ' . $this->tr('Вопросы'),
 ];
 
-$duration = $excursion->get('db_data')->duration;
+$isTour = $excursion->isTour();
+$duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get('db_data')->days[0]->duration;
 ?>
 
 <div class="block gray">
@@ -85,7 +86,10 @@ $duration = $excursion->get('db_data')->duration;
                 </div>
                 <div class="row">
                     <div class="label"><?php echo $this->tr('Длительность экскурсии') ?></div>
-                    <?php echo $this->declension($duration, ['час', 'часа', 'часов']) ?>
+                    <?= $isTour ?
+                        $this->declension($duration, ['день', 'дня', 'дней']) :
+                        $this->declension($duration, ['час', 'часа', 'часов'])
+                    ?>
                 </div>
                 <div class="row">
                     <div class="label"><?php echo $this->tr('В стоимость включено') ?></div>
@@ -136,6 +140,8 @@ $duration = $excursion->get('db_data')->duration;
 
             $html = '';
 
+            $days = $duration;
+
             $icons = [
                 'museum' => '<i class="fas fa-university"></i>',
                 'park'   => '<i class="fas fa-tree"></i>',
@@ -167,11 +173,19 @@ $duration = $excursion->get('db_data')->duration;
         <?php if(array_key_exists('museums', $menu)) { ?>
 
         <div class="std-header anchor-attractions">
-            <h2><?php echo $this->tr('В ходе экскурсии вы увидите') ?></h2>
+            <h2><?php echo $this->tr('Похожие экскурсии') ?></h2>
             <div class="separ"></div>
         </div>
 
-        <?php echo $this->shortList($excursion->getPlugin('museums'), ['desc' => false]) ?>
+        <?php echo $this->shortList($excursion->getPlugin('reco'), ['desc' => false]) ?>
+
+        <div class="notice-panel yellow">
+            <?php echo $this->tr('Все экскурсии на сайте являются <b>индивидуальными</b>, то есть Вам предоставляется персональный гид и транспорт.
+            Экскурсия начинается в удобное для Вас время, в любом месте города. Вход в музеи осуществляется без очереди.
+            Мы можем организовать встречу в аэропорту и на вокзале, поможем с выбором гостиницы. Наша фирма работает с
+            туристами из России, Европы и Китая. Количество туристов в группе не ограничено. Рады ответить на любой Ваш
+            вопрос по телефону') ?> <b>+7 (812) 380-88-47</b>
+        </div>
 
         <?php } ?>
 
@@ -185,23 +199,23 @@ $duration = $excursion->get('db_data')->duration;
             <?php
             $html =
                 '<form action="/excursions/get-price/" method="post" class="widget excursion-form common-form">'.
-                    '<input type="hidden" name="id" value="' . $excursion->getId() . '">'.
+                    '<input type="hidden" name="lang_id" value="' . \Translator\Model\Translator::getInstance()->getLangId() . '">'.
                     $this->commonForm($commonForm, [
-                        ['field' => 'date', 'icon' => 'far fa-calendar-alt'],
-                        ['field' => 'time', 'icon' => 'far fa-clock'],
-                        ['field' => 'adults', 'icon' => 'fas fa-user'],
-                        ['field' => 'children', 'icon' => 'fas fa-child'],
+                        ['field' => 'date', 'icon' => 'fal fa-calendar-alt'],
+                        ['field' => 'time', 'icon' => 'fal fa-clock'],
+                        ['field' => 'adults', 'icon' => 'fal fa-user'],
+                        ['field' => 'children', 'icon' => 'fal fa-child'],
                     ]).
-                    '<div class="price-box std-errors"></div>'.
-                    '<div class="btns">'.
-                        '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
+                    '<div class="body">'.
+                        '<div class="price-box std-errors"></div>'.
+                        '<div class="btns">'.
+                            '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
+                        '</div>'.
                     '</div>'.
                 '</form>';
 
             echo $html;
             ?>
-
-            <?php echo $this->excursionsRecoWidget($excursion->getPlugin('reco')) ?>
         </div>
     </div>
     </div>
@@ -228,7 +242,7 @@ $(function () {
 
     function updatePrice(data) {
         var html = '';
-
+        new CommonForm(form);
         var errorsHtml = '';
 
         $.each(data.errors, function(key, val) {
@@ -273,7 +287,7 @@ $(function () {
                     }
                 },
                 afterLoad: function(e, slide) {
-                    initElements(e.$refs.slider);
+                    initElements(slide.$slide);
                 }
             }
         });

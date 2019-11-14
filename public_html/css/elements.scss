@@ -403,7 +403,7 @@ label.radio input {
     padding: 12px;
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
     display: none;
-    z-index: 9000!important;
+    z-index: 999999 !important;
 }
 
 .ui-datepicker th {

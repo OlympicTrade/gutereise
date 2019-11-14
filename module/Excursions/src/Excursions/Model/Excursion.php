@@ -1,6 +1,7 @@
 <?php
 namespace Excursions\Model;
 
+use Application\Model\Currency;
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Plugin\Images;
 use Museums\Model\Museum;
@@ -15,6 +16,9 @@ class Excursion extends Entity
     const TRANSPORT_AUTO = 1;
     const TRANSPORT_WALK = 2;
 
+    const TYPE_EXCURSION = 0;
+    const TYPE_TOUR      = 1;
+
     public function __construct($options = [])
     {
         parent::__construct($options);
@@ -24,6 +28,7 @@ class Excursion extends Entity
         $this->addProperties([
             'db_excursion_id'   => [],
             'db_data'           => ['type' => 'json'],
+            'type'              => [],
             'transport'         => [],
             'name'              => [],
             'header'            => [],
@@ -114,8 +119,8 @@ class Excursion extends Entity
                     'crop'   => true,
                 ],
                 'm' => [
-                    'width'  => 500,
-                    'height' => 320,
+                    'width'  => 400,
+                    'height' => 400,
                     'crop'   => true,
                 ],
                 'r' => [
@@ -173,6 +178,11 @@ class Excursion extends Entity
         });*/
     }
 
+    public function isTour()
+    {
+        return count($this->get('db_data')->days) > 1;
+    }
+
     public function getUrl()
     {
         return '/excursions/' . $this->get('url') . '/';
@@ -180,7 +190,9 @@ class Excursion extends Entity
 
     public function getPrice($params = [])
     {
-        return $this->get('price');
+        return $this->get('db_data')->price->{Currency::getInstance()->getCurrency()};
+
+        /*return $this->get('price');
         $sync = new Sync();
 
         $price = $sync->getExcursionPrice([
@@ -195,6 +207,6 @@ class Excursion extends Entity
             'child'    => $price->child,
             'tourist'  => ($price->child ? ($price->child + $price->adult) / 2 : $price->adult),
             'total'    => $price->income,
-        ];
+        ];*/
     }
 }

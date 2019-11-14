@@ -13,6 +13,7 @@ $modules = [
     'Translator',
     'Comments',
     'Sync',
+    'Faq',
 ];
 
 return [

@@ -28,6 +28,14 @@ class Excursion extends Entity
         self::TRANSPORT_WALK => 'Пешеходная',
     ];
 
+    const TYPE_EXCURSION = 0;
+    const TYPE_TOUR      = 1;
+
+    static public $types = [
+        self::TYPE_EXCURSION => 'Экскурсия',
+        self::TYPE_TOUR => 'Тур',
+    ];
+
     public function __construct()
     {
         $this->setTable('excursions');
@@ -43,11 +51,10 @@ class Excursion extends Entity
             'text'              => [],
             'title'             => [],
             'duration'          => [],
-            /*'time_from'         => [],
-            'time_to'           => [],*/
             'description'       => [],
             'nationality'       => [],
             'url'               => [],
+            'type'              => [],
         ]);
 
         $this->addPlugin('background', function() {
@@ -256,13 +263,15 @@ class Excursion extends Entity
         $sync = new Sync();
         $data = $sync->getExcursionData(['id' => $dbId]);
 
-        if(count($data->days) == 1) {
+        $data = $data->days;
+
+        /*if(count($data->days) == 1) {
             $firstDay = $data->days[0];
             $data->duration = $firstDay->duration;
             $data->min_time = $firstDay->min_time;
             $data->max_time = $firstDay->max_time;
             unset($data->days);
-        }
+        }*/
 
 		$this->set('db_data', $data);
 

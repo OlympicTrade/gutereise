@@ -39,7 +39,7 @@ class ExcursionsWidgets extends AbstractHelper
         $view = $this->getView();
 
         $html =
-            '<div class="widget search">'.
+            '<div class="search">'.
                 '<i class="fas fa-search"></i>'.
                 '<input class="search-input" type="text" name="query" value="' . $val . '" placeholder="' .  $view->tr('Поиск по названию') . '">'.
             '</div>';
@@ -54,8 +54,9 @@ class ExcursionsWidgets extends AbstractHelper
         $view = $this->getView();
 
         $i = 0;
+        $count = 0;
         foreach ($data['data'] as $item) {
-            $i++;
+            $i++; $count += $item->get('count');
 
             if($i == 10) {
                 $html .= '<div class="h-box">';
@@ -70,16 +71,16 @@ class ExcursionsWidgets extends AbstractHelper
         if($i > 9) {
             $html .=
                 '</div>'
-                .'<span class="show-all">' . $view->tr('показать все') . '</span>';
+                .'<span class="btn s show-all">' . $view->tr('Весь список') . '</span>';
         } elseif($i <= 1) {
             return '';
         }
 
         $html =
-            '<div class="widget catalog">'
-                .'<div class="header">' . $view->tr('Категории') . '</div>'
-                .'<div class="body">' . $html . '</div>'
-            .'</div>';
+            '<div class="row">'.
+                '<a href="/excursions/">Все экскурсии<span> ' . $count . '</span></a>' .
+            '</div>'.
+            $html;
 
         return $html;
     }

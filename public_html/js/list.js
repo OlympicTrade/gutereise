@@ -1,20 +1,20 @@
 $(function () {
-    var box = $('.excursions-block');
+    let box = $('.excursions-block');
     if(!box.length) { return; }
 
-    var list = $('.items-list', box);
-    var filters  = $('.filters', box);
-    var paginator = $('.paginator', list);
-    var wTypes = $('.widget.types', filters);
-    var wMuseums  = $('.widget.museums', filters);
+    let list = $('.items-list', box);
+    let filters  = $('.filters', box);
+    let paginator = $('.paginator', list);
+    let wTypes = $('.widget.types', filters);
+    let wMuseums  = $('.widget.museums', filters);
 
     $('.show-all', filters).on('click', function() {
         $(this).css({display: 'none'}).closest('.body').children('.h-box').slideToggle(200);
     });
 
     function getFiltersUrl() {
-        var active = $('.active', wTypes);
-        var url = $.aptero.url();
+        let active = $('.active', wTypes);
+        let url = $.aptero.url();
 
         url.setPath(active.length ? active.attr('href') : $('input.update-url', filters).val());
         url.setParams($.aptero.serializeArray(filters));
@@ -42,29 +42,22 @@ $(function () {
             });
         });
 
-        var url = getFiltersUrl();
+        let url = getFiltersUrl();
 
         $.ajax({
             url: url.getUrl(),
             success: function (resp) {
-                var products = $(resp.html.items);
+                let products = $(resp.html.items);
                 list.html(products);
                 loadMoreProducts();
-
-                //$('html, body').scrollTop(list.offset().top - $('#nav').outerHeight() - 20);
 
                 if(list.is(':visible')) {
                     list.css({display: 'none'})
                 }
 
-                list.fadeIn(200);
-
-                /*if(options.filtersUpdate) {
-                    var upBox = $('.update-box', filters);
-                    upBox.html(resp.html.filters);
-                    initElements(filtersBox);
-                    initProductsFilters();
-                }*/
+                list.fadeIn(200, function () {
+                    $('.sidebar').sidebar().update();
+                });
 
                 History.replaceState({}, resp.meta.title, url.getUrl());
             }
@@ -77,21 +70,23 @@ $(function () {
             return;
         }
 
-        var url = getFiltersUrl();
+        let url = getFiltersUrl();
         url.setParams({page: paginator.data('page')});
-        var loadLine = $(window).scrollTop() + ($(window).height()) + 700;
+        let loadLine = $(window).scrollTop() + ($(window).height()) + 700;
         paginator.remove();
         paginator = $('.paginator', list);
 
         $.ajax({
             url: url.getUrl(),
             success: function (resp) {
-                var products = $(resp.html.items);
+                let products = $(resp.html.items);
                 products.appendTo(list);
                 paginator = $('.paginator', list);
 
                 if(paginator.length && paginator && loadLine >= paginator.offset().top) {
                     loadMoreProducts();
+                } else {
+                    $('.sidebar').sidebar().update();
                 }
             }
         });

@@ -81,11 +81,11 @@ class Module
 
         $compressor->compress([
             PUBLIC_DIR . '/css/libs/reset.css',
+            PUBLIC_DIR . '/fonts/fonts.css',
             PUBLIC_DIR . '/css/libs/lightslider.css',
             PUBLIC_DIR . '/css/libs/lightgallery.css',
-            //PUBLIC_DIR . '/css/libs/owlcarousel.css',
             PUBLIC_DIR . '/css/libs/fancybox.css',
-            PUBLIC_DIR . '/css/libs/grid.css',
+            PUBLIC_DIR . '/css/libs/grid.scss',
             PUBLIC_DIR . '/css/elements.scss',
             PUBLIC_DIR . '/css/main.scss',
         ],  'css');
@@ -93,10 +93,10 @@ class Module
 		 $jsDesktop = [
              0  => PUBLIC_DIR . '/js/config.js',
              10 => PUBLIC_DIR . '/js/libs/languages.js',
+             11 => PUBLIC_DIR . '/js/libs/currency.js',
              20 => PUBLIC_DIR . '/js/libs/fancybox/fancybox.js',
              25 => PUBLIC_DIR . '/js/libs/history.js',
              30 => PUBLIC_DIR . '/js/libs/inputmask.js',
-             //32 => PUBLIC_DIR . '/js/libs/owl.carousel.js',
              35 => PUBLIC_DIR . '/js/libs/lightslider.js',
              37 => PUBLIC_DIR . '/js/libs/lightgallery.js',
              45 => PUBLIC_DIR . '/js/libs/aptero.js',
@@ -108,8 +108,7 @@ class Module
              82 => PUBLIC_DIR . '/js/libs/catalog.js',
              85 => PUBLIC_DIR . '/js/libs/youtube-bg.js',
              90 => PUBLIC_DIR . '/js/main.js',
-             93 => PUBLIC_DIR . '/js/catalog.js',
-             95 => PUBLIC_DIR . '/js/list.js',
+             95 => PUBLIC_DIR . '/js/common-form.js',
         ];
 
         $compressor->compress($jsDesktop,  'js');
@@ -117,6 +116,7 @@ class Module
         //Mobile
         $compressor->compress([
             PUBLIC_DIR . '/css/libs/reset.css',
+            PUBLIC_DIR . '/fonts/fonts.css',
             PUBLIC_DIR . '/css/libs/lightslider.css',
             PUBLIC_DIR . '/css/libs/lightgallery.css',
             PUBLIC_DIR . '/css/libs/fancybox.css',
@@ -128,6 +128,7 @@ class Module
 		$jsMobile = [
             0  => PUBLIC_DIR . '/mobile/js/config.js',
             10 => PUBLIC_DIR . '/js/libs/languages.js',
+            11 => PUBLIC_DIR . '/js/libs/currency.js',
             20 => PUBLIC_DIR . '/js/libs/fancybox/fancybox.js',
             23 => PUBLIC_DIR . '/js/libs/lightslider.js',
             25 => PUBLIC_DIR . '/js/libs/history.js',
@@ -198,7 +199,7 @@ class Module
 
     public function initTranslate(MvcEvent $mvcEvent)
     {
-        Translator::getInstance()->detectLanguage();
+        Translator::getInstance();
 
         /*$translator = new Translator();
         echo $translator->translate('Экскурсии');
@@ -265,7 +266,7 @@ class Module
                 'ContentRender'         => 'Application\View\Helper\ContentRender',
                 'GenerateMeta'          => 'Application\View\Helper\GenerateMeta',
                 //'WidgetNav'             => 'Application\View\Helper\WidgetNav',
-                'LanguageSelect'        => 'Application\View\Helper\LanguageSelect',
+                'RegionSettings'        => 'Application\View\Helper\RegionSettings',
                 //'TextBlock'             => 'Application\View\Helper\TextBlock',
                 //'HtmlBlocks'            => 'Application\View\Helper\HtmlBlocks',
                 'Header'                => 'Application\View\Helper\Header',

@@ -5,8 +5,8 @@ $this->headLink()
     ->prependStylesheet(\Aptero\Compressor\Compressor::getPublicLink('css', 'mobile'))
     ->prependStylesheet('/fonts/fonts.css')
     ->prependStylesheet('//fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i')
-    ->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css');
-
+    //->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css')
+;
 $this->headScript()
     ->prependFile(\Aptero\Compressor\Compressor::getPublicLink('js', 'mobile'))
     ->prependFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')

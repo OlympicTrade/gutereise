@@ -7,7 +7,6 @@
         <div class="menu">
             <a href="/excursions/" class="btn yellow"><?php echo $this->tr('Экскурсии') ?></a>
             <a href="/tours/" class="btn yellow"><?php echo $this->tr('Туры') ?></a>
-            <a href="/hotels/" class="btn yellow"><?php echo $this->tr('Отели') ?></a>
             <a href="/transport/" class="btn yellow"><?php echo $this->tr('Траспорт') ?></a>
         </div>
 
@@ -59,35 +58,42 @@
     });
 </script>
 
+<div class="main-block main-block-3">
+    <div class="header">
+        <h2><?php echo $this->tr('Как мы проводим наши экскурсии') ?></h2>
+    </div>
+    <div class="body">
+        С 2007 года мы организуем отличные индивидуальные и групповые экскурсии по самым красивым историческим местам
+        нашего города. Нас отличает ответсвенный подход: к работе мы привлекаем лучших гидов и разрабатываем интересную
+        экскурсионную программу, лично проверяем качество транспорта. В результате экскурсии получаются интересными и
+        насыщенными. Об этом лучше всего расскажут отзывы наших клиентов.
+    </div>
+</div>
+
 <div class="main-block main-block-2">
     <div class="block">
-        <div class="header">
-            <h2><?php echo $this->tr('Индивидуальные экскурсии по Петербургу') ?></h2>
-            <div class="separ"></div>
-            <div class="notice"><?php echo $this->tr('Эта серия настольных игр лучше всего передаёт атмосферу хтонического кошмара и безысходности из рассказов Лавкрафта.') ?></div>
-        </div>
         <div class="menu">
-            <a href="/excursions/category//" class="item">
+            <a href="/excursions/category/obzornyie/#items-list-anchor" class="item">
                 <img src="/images/m-1.jpg" alt="<?php echo $this->tr('Обзорные экскурсии') ?>">
                 <span class="desc"><?php echo $this->tr('Обзорные экскурсии') ?></span>
             </a>
-            <a href="/excursions/category/hermitage/" class="item">
+            <a href="/excursions/category/hermitage/#items-list-anchor" class="item">
                 <img src="/images/m-10.jpg" alt="Эрмитаж">
                 <span class="desc"><?php echo $this->tr('Эрмитаж') ?></span>
             </a>
-            <a href="/excursions/category/peterhof/" class="item">
+            <a href="/excursions/category/peterhof/#items-list-anchor" class="item">
                 <img src="/images/m-7.jpg" alt="<?php echo $this->tr('Петергоф') ?>">
                 <span class="desc"><?php echo $this->tr('Петергоф') ?></span>
             </a>
-            <a href="/excursions/category/tsarskoe-selo-pavlovsk/" class="item">
+            <a href="/excursions/category/tsarskoe-selo-pavlovsk/#items-list-anchor" class="item">
                 <img src="/images/m-9.jpg" alt="<?php echo $this->tr('Царские село и Павловск') ?>">
                 <span class="desc"><?php echo $this->tr('Царские село и Павловск') ?></span>
             </a>
-            <a href="/excursions/category/zagorodnyie/" class="item">
+            <a href="/excursions/category/zagorodnyie/#items-list-anchor" class="item">
                 <img src="/images/m-3.jpg" alt="<?php echo $this->tr('Загородные экскурси') ?>">
                 <span class="desc"><?php echo $this->tr('Загородные экскурсии') ?></span>
             </a>
-            <a href="/excursions/category/reki-i-kanalyi/" class="item">
+            <a href="/excursions/category/reki-i-kanalyi/#items-list-anchor" class="item">
                 <img src="/images/m-4.jpg" alt="<?php echo $this->tr('Экскурсии по рекам и каналам') ?>">
                 <span class="desc"><?php echo $this->tr('Экскурсии по рекам и каналам') ?></span>
             </a>
@@ -96,6 +102,7 @@
     </div>
 </div>
 
+<?php /*
 <div class="main-block-3">
     <div id="main-block-3-map" style="height: 450px;"></div>
     <div class="notice">
@@ -141,6 +148,7 @@
         });
     </script>
 </div>
+ */ ?>
 
 <div class="main-block-4">
     <div class="col-l">
@@ -176,5 +184,40 @@
         slideMove: 1,
         easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
         speed: 600,
+    });
+</script>
+
+<?php
+$faq = \Faq\Model\Faq::getEntityCollection();
+if($faq->count()) {
+?>
+<div class="main-block main-block-5">
+    <div class="header">
+        <h2><?php echo $this->tr('Часто задаваемые вопросы') ?></h2>
+    </div>
+    <div class="body">
+        <?php
+        foreach (\Faq\Model\Faq::getEntityCollection() as $row) {
+            echo
+            '<div class="row">
+                <div class="question">' . $row->get('question') . '</div>
+                <div class="answer">' . $row->get('answer') . '</div>
+            </div>';
+        }
+        ?>
+    </div>
+</div>
+    <?php
+}
+?>
+
+<script>
+    var block = $('.main-block-5');
+
+    $('.row .question', block).on('click', function() {
+        var row = $(this).closest('.row');
+        $('.answer', row).slideToggle(200);
+
+        row.siblings().find('.answer').slideUp(200);
     });
 </script>

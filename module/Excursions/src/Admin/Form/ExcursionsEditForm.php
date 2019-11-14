@@ -65,6 +65,15 @@ class ExcursionsEditForm extends Form
         ]);*/
 
         $this->add([
+            'name' => 'type',
+            'type'  => 'Zend\Form\Element\Select',
+            'options' => [
+                'label'   => 'Тип',
+                'options' => Excursion::$types,
+            ],
+        ]);
+
+        $this->add([
             'name' => 'nationality',
             'type'  => 'Zend\Form\Element\Select',
             'options' => [

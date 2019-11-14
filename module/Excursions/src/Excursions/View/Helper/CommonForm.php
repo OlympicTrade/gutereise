@@ -12,7 +12,11 @@ class CommonForm extends AbstractHelper
 
         $html =
             '<div class="calc">'.
-                '<div class="header">' . $view->tr('Калькулятор стоимости') . '</div>';
+                '<div class="header">' . $view->tr('Калькулятор стоимости') . '</div>'.
+                '<div class="body">';
+
+        $html .=
+            $view->formElement($form->get('id'));
 
         foreach ($fields as $field) {
             $html .=
@@ -23,6 +27,7 @@ class CommonForm extends AbstractHelper
         }
 
         $html .=
+                '</div>'.
             '</div>';
 
         return $html;

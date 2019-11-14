@@ -57,7 +57,8 @@ class Translator
     {
         if($langCode) {
             $this->setLangCode($langCode);
-            return;
+        } else {
+            $this->detectLanguage();
         }
     }
 
@@ -91,11 +92,6 @@ class Translator
         $this->setLangCode($langCode);
 
         return $this;
-    }
-
-    public function getLanguages()
-    {
-        return DbConstants::$languages;
     }
 
     public function isForeigners()
@@ -147,5 +143,18 @@ class Translator
         }
 
         return $translate;
+    }
+
+    public function getLanguages($translate = true)
+    {
+        if(!$translate) return DbConstants::$languages;
+
+        $list = [];
+
+        foreach (DbConstants::$languages as $key => $val) {
+            $list[$key] = $this->translate($val);
+        }
+
+        return $list;
     }
 }

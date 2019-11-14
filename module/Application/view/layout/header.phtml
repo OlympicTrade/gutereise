@@ -5,13 +5,15 @@ $version = $settings->get('html_css_js_version');
 
 $this->headLink()
     ->prependStylesheet(\Aptero\Compressor\Compressor::getPublicLink('css'))
-    ->prependStylesheet('/fonts/fonts.css')
     ->prependStylesheet('//fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i')
-    ->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css');
+    //->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css')
+;
 
 $this->headScript()
     ->setAllowArbitraryAttributes(true)
     ->prependFile(\Aptero\Compressor\Compressor::getPublicLink('js'))
+    //->prependFile('/js/libs/jquery-ui.js')
+    //->prependFile('/js/libs/jquery.js')
     ->prependFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
     ->prependFile('//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
     ;
@@ -38,7 +40,8 @@ $langCode = $language->getLangCode();
     ?>
     <script>
         $.languages.setLanguage('<?php echo $langCode ?>');
-        $.config.euroRate = <?php echo $settings->get('euro_rate') ?>;
+        $.currency.setCurrency('<?php echo \Application\Model\Currency::getInstance()->getCurrency() ?>');
+        //$.config.euroRate = <?php echo $settings->get('euro_rate') ?>;
     </script>
 </head>
 <body>
@@ -47,32 +50,14 @@ $langCode = $language->getLangCode();
         <a href="/" class="logo"></a>
         <ul class="nav">
             <li><a href="/excursions/"><?php echo $this->tr('Экскурсии') ?></a></li>
-            <?php /*<li><a href="/tours/"><?php echo $this->tr('Туры') ?></a></li>
-            <li><a href="/hotels/"><?php echo $this->tr('Отели') ?></a></li> */?>
+            <li><a href="/tours/"><?php echo $this->tr('Туры') ?></a></li>
+            <?php /*<li><a href="/hotels/"><?php echo $this->tr('Отели') ?></a></li> */?>
             <li><a href="/transport/"><?php echo $this->tr('Транспорт') ?></a></li>
             <li><a href="/about/"><?php echo $this->tr('О компании') ?></a></li>
-            <li><a href="/attractions/"><?php echo $this->tr('Музеи') ?></a></li>
+            <li><a href="/attractions/"><?php echo $this->tr('Достопримечательности') ?></a></li>
         </ul>
 
-        <?php /*
-        <div class="language">
-            <div class="label"><?php echo $this->tr('Язык') ?></div>
-            <?php echo $this->languageSelect() ?>
-        </div>
-        */ ?>
-
-        <script>
-            $(function() {
-                var flags = $('.flags', '#header');
-                $('.flag', flags).on('click', function () {
-                    if($(this).hasClass('active')) return;
-
-                    var lang = $(this).data('lang');
-                    $.cookie('lang', lang, {expires: 365, path: "/"});
-                    location.reload();
-                })
-            });
-        </script>
+        <?php echo $this->regionSettings() ?>
 
         <div class="contacts">
             <div class="phone"><?php echo $contacts->get('phone_1') ?></div>

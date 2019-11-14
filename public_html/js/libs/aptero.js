@@ -58,7 +58,17 @@ fn.price = function(price, sign) {
     if(sign === undefined) sign = true;
 
     if(sign) {
-        price += $.languages.getLanguage() === 'ru' ? ' <i class="fas fa-ruble-sign"></i>' : ' <i class="fas fa-euro-sign"></i>';
+        switch ($.currency.getCurrency()) {
+            case 'rub':
+                price += ' <i class="fas fa-ruble-sign"></i>';
+                break;
+            case 'eur':
+                price += ' <i class="fas fa-euro-sign"></i>';
+                break;
+            case 'usd':
+                price += ' <i class="fas fa-dollar"></i>';
+                break;
+        }
     }
 
     return price;

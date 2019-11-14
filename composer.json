@@ -14,6 +14,7 @@
         "phpoffice/phpspreadsheet": "dev-master",
         "guzzlehttp/guzzle":"*",
         "matthiasmullie/minify":"*",
-        "leafo/scssphp": "0.7.6"
+        "leafo/scssphp": "0.7.6",
+        "mobiledetect/mobiledetectlib": "*"
     }
 }

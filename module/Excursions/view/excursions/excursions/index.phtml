@@ -1,28 +1,33 @@
 <?php echo $this->header([
-    'background' => '/images/headers/petergof.jpg'
+    'background' => '/images/headers/isaak.jpg'
 ]); ?>
 
 <div class="block module-items-block sidebar-aware" id="items-list-anchor">
     <div class="container">
         <div class="sidebar">
             <div class="slider filters">
-                <?php
-                $tags = \Excursions\Model\Tags::getEntityCollection();
-                $tags->select()->where
-                    ->greaterThan('count', 0);
+                <div class="widget catalog">
+                    <div class="header"><?= $this->tr('Экскурсии') ?></div>
+                    <div class="body">
+                        <?php
+                        $tags = \Excursions\Model\Tags::getEntityCollection();
+                        $tags->select()->where
+                            ->greaterThan('count', 0);
 
-                echo $this->ExcursionsWidgets([
-                    'url'   => '/excursions/',
-                ], [
-                    'search' => [
-                        'value'   => $filters['search'],
-                    ],
-                    'catalog' => [
-                        'value'   => $filters['tags'],
-                        'data'    => $tags
-                    ],
-                ]);
-                ?>
+                        echo $this->ExcursionsWidgets([
+                            'url'   => '/excursions/',
+                        ], [
+                            'search' => [
+                                'value'   => $filters['search'],
+                            ],
+                            'catalog' => [
+                                'value'   => $filters['tags'],
+                                'data'    => $tags,
+                            ],
+                        ]);
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="content">

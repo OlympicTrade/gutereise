@@ -1,10 +1,10 @@
 <div class="std-popup order-popup">
     <div class="header">
-        <?php echo $excursion->get('name'); ?>
+        <?php echo $this->tr($excursion->get('name')); ?>
     </div>
     <div class="body std-form">
         <form action="/excursions/order/?id=<?php echo $excursion->getId(); ?>" class="form-box common-form">
-            <?php echo $this->formElement($form->get('db_excursion_id')); ?>
+            <?php echo $this->formElement($form->get('id')); ?>
             <div class="cols">
                 <div class="col-25">
                     <div class="row">
@@ -29,7 +29,7 @@
             </div>
             <div class="cols">
                 <div class="col-25">
-                    <?php echo $this->formRow($form->get('time')); ?>
+                    <?php echo $this->formRow($form->get('lang_id')); ?>
                 </div>
                 <div class="col-25">
                     <?php echo $this->formRow($form->get('name')); ?>
@@ -52,15 +52,15 @@
             <div class="form-errors"></div>
 
             <div class="btns">
-                <input type="submit" value="Забронировать" class="btn yellow order">
+                <input type="submit" value="<?php echo $this->tr('Забронировать') ?>" class="btn yellow order">
                 <div class="price-box"></div>
             </div>
         </form>
         <div class="success-box">
-            <div class="sb-title">Экскурсия забронирована</div>
-            <div class="sb-desc">Наш менеджер перезвонит вам в ближайшее время для уточнения деталей заказа</div>
+            <div class="sb-title"><?php echo $this->tr('Экскурсия забронирована') ?></div>
+            <div class="sb-desc"><?php echo $this->tr('Наш менеджер перезвонит вам в ближайшее время для уточнения деталей заказа') ?></div>
             <div class="sb-btns">
-                <span class="btn yellow" data-fancybox-close>Закрыть</span>
+                <span class="btn yellow" data-fancybox-close><?php echo $this->tr('Закрыть') ?></span>
             </div>
         </div>
     </div>
@@ -73,7 +73,7 @@ var form = $('form', popup);
 form.formSubmit({
     success: function(resp, form){
         $(form).fadeOut(200, function(){
-            //$('.success-box', popup).fadeIn(200);
+            $('.success-box', popup).fadeIn(200);
         });
     }
 });
@@ -106,15 +106,15 @@ $('input, select', form).on('keyup change', function () {
                 }
 
                 html +=
-                    '<div class="price"><span>' + $.aptero.price(data.price) + '</span> <i class="fas fa-ruble-sign"></i></div>';
+                    '<div class="price">' + $.aptero.price(data.price, true) + '</div>';
                 if(!data.child) {
                     html +=
-                        '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i> за человека</div>';
+                        '<div class="notice">' + $.aptero.price(data.adult, true) + ' <?php echo $this->tr('за человека') ?></div>';
                 } else {
                     html +=
                         '<div class="notice">' +
-                            'взрослый - <b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i>, ' +
-                            'детский - <b>'  + $.aptero.price(data.child) + '</b> <i class="fas fa-ruble-sign"></i>' +
+                            'взрослый - ' + $.aptero.price(data.adult, true) + ', ' +
+                            'детский - '  + $.aptero.price(data.child, true) +
                         '</div>';
                 }
                 $('.price-box', form).html(html);
@@ -123,42 +123,3 @@ $('input, select', form).on('keyup change', function () {
     }, 200);
 }).trigger('change');
 </script>
-
-<style>
-    .order-popup {
-        width: 700px;
-    }
-
-    .order-popup .btn {
-        vertical-align: middle;
-        width: 210px;
-    }
-
-    .order-popup form .btns {
-        margin-top: 10px;
-    }
-
-    .order-popup form .btn {
-        vertical-align: middle;
-        width: 210px;
-        margin-right: 14px;
-    }
-
-    .order-popup form .price-box {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .order-popup form .price-box .price {
-        font-size: 21px;
-        font-weight: 700;
-    }
-
-    .order-popup form .price-box .notice {
-        font-size: 13px;
-    }
-
-    .order-popup form .form-errors {
-        margin-bottom: 10px;
-    }
-</style>

@@ -1,6 +1,7 @@
 <?php
 namespace Aptero\View\Helper;
 
+use Application\Model\Currency;
 use Application\Model\Settings;
 use Translator\Model\Translator;
 use Zend\View\Helper\AbstractHelper;
@@ -16,8 +17,19 @@ class Price extends AbstractHelper
         $str = preg_replace('/(\d)(?=(\d\d\d)+([^\d]|$))/i', '$1 ', $price);
 
         if($sign) {
-            $lang = Translator::getInstance()->getLangCode();
-            $str = '<b>' . $str . '</b> ' . ($lang == 'ru' ? ' <i class="fas fa-ruble-sign"></i>' : ' <i class="fas fa-euro-sign"></i>');
+            $str = '<b>' . $str . '</b> ';
+
+            switch (Currency::getInstance()->getCurrency()) {
+                case 'rub':
+                    $str .= '<i class="fas fa-ruble-sign"></i>';
+                    break;
+                case 'eur':
+                    $str .= '<i class="fas fa-euro-sign"></i>';
+                    break;
+                case 'usd':
+                    $str .= '<i class="fas fa-dollar"></i>';
+                    break;
+            }
         }
 
         return $str;

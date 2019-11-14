@@ -1,0 +1,164 @@
+<div class="std-popup order-popup">
+    <div class="header">
+        <?php echo $excursion->get('name'); ?>
+    </div>
+    <div class="body std-form">
+        <form action="/excursions/order/?id=<?php echo $excursion->getId(); ?>" class="form-box common-form">
+            <?php echo $this->formElement($form->get('db_excursion_id')); ?>
+            <div class="cols">
+                <div class="col-25">
+                    <div class="row">
+                        <?php echo $this->formRow($form->get('date')); ?>
+                    </div>
+                </div>
+                <div class="col-25 ">
+                    <div class="row">
+                    <?php echo $this->formRow($form->get('time')); ?>
+                    </div>
+                </div>
+                <div class="col-25 ">
+                    <div class="row">
+                    <?php echo $this->formRow($form->get('adults')); ?>
+                    </div>
+                </div>
+                <div class="col-25 ">
+                    <div class="row">
+                    <?php echo $this->formRow($form->get('children')); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="cols">
+                <div class="col-25">
+                    <?php echo $this->formRow($form->get('time')); ?>
+                </div>
+                <div class="col-25">
+                    <?php echo $this->formRow($form->get('name')); ?>
+                </div>
+                <div class="col-25">
+                    <?php echo $this->formRow($form->get('phone')); ?>
+                </div>
+                <div class="col-25">
+                    <?php echo $this->formRow($form->get('email')); ?>
+                </div>
+            </div>
+            <?php if($excursion->get('transport') == \Excursions\Model\Excursion::TRANSPORT_AUTO) { ?>
+            <div class="cols">
+                <div class="col-100">
+                    <?php echo $this->formRow($form->get('place_start')); ?>
+                </div>
+            </div>
+            <?php } ?>
+
+            <div class="form-errors"></div>
+
+            <div class="btns">
+                <input type="submit" value="Забронировать" class="btn yellow order">
+                <div class="price-box"></div>
+            </div>
+        </form>
+        <div class="success-box">
+            <div class="sb-title">Экскурсия забронирована</div>
+            <div class="sb-desc">Наш менеджер перезвонит вам в ближайшее время для уточнения деталей заказа</div>
+            <div class="sb-btns">
+                <span class="btn yellow" data-fancybox-close>Закрыть</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var popup = $('.order-popup');
+var form = $('form', popup);
+
+form.formSubmit({
+    success: function(resp, form){
+        $(form).fadeOut(200, function(){
+            //$('.success-box', popup).fadeIn(200);
+        });
+    }
+});
+
+var cForm = new CommonForm(form);
+
+var timer = null;
+$('input, select', form).on('keyup change', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+        $.ajax({
+            url: '/excursions/get-price/',
+            method: 'post',
+            data: $.aptero.serializeArray(form),
+            success: function (resp) {
+                $('.price-box, .form-errors', form).empty();
+
+                var data = resp.data;
+                var html = '';
+
+                var errorsHtml = '';
+
+                $.each(data.errors, function(key, val) {
+                    errorsHtml += '<div class="error">' + val + '</div>';
+                });
+
+                if(errorsHtml) {
+                    $('.price-box', form).html(errorsHtml);
+                    return;
+                }
+
+                html +=
+                    '<div class="price"><span>' + $.aptero.price(data.price) + '</span> <i class="fas fa-ruble-sign"></i></div>';
+                if(!data.child) {
+                    html +=
+                        '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i> за человека</div>';
+                } else {
+                    html +=
+                        '<div class="notice">' +
+                            'взрослый - <b>' + $.aptero.price(data.adult) + '</b> <i class="fas fa-ruble-sign"></i>, ' +
+                            'детский - <b>'  + $.aptero.price(data.child) + '</b> <i class="fas fa-ruble-sign"></i>' +
+                        '</div>';
+                }
+                $('.price-box', form).html(html);
+            }
+        });
+    }, 200);
+}).trigger('change');
+</script>
+
+<style>
+    .order-popup {
+        width: 700px;
+    }
+
+    .order-popup .btn {
+        vertical-align: middle;
+        width: 210px;
+    }
+
+    .order-popup form .btns {
+        margin-top: 10px;
+    }
+
+    .order-popup form .btn {
+        vertical-align: middle;
+        width: 210px;
+        margin-right: 14px;
+    }
+
+    .order-popup form .price-box {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .order-popup form .price-box .price {
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    .order-popup form .price-box .notice {
+        font-size: 13px;
+    }
+
+    .order-popup form .form-errors {
+        margin-bottom: 10px;
+    }
+</style>

@@ -39,9 +39,9 @@ class Form extends ZendForm {
 
     }
 
-    public function getMessages()
+    public function getMessages($elementName = null)
     {
-        $elemenets = parent::getMessages();
+        $elemenets = parent::getMessages($elementName = null);
 
         $translate = [
             "Invalid type given. String, integer or float expected" => "Неверный тип данных. Ожидается строка",

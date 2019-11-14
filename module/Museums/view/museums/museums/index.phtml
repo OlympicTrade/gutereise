@@ -5,24 +5,29 @@
 <div class="block module-items-block sidebar-aware">
     <div class="container">
         <div class="sidebar">
-            <div class="slider">
-                <?php
-                $tags = \Museums\Model\Tags::getEntityCollection();
-                $tags->select()->where
-                    ->greaterThan('count', 0);
+            <div class="slider filters">
+                <div class="widget catalog">
+                    <div class="header"><?= $this->tr('Экскурсии') ?></div>
+                    <div class="body">
+                        <?php
+                        $tags = \Museums\Model\Tags::getEntityCollection();
+                        $tags->select()->where
+                            ->greaterThan('count', 0);
 
-                echo $this->ExcursionsWidgets([
-                    'url'   => '/attractions/',
-                ], [
-                    'search' => [
-                        'value'   => $filters['search'],
-                    ],
-                    'catalog' => [
-                        'value'   => $filters['tags'],
-                        'data'    => $tags
-                    ],
-                ]);
-                ?>
+                        echo $this->ExcursionsWidgets([
+                            'url'   => '/attractions/',
+                        ], [
+                            'search' => [
+                                'value'   => $filters['search'],
+                            ],
+                            'catalog' => [
+                                'value'   => $filters['tags'],
+                                'data'    => $tags
+                            ],
+                        ]);
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="content">

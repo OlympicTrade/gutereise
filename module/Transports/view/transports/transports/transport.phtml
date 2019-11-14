@@ -1,4 +1,4 @@
-<?php echo $this->header([
+i<?php echo $this->header([
     'background' => $headerBg,
     'wrapper'    => true
 ]); ?>
@@ -27,7 +27,15 @@
             </div>
             <div class="sidebar">
                 <div class="slider">
-                    <?php
+                    <div class="widget text">
+                        <div class="header">Заказ транспорта</div>
+                        <div class="body">
+                            Весь представленный транспорт используется в наших индивидуальных экскурсиях.
+                            Если вы желаете заказать катер или машину отдельно, вы можете написать на почту
+                            <a href="email:info@gutereise.ru">info@gutereise.ru</a>
+                        </div>
+                    </div>
+                    <?php /*
                     $html =
                         '<form action="/transport/get-price/" method="post" class="transport-form common-form">'.
                             '<input type="hidden" name="id" value="' . $transport->getId() . '">'.
@@ -44,7 +52,7 @@
                         '</form>';
 
                     echo $html;
-                    ?>
+                    */ ?>
                 </div>
             </div>
         </div>

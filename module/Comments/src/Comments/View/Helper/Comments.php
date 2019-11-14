@@ -32,7 +32,8 @@ class Comments extends AbstractHelper
             '<div class="comments" data-type="' . $options['depend_type'] . '">'.
                 '<div class="std-header">'.
                     '<h2>' . $view->tr($options['header']) . '</h2>'.
-                    '<div class="separ"></div>'.
+                    '<div class="desc">Задайте вопрос службе поддержки или найдите ответ в <a class="popup" href="/faq/">часто задаваемых вопросах</a></div>'.
+                    //'<div class="separ"></div>'.
                 '</div>'.
                 '<div class="add-question">'.
                     '<a href="/comments/add/?depend=' . $options['depend_id'] . '&type=' . $options['depend_type'] . '" class="popup btn c2">' . $view->tr($options['btn']) . '</a>'.

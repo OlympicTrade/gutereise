@@ -2,6 +2,7 @@
 
 namespace User\Service;
 
+use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Storage\Session;
 use Zend\Authentication\Adapter;
@@ -59,7 +60,7 @@ class AuthService extends AuthenticationService
         return self::$user;
     }
 
-    public function authenticate()
+    public function authenticate(Adapter\AdapterInterface $adapter = null)
     {
         $result = $this->adapter->authenticate();
 
