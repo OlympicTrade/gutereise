@@ -47,7 +47,7 @@ class ExcursionsController extends AbstractActionController
 
         $tag  = $options['tag'] ?? null;
 
-        $view = $this->generate();
+        $view = $this->generate('/excursions/');
         $meta = $this->layout()->getVariable('meta');
 
         if($tag) {
@@ -98,6 +98,7 @@ class ExcursionsController extends AbstractActionController
             'filters'     => $filters,
             'excursions'  => $excursions,
             'page'        => $page,
+            'headerImage' => $tag ? $tag->get('background') : 'isaak',
         ]);
     }
 

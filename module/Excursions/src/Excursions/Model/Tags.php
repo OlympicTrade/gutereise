@@ -18,6 +18,7 @@ class Tags extends Entity
             'title'          => [],
             'description'    => [],
             'type'           => [],
+            'background'     => [],
             'hits'           => [],
             'count'          => [],
         ]);
