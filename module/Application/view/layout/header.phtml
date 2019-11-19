@@ -41,7 +41,6 @@ $langCode = $language->getLangCode();
     <script>
         $.languages.setLanguage('<?php echo $langCode ?>');
         $.currency.setCurrency('<?php echo \Application\Model\Currency::getInstance()->getCurrency() ?>');
-        //$.config.euroRate = <?php echo $settings->get('euro_rate') ?>;
     </script>
 </head>
 <body>

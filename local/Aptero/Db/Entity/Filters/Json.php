@@ -10,9 +10,16 @@ class Json extends AbstractFilter
      */
     protected $value = null;
 
+    public function __construct()
+    {
+        $this->setSource('');
+    }
+
     public function set($value)
     {
-        if($value instanceof \StdClass) {
+        if(is_array($value)) {
+            $this->value = ZJson::decode(ZJson::encode($value));
+        } elseif($value instanceof \StdClass) {
             $this->value = $value;
         } else {
             $this->setSource($value);
@@ -26,15 +33,12 @@ class Json extends AbstractFilter
     {
         $this->isChanged(true);
         if($this->value) return $this->value;
+
         return $this->unserialize();
     }
 
     public function unserialize()
     {
-        if(!$this->source) {
-            return $this->value = new \stdClass();
-        }
-
         try {
             $this->value = ZJson::decode($this->source);
         } catch (\Exception $e) {
@@ -46,21 +50,48 @@ class Json extends AbstractFilter
 
     public function serialize()
     {
-        $this->source = ZJson::encode($this->value);
+        $this->source = $this->value ? ZJson::encode($this->value) : '';
 
         return $this->source;
     }
 
-    /**
-     * @return array
-     */
-    public function serializeForForm($prefix)
+    public function unserializeArray($arr, &$param = false)
     {
-        $result = [];
-        foreach ($this->get() as $key => $value) {
-            $result[$prefix . '-' . $key] = $value;
+        foreach ($arr as $key => $val) {
+            if(!is_array($val)) {
+                @$param->{$key} = $val;
+                continue;
+            }
+            $this->unserializeArray($val, $param->{$key});
+        }
+    }
+
+    public function serializeArray($result = [], $prefix = '')
+    {
+        $this->unserialize();
+        $result = $this->serializeHelper($this->value, $result, $prefix);
+
+        return $result;
+    }
+
+    public function serializeHelper($obj, $result = [], $prefix = '')
+    {
+        foreach ($obj as $key => $val) {
+            if(is_object($val)) {
+                $result = $this->serializeHelper($val, $result, $prefix . '[' . $key . ']');
+            } else {
+                $result[$prefix . '[' . $key . ']'] = $val;
+            }
         }
 
         return $result;
+    }
+
+    public function setSource($value)
+    {
+        parent::setSource($value);
+        $this->unserialize();
+
+        return $this;
     }
 }

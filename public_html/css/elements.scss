@@ -1,12 +1,11 @@
-$btnColor1: #fcd828;
+/*$baseColor1: #fcd828;
 $background: #f7f7f7;
-$colorDark: #000000;
-$colorGray: #f4f4f4;
-$colorRed: #ee4923;
+$baseColor2: #f4f4f4;
+$baseColor3: #ee4923;
 $linkColor: #f85a1e;
 $imgDir: '/images/';
 $fontCommon: 'Proxima Nova';
-$fontHeader: 'Merriweather';
+$fontHeader: 'Merriweather';*/
 
 .btn {
     position: relative;
@@ -21,7 +20,7 @@ $fontHeader: 'Merriweather';
     line-height: 45px;
     border: none;
     padding: 0 25px;
-    background: $btnColor1;
+    background: $baseColor1;
 }
 
 .btn:hover {
@@ -69,7 +68,7 @@ input, select, textarea {
 }
 
 .std-select .red {
-    color: $colorRed;
+    color: $baseColor3;
 }
 
 .std-textarea {

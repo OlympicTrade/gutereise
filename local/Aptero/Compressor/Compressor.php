@@ -2,9 +2,9 @@
 namespace Aptero\Compressor;
 
 use ApplicationAdmin\Model\Settings;
-use Leafo\ScssPhp\Compiler;
 use MatthiasMullie\Minify\CSS;
 use MatthiasMullie\Minify\JS;
+use ScssPhp\ScssPhp\Compiler;
 
 class Compressor {
     protected $baseDir = '';
@@ -119,6 +119,16 @@ class Compressor {
 
         if($type == 'css') {
             $scss = new Compiler();
+            $scss->setVariables([
+                'background'  => '#f7f7f7',
+                'baseColor1'  => '#fcd828',
+                'baseColor2'  => '#f4f4f4',
+                'baseColor3'  => '#ee4923',
+                'linkColor'   => '#f5031a',
+                'imgDir'      => '/images/',
+                'fontCommon'  => 'Proxima Nova',
+                'fontHeader'  => 'Merriweather',
+            ]);
             $content = $scss->compile($content);
         }
 

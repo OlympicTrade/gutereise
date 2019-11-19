@@ -17,40 +17,27 @@ class ExcursionsList extends AbstractHelper
         foreach ($excursions as $excursion) {
             $url = $excursion->getUrl();
 
+            $excursion->checkDate();
+
+            mb_strlen($v->tr($excursion->get('name')));
+
+            $season = $excursion->checkDate();
+
             $html .=
                 '<a href="' . $url . '" class="item">' .
                     '<div class="pic">' .
                         '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="' . $v->tr($excursion->get('name')) . '">' .
                     '</div>'.
                     '<div class="info">'.
-                        '<div class="name"><span>' . $v->tr($excursion->get('name')) . '</span></div>'.
-                        '<div class="desc">' . $v->tr($excursion->get('preview')) . '</div>'.
-                    '</div>'.
-                    /*'<div class="info">'.
-                        '<div class="desc">' . $v->tr($excursion->get('preview')) . '</div>'.
-                        '<div class="name"><div>' . $v->tr($excursion->get('name')) . '</div></div>'.
-                        '<div class="price"><div>' .
-                            'от <span>' . $v->price($excursion->getPrice()->adult) . '</span> <i class="fa fa-rub"></i>' .
-                            '<div class="per">' . $v->tr('за человека') . '</div>'.
-                        '</div></div>'.
-                    '</div>'.*/
-                '</a>';
-
-                /*$html .=
-                    '<div class="desc">'.
-                        '<a  href="' . $url . '" class="name">' . $view->tr($excursion->get('name')) . '</a>'.
-                        '<div class="preview">' . $view->tr($excursion->get('preview')) . '</div>'.
-                    '</div>'.
-                    '<div class="order">';
-
-                $html .=
-                        '<div class="price">'.
-                            $view->tr('от') . ' <span>' . $view->price($excursion->getPrice()->adult) . '</span><br>'.
-                            $view->tr('за человека').
+                        (!$season['status'] ? '<div class="season">' . $season['header'] . '</div>' : '').
+                        '<div class="name' . (mb_strlen($v->tr($excursion->get('name'))) >= 35 ? ' long' : '') . '"><span>' .
+                            $v->tr($excursion->get('name')) .
+                        '</span></div>'.
+                        '<div class="desc">' .
+                            $v->tr($excursion->get('preview')) .
                         '</div>'.
-                        '<a href="' . $url . '" class="btn yellow">' . $view->tr('Узнать подробнее') . '</a>'.
                     '</div>'.
-                '</div>';*/
+                '</a>';
         }
 
         if($excursions instanceof Paginator) {
@@ -59,7 +46,6 @@ class ExcursionsList extends AbstractHelper
         }
 
         $html .=
-                //'<div class="clear"></div>'
             '';
 
         return $html;

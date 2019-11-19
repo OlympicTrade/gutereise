@@ -1,15 +1,12 @@
-$btnColor1: #fcd828;
+/*
 $background: #f7f7f7;
-$colorDark: #000000;
-$colorGray: #f4f4f4;
-$colorRed: #ee4923;
+$baseColor1: #fcd828;
+$baseColor2: #f4f4f4;
+$baseColor3: #ee4923;
 $linkColor: #f5031a;
-//$linkColor: #f85a1e;
 $imgDir: '/images/';
 $fontCommon: 'Proxima Nova';
-
-$fontHeader: 'Merriweather';
-$borderImg: $imgDir + 'border.png';
+$fontHeader: 'Merriweather';*/
 
 body {
     font-family: 'Proxima Nova', sans-serif;
@@ -547,7 +544,6 @@ h1 {
 .main-block-3 {
     background: url($imgDir + 'mb3-bg.jpg') 50% 0;
     padding-top: 125px;
-    padding-bottom: 160px;
     text-align: center;
     height: 567px;
 
@@ -845,7 +841,7 @@ h1 {
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 20px;
+            padding: 13px 20px;
             color: #ffffff;
             transition: all ease .2s;
 
@@ -856,10 +852,14 @@ h1 {
 
             .name {
                 font-size: 23px;
-                height: 80px;
+                height: 84px;
                 font-weight: 600;
                 line-height: 1.4;
                 overflow: hidden;
+
+                &.long {
+                    font-size: 19px;
+                }
             }
 
             .desc {
@@ -911,7 +911,7 @@ h1 {
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: $btnColor1;
+                background: $baseColor1;
                 z-index: 7;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
             }
@@ -954,7 +954,7 @@ h1 {
 
             .price {
                 flex: 0 135px;
-                background: $btnColor1;
+                background: $baseColor1;
 
                 * {
                     text-align: center;
@@ -1206,7 +1206,7 @@ h1 {
                 transition: all ease .2s;
 
                 &:hover {
-                    color: $colorRed;
+                    color: $baseColor3;
                 }
 
                 &:before {
@@ -1222,7 +1222,22 @@ h1 {
                 }
 
                 span {
-                    color: $colorRed;
+                    color: $baseColor3;
+                }
+            }
+
+            &.catalog .sub {
+                display: none;
+                margin: -5px 0 18px 0;
+
+                a {
+                    margin-bottom: 5px;
+                    font-size: 15px;
+                    padding-left: 30px;
+
+                    &:before {
+                        display: none;
+                    }
                 }
             }
 
@@ -1250,6 +1265,8 @@ h1 {
         font-weight: 700;
         text-align: center;
         margin-bottom: 0;
+        background: none;
+        color: #000000;
     }
 
     .body {
@@ -1278,7 +1295,7 @@ h1 {
         padding-left: 30px;
         font-size: 16px;
         border: none;
-        background: #ffffff;
+        background: none;
     }
 
     input::placeholder {
@@ -1524,7 +1541,6 @@ h1 {
 
             &.reco {
                 .item {
-                    /*background: url($borderImg) 0 100% repeat-x;*/
                     padding-bottom: 14px;
                     margin-bottom: 15px;
                     display: block;
@@ -1613,118 +1629,6 @@ h1 {
     }
 }
 
-.excursion-block{
-    .sidebar {
-        margin-top: 65px;
-    }
-
-    .attrs-list {
-        margin-bottom: 45px;
-        margin-top: 50px;
-        a {
-            color: #f85a1e;
-        }
-
-        & > .row {
-            position: relative;
-            padding: 27px 0 27px 305px;
-            background: url($imgDir + 'border.png') 0 100% repeat-x;
-            color: #595959;
-            font-size: 16px;
-            font-weight: 300;
-        }
-
-        & > .row:first-child {
-            background: url($imgDir + 'border.png') 0 100% repeat-x, url($imgDir + 'border.png') 0 0 repeat-x;
-        }
-
-        .label {
-            position: absolute;
-            left: 0;
-            width: 330px;
-            font-size: 17px;
-            font-weight: 700;
-            color: #000000;
-        }
-
-        .row .row {
-            font-size: 15px;
-            font-weight: 300;
-            margin-bottom: 4px;
-        }
-
-        .row .row i {
-            color: #000;
-            font-size: 15px;
-            margin-right: 6px;
-        }
-    }
-
-    .plan {
-        margin-bottom: 50px;
-    }
-
-    .short-list {
-        margin-bottom: 30px;
-    }
-
-    .plan .day {
-        display: flex;
-
-        &:last-child .stage {
-            background: none;
-        }
-
-        .stage {
-            flex: 0 37px;
-            margin-right: 28px;
-            background: url($imgDir + 'border-v.png') 50% 39px repeat-y;
-        }
-
-        .stage .icon {
-            border-radius: 50%;
-            background: #fce12a;
-            font-size: 19px;
-            text-align: center;
-            vertical-align: 37px;
-            width: 37px;
-            height: 37px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .desc {
-            flex: 1;
-            padding-bottom: 30px;
-
-            .header {
-                font-size: 18px;
-                font-weight: 300;
-                margin-bottom: 10px;
-                padding-top: 3px;
-                padding-left: 15px;
-            }
-
-            .text {
-                padding: 12px 20px;
-                background: #f4f4f4;
-                width: 100%;
-                display: block;
-
-                a {
-                    font-weight: 600;
-                    color: $linkColor;
-                }
-
-                p {
-                    margin-bottom: 4px;
-                }
-            }
-        }
-    }
-}
-
 .faq-list {
     max-width: 700px;
     margin: 0 auto;
@@ -1745,7 +1649,7 @@ h1 {
             &:before {
                 content: '';
                 display: block;
-                background: $btnColor1;
+                background: $baseColor1;
                 position: absolute;
                 left: 2px;
                 top: 9px;
@@ -1760,7 +1664,7 @@ h1 {
                 left: 0;
                 top: 50%;
                 margin-top: -3px;
-                border-radius: $btnColor1;
+                border-radius: $baseColor1;
             }
         }
 
@@ -1779,7 +1683,7 @@ h1 {
 
     .attrs-list {
         max-width: 700px;
-        background: $colorGray;
+        background: $baseColor2;
         margin: 45px auto 60px auto;
         padding: 20px 35px;
 
@@ -1808,7 +1712,7 @@ h1 {
 .transport-block-ajax {
     .attrs-list {
         max-width: 700px;
-        background: $colorGray;
+        background: $baseColor2;
         margin: 35px auto 0 auto;
         padding: 20px 35px;
 
@@ -1836,7 +1740,7 @@ h1 {
 
 .comments {
     .add-question {
-        background: $colorGray;
+        background: $baseColor2;
         margin-bottom: 20px;
 
         .btn {
@@ -1883,7 +1787,6 @@ h1 {
 
         .question {
             font-size: 14px;
-            /*color: #525252;*/
         }
 
         .answer {
@@ -1920,7 +1823,7 @@ h1 {
         font-size: 13px;
 
         span {
-            color: $colorRed;
+            color: $baseColor3;
         }
     }
 }
@@ -1952,7 +1855,7 @@ h1 {
         li:before {
             content: '';
             display: block;
-            background: $btnColor1;
+            background: $baseColor1;
             position: absolute;
             left: 2px;
             top: 9px;
@@ -2068,16 +1971,26 @@ h1 {
 
 @media screen and (max-height: 700px) {
     .main-block-1 {
-        height: 650px;
+        height: 570px;
+
+        h1 {
+            font-size: 40px;
+        }
+
+        .wrapper {
+            padding-top: 140px;
+            z-index: 1;
+        }
+
+        .tags {
+            margin-top: 120px;
+        }
     }
 
-    .main-block-1 .wrapper {
-        padding-top: 200px;
-        z-index: 1;
-    }
-
-    .main-block-1 .tags {
-        margin-top: 120px;
+    .main-block-3 {
+        background-position: -40px 0;
+        padding-top: 90px;
+        height: 460px;
     }
 }
 
@@ -2085,6 +1998,12 @@ h1 {
     .block {
         padding-left: 20px;
         padding-right: 20px;
+    }
+
+    .header-block {
+        &, .wrapper {
+            height: 340px;
+        }
     }
 
     #footer .wrapper {
@@ -2142,24 +2061,6 @@ h1 {
             .name {
                 font-size: 17px;
             }
-
-            .desc {
-                padding: 15px 20px 65px 20px;
-            }
-
-            .order {
-                height: 50px;
-
-                .price {
-                    height: 50px;
-                }
-
-                .btn {
-                    height: 50px;
-                    line-height: 50px;
-                    width: 55%;
-                }
-            }
         }
     }
 
@@ -2169,7 +2070,7 @@ h1 {
     }
 
     .header-block h1 {
-        font-size: 40px;
+        font-size: 45px;
         font-weight: 900;
         text-shadow: 0 2px 0 rgba(0,0,0,0.8);
     }
@@ -2182,6 +2083,21 @@ h1 {
         .menu {
             ul {
                 margin-right: 100px;
+            }
+        }
+    }
+
+    .sidebar .widget .body {
+        padding-bottom: 20px;
+    }
+
+    .module-items-block {
+        &.sidebar-aware {
+            .widget {
+                &.catalog a {
+                    margin-bottom: 8px;
+                    font-size: 15px;
+                }
             }
         }
     }

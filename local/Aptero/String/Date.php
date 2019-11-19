@@ -152,12 +152,12 @@ class Date
 
     public function toStr($options = [])
     {
-        $options = array_merge([
+        $options = $options + [
             'day'    => true,
             'month'  => true,
             'year'   => true,
             'time'   => false,
-        ], $options);
+        ];
 
         if(!$this->dt) {
             return '';
@@ -166,14 +166,14 @@ class Date
         $str = '';
 
         if($options['day']) {
-            $str .= $this->dt->format('d');
+            $str .= $this->dt->format('j');
         }
 
         if($options['month']) {
-            if($options['month'] == 'short') {
+            if($options['month'] === 'short') {
                 $str .= ' ' . self::$monthsShort[$this->dt->format('n')];
             } else {
-                $str .= ' ' . self::$months[$this->dt->format('n')];
+                $str .= ' ' . self::$months2[$this->dt->format('n')];
             }
         }
 

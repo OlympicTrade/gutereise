@@ -817,7 +817,7 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
                 }
 
                 if(!isset($dataPlugins[$pluginName])) {
-                    $dataPlugins[$pluginName] = array();
+                    $dataPlugins[$pluginName] = [];
                 }
 
                 $dataPlugins[$pluginName][$key] = $value;

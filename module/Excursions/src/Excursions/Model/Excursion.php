@@ -4,6 +4,8 @@ namespace Excursions\Model;
 use Application\Model\Currency;
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Plugin\Images;
+use Aptero\Exception\Exception;
+use Aptero\String\Date;
 use Museums\Model\Museum;
 use Sync\Model\Sync;
 
@@ -28,6 +30,7 @@ class Excursion extends Entity
         $this->addProperties([
             'db_excursion_id'   => [],
             'db_data'           => ['type' => 'json'],
+            'options'           => ['type' => 'json'],
             'type'              => [],
             'transport'         => [],
             'name'              => [],
@@ -162,20 +165,36 @@ class Excursion extends Entity
 
             return $image;
         });
+    }
 
-        /*$this->addPlugin('museums', function($model) {
-            $item = new Entity();
-            $item->setTable('excursions_museums');
-            $item->addProperties([
-                'depend'     => [],
-                'museums_id' => [],
-                'time'       => [],
-            ]);
-            $catalog = $item->getCollection()->getPlugin();
-            $catalog->setParentId($model->getId());
+    public function checkDate()
+    {
+        $options = $this->get('options');
+        if(empty($options->date)) {
+            return ['status' => true];
+        }
 
-            return $catalog;
-        });*/
+        try {
+            list($from, $to) = explode('-', $options->date);
+            $cDate = date('d.m');
+            $result = $cDate > $from && $cDate < $to;
+
+            if($result) {
+                return ['status' => true];
+            }
+
+            return [
+                'status'  => $result,
+                'header'  => '<i class="fal fa-sun"></i> Летняя экскурсия',
+                'desc' =>
+                    'Данная экскурсия активна только в летний период с ' .
+                    mb_strtolower((new Date(\DateTime::createFromFormat('d.m', $from)))->toStr(['year' => false])).
+                    ' по '.
+                    mb_strtolower((new Date(\DateTime::createFromFormat('d.m', $to)))->toStr(['year' => false]))
+            ];
+        } catch (Exception $e) {
+            return ['status' => true];
+        }
     }
 
     public function isTour()

@@ -7,11 +7,12 @@
         <div class="sidebar">
             <div class="slider filters">
                 <div class="widget catalog">
-                    <div class="header"><?= $this->tr('Экскурсии') ?></div>
+                    <div class="header"><?= $this->tr('Достопримечательности') ?></div>
                     <div class="body">
                         <?php
                         $tags = \Museums\Model\Tags::getEntityCollection();
                         $tags->select()->where
+                            ->equalTo('parent', 0)
                             ->greaterThan('count', 0);
 
                         echo $this->ExcursionsWidgets([
@@ -22,7 +23,9 @@
                             ],
                             'catalog' => [
                                 'value'   => $filters['tags'],
-                                'data'    => $tags
+                                'data'    => $tags,
+                                'counter' => false,
+                                'all'     => ['text' => 'Показать все', 'url' => '/attractions/']
                             ],
                         ]);
                         ?>

@@ -1,6 +1,7 @@
 <?php
 namespace ExcursionsAdmin\Form;
 
+use Aptero\Form\Filter\Pipe;
 use Aptero\Form\Form;
 
 use ExcursionsAdmin\Model\Excursion;
@@ -34,6 +35,8 @@ class ExcursionsEditForm extends Form
         $this->get('reco-collection')->setOption('model', $model->getPlugin('reco'));
         $this->get('tags-collection')->setOption('model', $model->getPlugin('tags'));
         $this->get('plan-collection')->setOption('model', $model->getPlugin('plan'));
+
+        $this->get('options[date]')->setValue($this->getModel()->get('options')->date);
     }
 
     public function __construct()
@@ -156,6 +159,18 @@ class ExcursionsEditForm extends Form
         ]);
 
         $this->add([
+            'name' => 'options[date]',
+            'type'  => 'Zend\Form\Element\Text',
+            'options' => [
+                'label' => 'Ограничение по дате',
+            ],
+            'attributes' => [
+                'placeholder' => 'дд.мм-дд.мм',
+                'id'    => 'page-text'
+            ],
+        ]);
+
+        $this->add([
             'name' => 'image-image',
             'type'  => 'Aptero\Form\Element\Admin\Image',
         ]);
@@ -199,20 +214,6 @@ class ExcursionsEditForm extends Form
                 ]
             ],
         ]);
-
-        /*$this->add([
-            'name' => 'transport-collection',
-            'type'  => 'Aptero\Form\Element\Admin\Collection',
-            'options' => [
-                'options'      => [
-                    'transport_id' => [
-                        'label'   => 'Транспорт',
-                        'width'   => 150,
-                        'options' => new Transport()
-                    ],
-                ]
-            ],
-        ]);*/
 
         $this->add([
             'name' => 'pricetable-collection',
@@ -285,6 +286,12 @@ class ExcursionsEditForm extends Form
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
+        ]));
+
+        $inputFilter->add($factory->createInput([
+            'name'     => 'options',
+            'required' => false,
+            'filters'  => [new Pipe()],
         ]));
 
         $this->setInputFilter($inputFilter);

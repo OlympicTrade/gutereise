@@ -1,0 +1,149 @@
+.excursion-items {
+    .item {
+        .season {
+            position: absolute;
+            top: -40px;
+            background: #b6f1b4;
+            color: #000;
+            font-size: 15px;
+            font-weight: 400;
+            border-radius: 4px;
+            padding: 6px 10px;
+        }
+    }
+}
+
+.excursion-block{
+    .sidebar {
+        margin-top: 65px;
+
+        .excursion-form {
+            padding-top: 20px;
+            border-radius: 5px;
+            background: linear-gradient(45deg,#fbcfb1,#f5f8aa);
+        }
+    }
+
+    .season {
+        padding: 15px 20px;
+        background: #b6f1b4;
+        margin-bottom: 26px;
+        border-radius: 5px;
+
+        .title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .desc {
+            font-size: 14px;
+        }
+    }
+
+    .attrs-list {
+        margin-bottom: 45px;
+        margin-top: 50px;
+        a {
+            color: #f85a1e;
+        }
+
+        & > .row {
+            position: relative;
+            padding: 27px 0 27px 305px;
+            background: url($imgDir + 'border.png') 0 100% repeat-x;
+            color: #595959;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        & > .row:first-child {
+            background: url($imgDir + 'border.png') 0 100% repeat-x, url($imgDir + 'border.png') 0 0 repeat-x;
+        }
+
+        .label {
+            position: absolute;
+            left: 0;
+            width: 330px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .row .row {
+            font-size: 15px;
+            font-weight: 300;
+            margin-bottom: 4px;
+        }
+
+        .row .row i {
+            color: #000;
+            font-size: 15px;
+            margin-right: 6px;
+        }
+    }
+
+    .plan {
+        margin-bottom: 50px;
+    }
+
+    .short-list {
+        margin-bottom: 30px;
+    }
+
+    .plan .day {
+        display: flex;
+
+        &:last-child .stage {
+            background: none;
+        }
+
+        .stage {
+            flex: 0 37px;
+            margin-right: 28px;
+            background: url($imgDir + 'border-v.png') 50% 39px repeat-y;
+        }
+
+        .stage .icon {
+            border-radius: 50%;
+            background: #fce12a;
+            font-size: 19px;
+            text-align: center;
+            vertical-align: 37px;
+            width: 37px;
+            height: 37px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .desc {
+            flex: 1;
+            padding-bottom: 30px;
+
+            .header {
+                font-size: 18px;
+                font-weight: 300;
+                margin-bottom: 10px;
+                padding-top: 3px;
+                padding-left: 15px;
+            }
+
+            .text {
+                padding: 12px 20px;
+                background: #f4f4f4;
+                width: 100%;
+                display: block;
+
+                a {
+                    font-weight: 600;
+                    color: $linkColor;
+                }
+
+                p {
+                    margin-bottom: 4px;
+                }
+            }
+        }
+    }
+}

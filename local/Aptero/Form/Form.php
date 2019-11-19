@@ -4,6 +4,7 @@ namespace Aptero\Form;
 use Translator\Model\Translator;
 use Zend\Form\Form as ZendForm;
 use Aptero\Db\Entity\Entity;
+use Zend\InputFilter\Factory as InputFactory;
 
 class Form extends ZendForm {
     protected $translate = true;
@@ -72,22 +73,44 @@ class Form extends ZendForm {
         return $elemenets;
     }
 
-    public function add($elementOrFieldset, array $flags = [])
+    public function add($elData, array $flags = [])
     {
+        $elData['name'] = $this->getElName($elData['name']);
+
+        if(is_bool($elData['required'])) {
+            $this->getInputFilter()->add((new InputFactory())->createInput([
+                'name'      => $elData['name'],
+                'required'  => $flags['required'],
+            ]));
+        }
+
         if(!$this->translate) {
-            return parent::add($elementOrFieldset, $flags);
+            return parent::add($elData, $flags);
         }
 
-        if($elementOrFieldset['options']['label']) {
+        if($elData['options']['label']) {
             $language = Translator::getInstance();
-            $elementOrFieldset['options']['label'] = $language->translate($elementOrFieldset['options']['label']);
+            $elData['options']['label'] = $language->translate($elData['options']['label']);
         }
 
-        if($elementOrFieldset['attributes']['placeholder']) {
+        if($elData['attributes']['placeholder']) {
             $language = Translator::getInstance();
-            $elementOrFieldset['attributes']['placeholder'] = $language->translate($elementOrFieldset['attributes']['placeholder']);
+            $elData['attributes']['placeholder'] = $language->translate($elData['attributes']['placeholder']);
         }
 
-        return parent::add($elementOrFieldset, $flags);
+        return parent::add($elData, $flags);
+    }
+
+    public function getElName($field)
+    {
+        if(!$this->options['baseName']) {
+            return $field;
+        }
+
+        if(strpos($field, '[') === false) {
+            return $this->options['baseName'] . '[' . $field . ']';
+        }
+
+        return $this->options['baseName'] . $field;
     }
 }

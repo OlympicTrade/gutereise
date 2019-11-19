@@ -88,6 +88,7 @@ class Module
             PUBLIC_DIR . '/css/libs/grid.scss',
             PUBLIC_DIR . '/css/elements.scss',
             PUBLIC_DIR . '/css/main.scss',
+            PUBLIC_DIR . '/css/modules/excursions.scss',
         ],  'css');
 		
 		 $jsDesktop = [

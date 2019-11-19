@@ -6,8 +6,18 @@ $(function () {
     let wCtegory = $('.widget.catalog', filtersBox);
     let search = $('.search-input', filtersBox);
 
-    $('a', wCtegory).on('click', function () {
-        $(this).toggleClass('active').closest('.row').siblings().find('a').removeClass('active');
+    $('.row', wCtegory).on('click', function () {
+        var row = $(this);
+
+        row.addClass('active')
+            .find('.sub')
+            .slideDown(200);
+
+        row.siblings()
+            .removeClass('active')
+            .find('.sub')
+            .slideUp(200);
+
         search.val('');
         updateProducts();
         return false;
@@ -32,7 +42,7 @@ $(function () {
 
     function getFiltersUrl() {
         let url = $.aptero.url();
-        let active = $('.active', wCtegory);
+        let active = $('.active a', wCtegory);
 
         url.setPath(active.length ? active.attr('href') : $('.base-url', filtersBox).val());
         url.setParams($.aptero.serializeArray(filtersBox));

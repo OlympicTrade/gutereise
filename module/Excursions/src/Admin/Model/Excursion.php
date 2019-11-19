@@ -43,6 +43,7 @@ class Excursion extends Entity
         $this->addProperties([
             'db_excursion_id'   => [],
             'db_data'           => ['type' => 'json'],
+            'options'           => ['type' => 'json'],
             'name'              => [],
             'header'            => [],
             'header_desc'       => [],

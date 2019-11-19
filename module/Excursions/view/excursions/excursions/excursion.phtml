@@ -51,6 +51,17 @@ $duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get(
             ?>
         </div>
 
+        <?php
+        $season = $excursion->checkDate();
+        if(!$season['status']) {
+            echo
+                '<div class="season">'.
+                    '<div class="title">' . $season['header'] . '</div>'.
+                    '<div class="desc">' . $season['desc'] . '</div>'.
+                '</div>';
+        }
+        ?>
+
         <?php echo $this->gallery($excursion) ?>
         <?php /*
         $html =

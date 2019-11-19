@@ -46,8 +46,8 @@ class Header extends AbstractHelper
             '>';
 
         if($options['background']) {
-            //$html .= '<div class="bg"><img src="' . $options['background'] . '" alt="' . $options['header'] . '"></div>';
-            $html .= '<div class="bg" style="height: 400px"></div>';
+            //$html .= '<div class="bg" style="height: 400px"></div>';
+            $html .= '<div class="bg"></div>';
         }
 
         if($options['wrapper']) {

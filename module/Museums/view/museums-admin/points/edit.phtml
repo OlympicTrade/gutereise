@@ -3,35 +3,27 @@
     <?php echo $this->header ?>
 </h1>
 
-<div class="panel">
-    <a href="<?php echo $model->getPublicUrl() ?>" target="_blank">Показать на сайте</a>
-</div>
-
 <?php $form = $this->editForm ?>
 <?php echo $this->form()->openTag($form) ?>
 <div class="edit-form std-form">
     <div class="tabs tabs-class" data-name="edit-tabs">
         <div class="tabs-header">
             <div class="tab" data-tab="general">Основное</div>
+            <div class="tab" data-tab="photo">Фото</div>
             <div class="tab" data-tab="seo">SEO</div>
-            <div class="tab" data-tab="map">Карта</div>
-            <div class="tab" data-tab="content">Тест</div>
+            <div class="tab" data-tab="text">Текст</div>
         </div>
         <div class="tabs-body">
             <div class="tab" data-tab="general">
                 <?php
-                echo $this->adminFormRow($form->get('background-image'));
                 echo $this->adminFormRow($form->get('image-image'));
                 echo $this->adminFormRow($form->get('name'));
-                echo $this->adminFormRow($form->get('header'));
                 echo $this->adminFormRow($form->get('preview'));
                 echo $this->adminFormRow($form->get('url'));
-                echo $this->adminFormRow($form->get('parent'));
-                echo $this->adminFormRow($form->get('type'));
-                echo $this->adminFormRow($form->get('active'));
                 ?>
-
-                <?php //echo $this->formRow($form->get('tags-collection')); ?>
+            </div>
+            <div class="tab" data-tab="photo">
+                <?php echo $this->formRow($form->get('images-images')); ?>
             </div>
             <div class="tab" data-tab="seo">
                 <?php
@@ -39,41 +31,10 @@
                 echo $this->adminFormRow($form->get('description'));
                 ?>
             </div>
-            <div class="tab" data-tab="map">
+            <div class="tab" data-tab="text">
                 <?php
-                echo $this->formElement($form->get('lat'));
-                echo $this->formElement($form->get('lng'));
+                echo $this->adminFormRow($form->get('text'));
                 ?>
-                <div id="museum-map" style="height: 400px;"></div>
-                <script>
-                    var form = $('.edit-form');
-                    var coords = {
-                        lat: parseFloat($('[name="lat"]', form).val()),
-                        lng: parseFloat($('[name="lng"]', form).val())
-                    };
-
-                    if(coords.lat == '' && coords.lng == '') {
-                        coords = {lat: 59.927725, lng: 30.325141};
-                    }
-
-                    var map = new google.maps.Map(document.getElementById('museum-map'), {
-                        center: coords,
-                        zoom: 10,
-                        styles: getGoogleMapStyle()
-                    });
-
-                    var marker = new google.maps.Marker({position: coords, map: map, draggable:true});
-
-                    google.maps.event.addListener(marker, 'dragend', function() {
-                        var pos = marker.getPosition();
-                        $('[name="lat"]', form).val(pos.lat());
-                        $('[name="lng"]', form).val(pos.lng());
-                    });
-                </script>
-            </div>
-
-            <div class="tab" data-tab="content">
-                <?php echo $this->adminContentList($model->getPlugin('content'), $model); ?>
             </div>
         </div>
     </div>
