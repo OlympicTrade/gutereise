@@ -146,18 +146,6 @@ class MuseumsEditForm extends Form
         ]);
 
         $this->add([
-            'name' => 'type',
-            'type'  => 'Zend\Form\Element\Select',
-            'options' => [
-                'label' => 'Тип',
-                'options' => [
-                    Museum::TYPE_ARTICLE  => 'Статья',
-                    Museum::TYPE_CATEGORY => 'Категория',
-                ],
-            ],
-        ]);
-
-        $this->add([
             'name' => 'active',
             'type'  => 'Zend\Form\Element\Select',
             'options' => [

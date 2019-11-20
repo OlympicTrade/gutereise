@@ -8,9 +8,6 @@ use Zend\Db\Sql\Expression;
 
 class Museum extends EntityHierarchy
 {
-    const TYPE_ARTICLE  = 1;
-    const TYPE_CATEGORY = 2;
-
     public function __construct()
     {
         $this->setTable('museums');
