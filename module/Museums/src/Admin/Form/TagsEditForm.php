@@ -15,6 +15,8 @@ class TagsEditForm extends Form
         $this->get('background-image')->setOptions([
             'model' => $model->getPlugin('background'),
         ]);
+
+        $this->get('parent')->setOption('model', $this->getModel());
     }
 
     public function __construct()
@@ -26,6 +28,15 @@ class TagsEditForm extends Form
         $this->add([
             'name' => 'id',
             'type'  => 'Zend\Form\Element\Hidden',
+        ]);
+
+        $this->add([
+            'name' => 'parent',
+            'type'  => 'Aptero\Form\Element\TreeSelect',
+            'options' => [
+                'label'   => 'Прикрепить к музею',
+                'empty'   => '',
+            ],
         ]);
 
         $this->add([

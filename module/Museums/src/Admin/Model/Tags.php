@@ -2,8 +2,9 @@
 namespace MuseumsAdmin\Model;
 
 use Aptero\Db\Entity\Entity;
+use Aptero\Db\Entity\EntityHierarchy;
 
-class Tags extends Entity
+class Tags extends EntityHierarchy
 {
     public function __construct($options = [])
     {
@@ -12,6 +13,7 @@ class Tags extends Entity
         $this->setTable('museums_tags');
 
         $this->addProperties([
+            'parent'    => [],
             'name'      => [],
             'url'       => [],
             'title'     => [],

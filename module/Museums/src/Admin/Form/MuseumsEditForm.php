@@ -44,14 +44,14 @@ class MuseumsEditForm extends Form
             'type'  => 'Zend\Form\Element\Hidden',
         ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'parent',
             'type'  => 'Aptero\Form\Element\TreeSelect',
-            'options' => array(
-                'label'   => 'Прикрепить к музею',
+            'options' => [
+                'label'   => 'Прикрепить к тегу',
                 'empty'   => '',
-            ),
-        ));
+            ],
+        ]);
 
         $this->add([
             'name' => 'lat',
