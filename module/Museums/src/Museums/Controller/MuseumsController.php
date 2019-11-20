@@ -60,9 +60,7 @@ class MuseumsController extends AbstractActionController
 
         $filters = $this->params()->fromQuery();
 
-        if($tag) {
-            $filters['tag'] = $tag->getId();
-        }
+        $filters['tag'] = $tag;
 
         $museums = $museumsService->getPaginator($page, $filters);
 

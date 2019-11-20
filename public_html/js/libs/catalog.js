@@ -9,8 +9,12 @@ $(function () {
     $('.row', wCtegory).on('click', function () {
         var row = $(this);
 
-        row.addClass('active')
-            .find('.sub')
+        $('a', wCtegory).removeClass('active');
+
+        row.children('a')
+            .addClass('active');
+
+        row.find('.sub')
             .slideDown(200);
 
         row.siblings()
@@ -42,7 +46,7 @@ $(function () {
 
     function getFiltersUrl() {
         let url = $.aptero.url();
-        let active = $('.active a', wCtegory);
+        let active = $('.active', wCtegory);
 
         url.setPath(active.length ? active.attr('href') : $('.base-url', filtersBox).val());
         url.setParams($.aptero.serializeArray(filtersBox));

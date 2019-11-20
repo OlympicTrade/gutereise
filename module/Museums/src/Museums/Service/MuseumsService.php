@@ -53,9 +53,15 @@ class MuseumsService extends AbstractService
         }
 
         if(!empty($filters['tag'])) {
+            $ids[] = $filters['tag']->getId();
+
+            foreach ($filters['tag']->getChildren() as $subTag) {
+                $ids[] = $subTag->getId();
+            }
+
             $select
                 ->join(['mtt' => 'museums_mtt'], 't.id = mtt.depend', [], 'left')
-                ->where(['mtt.tag_id' => $filters['tag']]);
+                ->where(['mtt.tag_id' => $ids]);
         }
 
         return $select;
