@@ -91,6 +91,8 @@ class ExcursionsWidgets extends AbstractHelper
             'all'      => ['text' => '', 'url' => ''],
         ];
 
+        $limit = $data['limit'];
+
         $html = '';
 
         $view = $this->getView();
@@ -100,7 +102,7 @@ class ExcursionsWidgets extends AbstractHelper
         foreach ($data['data'] as $item) {
             $i++; $count += $item->get('count');
 
-            if($i == 10) {
+            if($limit &&  $i == $limit) {
                 $html .= '<div class="h-box">';
             }
 
@@ -123,7 +125,7 @@ class ExcursionsWidgets extends AbstractHelper
                 '</div>';
         }
 
-        if($data['limit'] && $i > $data['limit']) {
+        if($limit && $i > $limit) {
             $html .=
                 '</div>'
                 .'<span class="btn s show-all">' . $view->tr('Весь список') . '</span>';
