@@ -236,8 +236,10 @@ class EntityCollection extends AbstractDb implements Iterator, AdapterInterface
      * @param array $options
      * @return Paginator
      */
-    public function getPaginator($page = 1, $rows = 10, $options = array())
+    public function getPaginator($page = null, $rows = 10, $options = [])
     {
+        $page = $page ?? ($_GET['page']);
+
         $resultSet = new ResultSet();
         $resultSet->setPrototype($this->getPrototype());
         $paginatorAdapter = new DbSelect(

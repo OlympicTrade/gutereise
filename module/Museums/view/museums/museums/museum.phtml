@@ -3,10 +3,10 @@
     'wrapper'    => true
 ]); ?>
 
-<div class="block gray">
+<div class="block first last">
     <div class="wrapper">
         <div class="module-item-block museum-block">
-            <div class="content pt">
+            <div class="content panel">
                 <?php echo $this->contentRender($museum->getPlugin('content')) ?>
                 <?php echo $this->shortList($museum->getChildren(false), ['header' => 'Достопримечательности']); ?>
 

@@ -1,0 +1,328 @@
+
+.excursions-block {
+    .info-block {
+        display: flex;
+        background: $btnColor1;
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        .icon {
+            line-height: 1.2;
+            flex: 0 34px;
+            height: 34px;
+            margin-right: 10px;
+            background: url($imgDir + 'info.svg');
+            background-size: cover;
+        }
+
+        .text {
+            flex: 1;
+
+        }
+    }
+
+    .filters-block {
+        margin-top: 14px;
+
+        .search {
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 34px;
+                width: 34px;
+            }
+
+            input {
+                border: none;
+                border-bottom: 1px solid #000;
+                background: url($imgDir + 'search.svg') 0 50% no-repeat transparent;
+                height: 45px;
+                line-height: 45px;
+                padding-left: 42px;
+
+                &::placeholder {
+                    color: #000000;
+                }
+            }
+        }
+    }
+
+    .list-block {
+        margin-top: 25px;
+
+        .item {
+            overflow: hidden;
+            display: block;
+            position: relative;
+            max-width: 385px;
+            flex: 0 30%;
+            margin-bottom: 20px;
+            transition: all ease .4s;
+            box-shadow: 0 5px 25px 0 rgba(37, 46, 89, 0.13);
+
+            &:hover {
+
+            }
+
+            .pic {
+                display: block;
+                overflow: hidden;
+            }
+
+            img {
+                display: block;
+                transition: all ease .4s;
+            }
+
+            &:hover img {
+                transform: scale(1.1);
+            }
+
+            .info {
+                position: relative;
+                background: #ffffff;
+                padding: 14px 15px;
+
+                * {
+                    position: relative;
+                    z-index: 10;
+                }
+
+                .season {
+                    position: absolute;
+                    top: -40px;
+                    background: #b6f1b4;
+                    color: #000;
+                    font-size: 15px;
+                    font-weight: 400;
+                    border-radius: 4px;
+                    padding: 6px 10px;
+                }
+
+                .name {
+                    font-size: 17px;
+                    line-height: 1.4;
+                    overflow: hidden;
+                    margin-bottom: 6px;
+                    font-weight: 400;
+                }
+
+                .price {
+                    font-size: 13px;
+                    color: $fontColor2;
+
+                    span {
+                        font-size: 17px;
+                        color: $linkColor1;
+                    }
+                }
+
+                .desc {
+                    margin-top: 10px;
+                    height: 85px;
+                    overflow: hidden;
+                    color: $fontColor2;
+                    line-height: 1.5;
+                }
+            }
+        }
+
+        /*.item {
+            display: block;
+            position: relative;
+            background: #ffffff;
+            margin-bottom: 30px;
+
+            .name, .preview {
+                padding-left: 17px;
+                padding-right: 17px;
+            }
+
+            .name {
+                display: block;
+                margin-top: 15px;
+                font-size: 17px;
+                font-weight: 600;
+            }
+
+            .preview {
+                margin-top: 12px;
+                color: #868686;
+            }
+
+            .info {
+                position: absolute;
+                left: 0;
+                bottom: 5px;
+                font-weight: 400;
+
+                .row {
+                    margin-bottom: 3px;
+
+                    i {
+                        margin-right: 4px;
+                    }
+                }
+            }
+
+            .btn {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 175px;
+                height: 50px;
+                line-height: 50px;
+            }
+        }*/
+    }
+}
+
+.excursion-block {
+    padding-top: 38px;
+
+    .attrs-list {
+        margin-top: 40px;
+        margin-bottom: 40px;
+
+        a {
+            color: $linkColor1;
+        }
+
+        & > .row {
+            position: relative;
+            margin-bottom: 14px;
+            font-size: 15px;
+            color: $fontColor2;
+            padding-left: 30px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            i {
+                position: absolute;
+                left: 0;
+                top: 0;
+                font-size: 20px;
+                color: $linkColor1;
+                width: 20px;
+                text-align: center;
+                display: inline-block;
+            }
+
+            .sub {
+                padding: 8px 0 0 8px;
+
+                .row {
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+.excursion-form {
+    background: #ffffff;
+    max-width: 240px;
+    margin: 0 auto;
+
+    .header {
+        font-family: $fontHeader, Serif;
+        font-size: 24px;
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .element select,
+    .element input {
+        background: #f0f0f0;
+        height: 35px;
+        padding: 0 12px;
+    }
+
+    .btns {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .btns .btn {
+        padding: 0 35px;
+    }
+
+    .price-box {
+        text-align: center;
+    }
+
+    .price-box .price {
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    .price-box .notice {
+        font-size: 13px;
+    }
+
+    .btn {
+        height: 45px;
+        line-height: 45px;
+    }
+}
+
+.excursion-plan {
+    .day {
+        display: flex;
+
+        &:last-child .stage {
+            background: none;
+        }
+    }
+
+    .stage {
+        flex: 0 37px;
+        margin-right: 10px;
+        background: url($imgDir + 'border-v.png') 50% 39px repeat-y;
+
+        .icon {
+            border-radius: 50%;
+            background: #fce12a;
+            font-size: 19px;
+            text-align: center;
+            vertical-align: 37px;
+            width: 37px;
+            height: 37px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .desc {
+        flex: 1;
+        padding-bottom: 30px;
+
+        a {
+            color: $linkColor1;
+        }
+
+        .header {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 4px;
+            padding-left: 5px;
+        }
+
+        .text {
+            padding: 10px 16px;
+            width: 100%;
+            display: block;
+
+            p {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

@@ -5,8 +5,9 @@ $this->headLink()
     ->prependStylesheet(\Aptero\Compressor\Compressor::getPublicLink('css', 'mobile'))
     ->prependStylesheet('/fonts/fonts.css')
     ->prependStylesheet('//fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i')
-    //->prependStylesheet('//use.fontawesome.com/releases/v5.4.1/css/all.css')
+    ->prependStylesheet('//fonts.googleapis.com/css?family=Playfair+Display&display=swap')
 ;
+
 $this->headScript()
     ->prependFile(\Aptero\Compressor\Compressor::getPublicLink('js', 'mobile'))
     ->prependFile('//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js')
@@ -42,7 +43,7 @@ $langCode = $language->getLangCode();
     ?>
     <script>
         $.languages.setLanguage('<?php echo $langCode ?>');
-        $.config.euroRate = <?php echo $settings->get('euro_rate') ?>;
+        $.currency.setCurrency('<?php echo \Application\Model\Currency::getInstance()->getCurrency() ?>');
     </script>
 </head>
 <body>
@@ -81,8 +82,8 @@ setcookie("greeting", 1, time()+(31104000), '/');
         </div>
     </a>
 
-    <span class="language">
-        <?php echo $this->languageSelect() ?>
+    <span class="language">languageSelect
+        <?= $this->languageSelect() ?>
     </span>
 
     <div class="nav">

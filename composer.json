@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle":"*",
         "matthiasmullie/minify":"*",
         "scssphp/scssphp":"*",
-        "mobiledetect/mobiledetectlib": "*"
+        "mobiledetect/mobiledetectlib": "*",
+        "ext-curl": "*"
     }
 }

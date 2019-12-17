@@ -37,7 +37,8 @@ class ShortList extends AbstractHelper
                         '<img src="' . $img->getImage($options['imgSize']) . '" alt="' . $img->getDesc() . '">'.
                     '</div>'.
                     '<div class="name">' . $item->get('name') . '</div>' .
-                    ($options['desc'] ? '<div class="desc">' . $item->get('preview') . '</div>' : '').
+                    '<div class="price">от <span>1 200</span> <i class="fal fa-ruble-sign"></i> / за 1 человека</div>' .
+                    //($options['desc'] ? '<div class="desc">' . $item->get('preview') . '</div>' : '').
                 '</a>';
         }
 

@@ -3,6 +3,7 @@ namespace Application\Controller;
 
 use Application\Model\About;
 use Aptero\Mvc\Controller\AbstractActionController;
+use Zend\Json\Json;
 use Zend\Session\Container;
 
 class IndexController extends AbstractActionController

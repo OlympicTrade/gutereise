@@ -1,34 +1,53 @@
 <div class="block" id="footer">
     <div class="wrapper">
-        <div class="about">
-            <div class="logo"></div>
-            <div class="desc">
-                <?php echo $this->tr('Мы работаем с 2007 года на рынке туристических услуг в сфере внутреннего и международного '.
+        <div class="col about">
+            <div class="header">
+                <div class="logo">Gute Reise</div>
+            </div>
+            <div class="body">
+                <?= $this->tr('Мы работаем с 2007 года на рынке туристических услуг в сфере внутреннего и международного '.
                      'выездного туризма. Партнеры с которыми мы сотрудничаем -  это надежные и ответственные организации. '.
                      'Для нас нет мелочей в работе, все, что мы делаем должно соответствовать европейскому уровню качества.'); ?>
             </div>
         </div>
-        <div class="menu">
-            <ul class="item">
-                <li class="title"><?php echo $this->tr('Услуги') ?></li>
-                <li><a href="/about/"><?php echo $this->tr('О компании') ?></a></li>
-                <li><a href="/excursions/"><?php echo $this->tr('Экскурсии') ?></a></li>
-                <li><a href="/tours/"><?php echo $this->tr('Туры') ?></a></li>
-                <li><a href="/transport/"><?php echo $this->tr('Аренда транспорта') ?></a></li>
-            </ul>
+        <div class="col registry">
+            <div class="header">
+                <div class="logo">Росреестр</div>
+            </div>
+            <div class="body">
+                <p>ООО "Гуте Райзе"</p>
+                <p>
+                    <?= $this->tr('Номер в едином реестре туороператоров') . ' <a class="popup-img" href="' .
+                    (new \Application\Model\About())->getPlugin('certificate')->getImage('hr') . '">РТО 014043</a>' ?>
+                </p>
+            </div>
         </div>
-        <div class="contacts">
-            <div class="row address">
-                <i class="fas fa-map-marker-alt"></i>
-                <?php echo $this->tr($contacts->get('address')) ?>
+        <div class="col menu">
+            <div class="header"><?= $this->tr('Услуги') ?></div>
+            <div class="body">
+                <ul class="item">
+                    <li><a href="/about/"><?php echo $this->tr('О компании') ?></a></li>
+                    <li><a href="/excursions/"><?php echo $this->tr('Экскурсии') ?></a></li>
+                    <li><a href="/tours/"><?php echo $this->tr('Туры') ?></a></li>
+                    <li><a href="/transport/"><?php echo $this->tr('Аренда транспорта') ?></a></li>
+                </ul>
             </div>
-            <div class="row">
-                <i class="fas fa-phone"></i>
-                <?php echo $contacts->get('phone_1') . ', ' . $contacts->get('phone_2') ?>
-            </div>
-            <div class="row">
-                <i class="far fa-envelope-open"></i>
-                <?php echo $contacts->get('email') ?>
+        </div>
+        <div class="col contacts">
+            <div class="header">Наши контакты</div>
+            <div class="body">
+                <div class="row address">
+                    <i class="fal fa-map-marker-alt"></i>
+                    <?php echo $this->tr($contacts->get('address')) ?>
+                </div>
+                <div class="row">
+                    <i class="fal fa-phone"></i>
+                    <?php echo $contacts->get('phone_1') . ', ' . $contacts->get('phone_2') ?>
+                </div>
+                <div class="row">
+                    <i class="fal fa-envelope-open"></i>
+                    <?php echo $contacts->get('email') ?>
+                </div>
             </div>
         </div>
     </div>

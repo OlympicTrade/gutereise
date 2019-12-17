@@ -79,11 +79,31 @@ class Module
     {
         $compressor = new Compressor();
 
+        $compressor->setParams([
+            'borderColor' => '#e8e8e8',
+            'background'  => '#f7f7f7',
+            //'baseColor1'  => '#fcd828',
+            'fontColor1'  => '#000000',
+            'fontColor2'  => '#5f676c',
+            'baseColor1'  => '#ffcc00',
+            'baseColor2'  => '#f4f4f4',
+            'baseColor3'  => '#ee4923',
+            'baseColor4'  => '#eff6fb',
+            'linkColor1'  => '#2a2f31',
+            'linkColor2'  => '#76838c',
+            'imgDir'      => '/images/',
+            'fontCommon'  => 'Proxima Nova',
+            'fontHeader1' => 'Playfair Display',
+            'fontHeader2' => 'Merriwc1b086eather',
+            //'fontHeader'  => 'Merriweather',
+        ], 'css');
+
         $compressor->compress([
             PUBLIC_DIR . '/css/libs/reset.css',
             PUBLIC_DIR . '/fonts/fonts.css',
             PUBLIC_DIR . '/css/libs/lightslider.css',
             PUBLIC_DIR . '/css/libs/lightgallery.css',
+            PUBLIC_DIR . '/css/libs/flexslider.css',
             PUBLIC_DIR . '/css/libs/fancybox.css',
             PUBLIC_DIR . '/css/libs/grid.scss',
             PUBLIC_DIR . '/css/elements.scss',
@@ -98,6 +118,7 @@ class Module
              20 => PUBLIC_DIR . '/js/libs/fancybox/fancybox.js',
              25 => PUBLIC_DIR . '/js/libs/history.js',
              30 => PUBLIC_DIR . '/js/libs/inputmask.js',
+             33 => PUBLIC_DIR . '/js/libs/flexslider.js',
              35 => PUBLIC_DIR . '/js/libs/lightslider.js',
              37 => PUBLIC_DIR . '/js/libs/lightgallery.js',
              45 => PUBLIC_DIR . '/js/libs/aptero.js',
@@ -124,6 +145,7 @@ class Module
             PUBLIC_DIR . '/css/libs/grid.css',
             PUBLIC_DIR . '/mobile/css/elements.scss',
             PUBLIC_DIR . '/mobile/css/main.scss',
+            PUBLIC_DIR . '/mobile/css/modules/excursions.scss',
         ], 'css', 'mobile');
 
 		$jsMobile = [
@@ -201,30 +223,6 @@ class Module
     public function initTranslate(MvcEvent $mvcEvent)
     {
         Translator::getInstance();
-
-        /*$translator = new Translator();
-        echo $translator->translate('Экскурсии');
-        die('zxczxc');*/
-        /*$files = array(
-            'en' => 'en',
-            'de' => 'de',
-            'ru' => 'ru',
-        );
-
-        $languages = Translator::getInstance();
-        $lang = $languages->getLangCode();
-
-        if(array_key_exists($lang, $files)) {
-            \Locale::setDefault($files[$lang]);
-        }
-
-        $translator = $mvcEvent->getApplication()->getServiceManager()->get('translator')->setLocale(\Locale::getDefault());
-        $mvcEvent->getApplication()->getServiceManager()->get('ViewHelperManager')->get('translate')->setTranslator($translator);
-        $languages->setTranslator($translator);
-
-        $formTranslator = new Translator($translator);
-
-        AbstractValidator::setDefaultTranslator($formTranslator, 'Forms');*/
     }
 
     public function getConfig()
@@ -236,6 +234,7 @@ class Module
         return array(
             'invokables' => array(
                 'IsMobile'              => 'Aptero\View\Helper\IsMobile',
+                'languageSelect'        => 'Application\View\Helper\languageSelect',
                 'Gallery'               => 'Application\View\Helper\Gallery',
                 'MenuList'              => 'Application\View\Helper\MenuList',
                 'Breadcrumbs'           => 'Application\View\Helper\Breadcrumbs',

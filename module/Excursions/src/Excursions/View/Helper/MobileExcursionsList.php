@@ -14,13 +14,45 @@ class MobileExcursionsList extends AbstractHelper
            '<div class="list">';
 
         foreach ($excursions as $excursion) {
-            if(Translator::getInstance()->getLangCode() == 'ru') {
+            $url = $excursion->getUrl();
+
+            $excursion->checkDate();
+
+            mb_strlen($view->tr($excursion->get('name')));
+
+            $season = $excursion->checkDate();
+
+            $price = $excursion->get('db_data')->price->rub->adult;
+
+            $html .=
+                '<a href="' . $url . '" class="item">' .
+                    '<div class="pic">' .
+                        '<img src="' . $excursion->getPlugin('image')->getImage('mm') . '" alt="' . $view->tr($excursion->get('name')) . '">' .
+                    '</div>'.
+                    '<div class="info">'.
+                        (!$season['status'] ? '<div class="season">' . $season['header'] . '</div>' : '').
+                        '<div class="name' . (mb_strlen($view->tr($excursion->get('name'))) >= 35 ? ' long' : '') . '"><span>' .
+                            $view->tr($excursion->get('name')) .
+                        '</span></div>'.
+                        '<div class="price">' .
+                            'от ' . $view->price($price) . ' / за 1 человека' .
+                        '</div>'.
+                        /*'<div class="desc">' .
+                            $v->tr($excursion->get('preview')) .
+                        '</div>'.*/
+                    '</div>'.
+                '</a>';
+
+
+            /*if(Translator::getInstance()->getLangCode() == 'ru') {
                 $price = $excursion->get('db_data')->price->rub->adult;
             } else {
                 $price = $excursion->get('db_data')->price->eur->adult;
             }
 
             $url = $excursion->getUrl();
+
+
 
             $html .=
                 '<div class="item">'.
@@ -38,7 +70,7 @@ class MobileExcursionsList extends AbstractHelper
                         '</div>'.
                     '</div>'.
                     '<span class="btn c2">' . $view->tr('Бронировать') . '</span>'.
-                '</div>';
+                '</div>';*/
         }
 
         $html .=

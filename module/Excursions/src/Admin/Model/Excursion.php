@@ -266,14 +266,6 @@ class Excursion extends Entity
 
         $data = $data->days;
 
-        /*if(count($data->days) == 1) {
-            $firstDay = $data->days[0];
-            $data->duration = $firstDay->duration;
-            $data->min_time = $firstDay->min_time;
-            $data->max_time = $firstDay->max_time;
-            unset($data->days);
-        }*/
-
 		$this->set('db_data', $data);
 
         return $this;

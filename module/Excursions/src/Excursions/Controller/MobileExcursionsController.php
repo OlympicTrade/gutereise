@@ -88,7 +88,7 @@ class MobileExcursionsController extends AbstractMobileActionController
             $this->addBreadcrumbs([['url' => $url, 'name' => $type->get('name')]]);
             $view->setVariables([
                 'header'      => $type->get('name'),
-                'breadcrumbs' => $this->getBreadcrumbs(),
+                //'breadcrumbs' => $this->getBreadcrumbs(),
             ]);
         }
 
@@ -115,7 +115,7 @@ class MobileExcursionsController extends AbstractMobileActionController
             'header'         => $excursion->get('header'),
             'headerDesc'     => $excursion->get('header_desc'),
             'excursion'      => $excursion,
-            'breadcrumbs'    => $this->getBreadcrumbs(),
+            //'breadcrumbs'    => $this->getBreadcrumbs(),
             'commonForm'     => new CommonForm($excursion),
         ]);
     }

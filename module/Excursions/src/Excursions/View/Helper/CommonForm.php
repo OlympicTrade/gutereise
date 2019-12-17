@@ -12,7 +12,7 @@ class CommonForm extends AbstractHelper
 
         $html =
             '<div class="calc">'.
-                '<div class="header">' . $view->tr('Калькулятор стоимости') . '</div>'.
+                '<div class="header">' . $view->tr('Рассчитать') . '</div>'.
                 '<div class="body">';
 
         $html .=

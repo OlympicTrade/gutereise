@@ -9,6 +9,7 @@ $modules = [
     'Reviews',
     'Museums',
     'Excursions',
+    'Hotels',
     'Transports',
     'Translator',
     'Comments',

@@ -8,29 +8,42 @@ use Zend\View\Helper\AbstractHelper;
 
 class Price extends AbstractHelper
 {
-    public function __invoke($price, $sign = true, $euro = false)
+    public function __invoke($price, $sign = true, $currency = null)
     {
-        if($euro && Translator::getInstance()->isForeigners()) {
-            $price = (int) ($price / Settings::getInstance()->get('euro_rate'));
+        $currency = $currency ?? Currency::getInstance()->getCurrency();
+
+        switch ($currency) {
+            case 'eur':
+                $rate = Settings::getInstance()->get('euro_rate');
+                break;
+            case 'usd':
+                $rate = Settings::getInstance()->get('usd_rate');
+                break;
+            default:
+                $rate = 1;
         }
 
-        $str = preg_replace('/(\d)(?=(\d\d\d)+([^\d]|$))/i', '$1 ', $price);
+        $price = (int) ($price / $rate);
+
+        $str = '<span>' . preg_replace('/(\d)(?=(\d\d\d)+([^\d]|$))/i', '$1 ', $price);
 
         if($sign) {
-            $str = '<b>' . $str . '</b> ';
+            $str .= ' ';
 
             switch (Currency::getInstance()->getCurrency()) {
                 case 'rub':
-                    $str .= '<i class="fas fa-ruble-sign"></i>';
+                    $str .= '<i class="fal fa-ruble-sign"></i>';
                     break;
                 case 'eur':
-                    $str .= '<i class="fas fa-euro-sign"></i>';
+                    $str .= '<i class="fal fa-euro-sign"></i>';
                     break;
                 case 'usd':
-                    $str .= '<i class="fas fa-dollar"></i>';
+                    $str .= '<i class="fal fa-dollar"></i>';
                     break;
             }
         }
+
+        $str .= '</span>';
 
         return $str;
     }

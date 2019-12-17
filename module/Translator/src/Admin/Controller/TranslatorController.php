@@ -14,11 +14,28 @@ class TranslatorController extends AbstractActionController
         $this->generate();
 
         $translatorList = Translator::getEntityCollection();
+
+        $filters = $this->params()->fromQuery();
+
+        switch ($filters['filter']) {
+            case 'empty-de':
+                $translatorList->select()->where(['de' => '']);
+                break;
+            case 'empty-en':
+                $translatorList->select()->where(['en' => '']);
+                break;
+            default:
+        }
+
+        if($filters['search']) {
+            $translatorList->select()->where->like('ru', '%' . $filters['search'] . '%');
+        }
+
         $translatorList->select()
             ->order('id DESC');
 
         return [
-            'items' => $translatorList
+            'items' => $translatorList->getPaginator()
         ];
     }
 

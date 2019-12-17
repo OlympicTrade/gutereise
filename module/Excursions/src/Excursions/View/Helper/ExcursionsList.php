@@ -9,7 +9,7 @@ class ExcursionsList extends AbstractHelper
 {
     public function __invoke($excursions, Form $form = null)
     {
-        $v = $this->getView();
+        $view = $this->getView();
 
         $html =
            '';
@@ -19,30 +19,35 @@ class ExcursionsList extends AbstractHelper
 
             $excursion->checkDate();
 
-            mb_strlen($v->tr($excursion->get('name')));
+            mb_strlen($view->tr($excursion->get('name')));
 
             $season = $excursion->checkDate();
+
+            $price = $excursion->get('db_data')->price->rub->adult;
 
             $html .=
                 '<a href="' . $url . '" class="item">' .
                     '<div class="pic">' .
-                        '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="' . $v->tr($excursion->get('name')) . '">' .
+                        '<img src="' . $excursion->getPlugin('image')->getImage('m') . '" alt="' . $view->tr($excursion->get('name')) . '">' .
                     '</div>'.
                     '<div class="info">'.
                         (!$season['status'] ? '<div class="season">' . $season['header'] . '</div>' : '').
-                        '<div class="name' . (mb_strlen($v->tr($excursion->get('name'))) >= 35 ? ' long' : '') . '"><span>' .
-                            $v->tr($excursion->get('name')) .
+                        '<div class="name' . (mb_strlen($view->tr($excursion->get('name'))) >= 35 ? ' long' : '') . '"><span>' .
+                            $view->tr($excursion->get('name')) .
                         '</span></div>'.
-                        '<div class="desc">' .
-                            $v->tr($excursion->get('preview')) .
+                        '<div class="price">' .
+                            'от ' . $view->price($price) . ' / за 1 человека' .
                         '</div>'.
+                        /*'<div class="desc">' .
+                            $v->tr($excursion->get('preview')) .
+                        '</div>'.*/
                     '</div>'.
                 '</a>';
         }
 
         if($excursions instanceof Paginator) {
             $html .=
-                $v->paginationControl($excursions, 'Sliding', 'pagination-slide-auto', ['route' => 'application/pagination']);
+                $view->paginationControl($excursions, 'Sliding', 'pagination-slide-auto', ['route' => 'application/pagination']);
         }
 
         $html .=

@@ -15,12 +15,7 @@
 
 .excursion-block{
     .sidebar {
-        margin-top: 65px;
-
         .excursion-form {
-            padding-top: 20px;
-            border-radius: 5px;
-            background: linear-gradient(45deg,#fbcfb1,#f5f8aa);
         }
     }
 
@@ -42,44 +37,39 @@
     }
 
     .attrs-list {
-        margin-bottom: 45px;
-        margin-top: 50px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+
         a {
-            color: #f85a1e;
+            color: $linkColor1;
         }
 
         & > .row {
             position: relative;
-            padding: 27px 0 27px 305px;
-            background: url($imgDir + 'border.png') 0 100% repeat-x;
-            color: #595959;
+            margin-bottom: 14px;
             font-size: 16px;
-            font-weight: 300;
-        }
+            color: $fontColor2;
+            padding-left: 38px;
 
-        & > .row:first-child {
-            background: url($imgDir + 'border.png') 0 100% repeat-x, url($imgDir + 'border.png') 0 0 repeat-x;
-        }
+            i {
+                position: absolute;
+                left: 0;
+                top: 0;
+                font-size: 20px;
+                color: $linkColor1;
+                width: 20px;
+                text-align: center;
+                display: inline-block;
+            }
 
-        .label {
-            position: absolute;
-            left: 0;
-            width: 330px;
-            font-size: 17px;
-            font-weight: 700;
-            color: #000000;
-        }
+            .sub {
+                padding: 8px 0 0 8px;
 
-        .row .row {
-            font-size: 15px;
-            font-weight: 300;
-            margin-bottom: 4px;
-        }
-
-        .row .row i {
-            color: #000;
-            font-size: 15px;
-            margin-right: 6px;
+                .row {
+                    margin-bottom: 6px;
+                    font-size: 14px;
+                }
+            }
         }
     }
 
@@ -106,8 +96,9 @@
 
         .stage .icon {
             border-radius: 50%;
-            background: #fce12a;
-            font-size: 19px;
+            background: $linkColor1;
+            color: #ffffff;
+            font-size: 17px;
             text-align: center;
             vertical-align: 37px;
             width: 37px;
@@ -119,29 +110,28 @@
 
         .desc {
             flex: 1;
-            padding-bottom: 30px;
+            padding-bottom: 10px;
 
             .header {
-                font-size: 18px;
-                font-weight: 300;
+                font-size: 16px;
+                color: $fontColor1;
+                font-weight: 400;
                 margin-bottom: 10px;
-                padding-top: 3px;
-                padding-left: 15px;
+                padding-top: 8px;
             }
 
             .text {
-                padding: 12px 20px;
-                background: #f4f4f4;
+                padding: 12px 25px;
+                margin-bottom: 10px;
                 width: 100%;
                 display: block;
 
                 a {
-                    font-weight: 600;
-                    color: $linkColor;
+                    color: $linkColor1;
                 }
 
                 p {
-                    margin-bottom: 4px;
+                    margin-bottom: 10px;
                 }
             }
         }

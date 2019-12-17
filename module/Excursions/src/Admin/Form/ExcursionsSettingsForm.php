@@ -1,7 +1,7 @@
 <?php
 namespace ExcursionsAdmin\Form;
 
-use Aptero\Form\Form;
+use Aptero\Form\Admin\Form;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -19,43 +19,13 @@ class ExcursionsSettingsForm extends Form
         $this->setAttribute('method', 'post');
         $this->setAttribute('autocomplete', 'off');
 
-        $this->add(array(
-            'name' => 'settings-qiwi_shop_id',
-            'type'  => 'Zend\Form\Element\Text',
-            'options' => array(
-                'label' => 'SHOP_ID',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'settings-qiwi_shop_id',
-            'type'  => 'Zend\Form\Element\Text',
-            'options' => array(
-                'label' => 'KEY',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'settings-qiwi_shop_id',
-            'type'  => 'Zend\Form\Element\Text',
-            'options' => array(
-                'label' => 'PSWD',
-            ),
-        ));
+        $this->addMeta();
     }
 
     public function setFilters()
     {
         $inputFilter = new InputFilter();
         $factory     = new InputFactory();
-
-        $inputFilter->add($factory->createInput(array(
-            'name'     => 'settings-title',
-            'required' => true,
-            'filters'  => array(
-                array('name' => 'StringTrim'),
-            ),
-        )));
 
         $this->setInputFilter($inputFilter);
     }

@@ -4,7 +4,7 @@ namespace Aptero\Form\Admin;
 class Form extends \Aptero\Form\Form {
     protected $translate = false;
 
-    public function addMeta($prefix = '', $help = '')
+    public function addMeta($prefix = 'settings-')
     {
         $this->add(array(
             'name' => $prefix . 'title',
@@ -16,7 +16,7 @@ class Form extends \Aptero\Form\Form {
 
         $this->add(array(
             'name' => $prefix . 'description',
-            'type'  => 'Zend\Form\Element\Text',
+            'type'  => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => 'Description',
             ),

@@ -29,6 +29,15 @@ class Compressor {
         return $file;
     }
 
+    protected $params = [
+        'css' => [],
+        'js' => []
+    ];
+    public function setParams(array $params, $type)
+    {
+        $this->params[$type] = $params;
+    }
+
     public function getFile($type, $platform, $new = false)
     {
         $file = PUBLIC_DIR . '/';
@@ -119,16 +128,7 @@ class Compressor {
 
         if($type == 'css') {
             $scss = new Compiler();
-            $scss->setVariables([
-                'background'  => '#f7f7f7',
-                'baseColor1'  => '#fcd828',
-                'baseColor2'  => '#f4f4f4',
-                'baseColor3'  => '#ee4923',
-                'linkColor'   => '#f5031a',
-                'imgDir'      => '/images/',
-                'fontCommon'  => 'Proxima Nova',
-                'fontHeader'  => 'Merriweather',
-            ]);
+            $scss->setVariables($this->params[$type]);
             $content = $scss->compile($content);
         }
 

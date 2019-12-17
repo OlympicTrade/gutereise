@@ -5,7 +5,7 @@ use Aptero\Db\Plugin\PluginAbstract;
 
 class Comments extends PluginAbstract
 {
-    protected $comments = array();
+    protected $comments = [];
 
     public function load()
     {
@@ -16,7 +16,7 @@ class Comments extends PluginAbstract
         }
 
         $select = $this->getSelect()
-            ->where(array('t.' . $this->parentFiled => $parentId));
+            ->where(['t.' . $this->parentFiled => $parentId]);
 
         $result = $this->fetchAll($select);
 

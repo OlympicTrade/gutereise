@@ -2,7 +2,7 @@
 $duration = $excursion->get('db_data')->duration;
 ?>
 
-<div class="module-item-block excursion-block block">
+<div class="module-item-block excursion-block">
     <div class="menu">
         <a href=".excursion-block" class="item anchor active">
             <?php echo $this->tr('Описание') ?>
@@ -18,108 +18,163 @@ $duration = $excursion->get('db_data')->duration;
         </a>
     </div>
 
-    <h1><?= $this->tr($header) ?></h1>
 
-    <?php
-    $html =
-        '<div class="gallery">'.
-            '<ul class="list">';
+    <div class="block panel">
+        <h1><?= $this->tr($header) ?></h1>
 
-    $html .=
-        '<li data-thumb="' . $excursion->getPlugin('image')->getImage('hr') . '">'.
-            '<img src="' . $excursion->getPlugin('image')->getImage('g') . '" alt="">'.
-        '</li>';
+        <?php
+        $html =
+            '<div class="gallery">'.
+                '<ul class="list">';
 
-    foreach ($excursion->getPlugin('images') as $image) {
         $html .=
-            '<li data-thumb="' . $image->getImage('hr') . '">'.
-                '<img src="' . $image->getImage('g') . '" alt=""></li>'.
+            '<li data-thumb="' . $excursion->getPlugin('image')->getImage('hr') . '">'.
+                '<img src="' . $excursion->getPlugin('image')->getImage('g') . '" alt="">'.
             '</li>';
-    }
 
-    $html .=
-            '</ul>'.
-        '</div>';
-    echo $html;
-    ?>
+        foreach ($excursion->getPlugin('images') as $image) {
+            $html .=
+                '<li data-thumb="' . $image->getImage('hr') . '">'.
+                    '<img src="' . $image->getImage('g') . '" alt=""></li>'.
+                '</li>';
+        }
 
-    <div class="std-text"><?php echo $this->tr($excursion->get('text')) ?></div>
+        $html .=
+                '</ul>'.
+            '</div>';
+        echo $html;
+        ?>
 
-    <div class="attrs-list">
-        <div class="row">
-            <div class="label"><?php echo $this->tr('Длительность экскурсии') ?>: <?php echo $this->declension($duration, ['час', 'часа', 'часов']) ?></div>
+        <div class="std-text"><?php echo $this->tr($excursion->get('text')) ?></div>
 
-        </div>
-        <div class="row">
-            <div class="label"><?php echo $this->tr('В стоимость включено') ?></div>
-            <div class="row"><?php echo $this->tr('Аренда') ?>
-                <a class="popup" href="/transport/mercedes-benz-e-class/"><?php echo $this->tr('Мерседеса Е 211') ?></a>/
-                <a href=""><?php echo $this->tr('Мерседеса Виано') ?></a>/
-                <a href=""><?php echo $this->tr('Мерседеса Спринтера') ?></a>
+        <div class="desc-box">
+            <div class="std-text"><?php echo $this->tr($excursion->get('text')) ?></div>
+
+            <div class="attrs-list">
+                <div class="row">
+                    <i class="fal fa-clock"></i>
+                    <?php if($excursion->get('place_and_time')) {
+                        echo $this->tr('Место и время начала: ' . $excursion->get('place_and_time'));
+                    } else {
+                        echo $this->tr('Место и время начала экскурсии по вашему желанию');
+                    }
+                    ?>
+                </div>
+                <div class="row">
+                    <i class="fal fa-map-marker-alt"></i>
+                    <?php
+                    if(!$isTour) {
+                        echo
+                            $this->tr('Длительность экскурсии - ').
+                            $this->declension($duration, ['час', 'часа', 'часов']);
+                    } else {
+                        echo
+                            $this->tr('Длительность тура - ').
+                            $this->declension($duration, ['день', 'дня', 'дней']);
+                    }
+                    ?>
+                </div>
+                <div class="row">
+                    <i class="fal fa-clipboard-list-check"></i>
+                    <?php
+                    echo $this->tr('В стоимость включено:');
+
+                    $html =
+                        '<div class="sub">';
+
+                    foreach ($excursion->getPlugin('pricetable') as $row) {
+                        $text = $row->get('text');
+
+                        if($text == '%TRANSPORT%') {
+                            $transports = \Transports\Model\Transport::getEntityCollection();
+                            $transports->select()->where(['type' => \Transports\Model\Transport::TYPE_AUTO, 'id' => [1, 2, 3]]);
+
+                            $text = $this->tr('Аренда') . ' ';
+                            foreach ($transports as $transport) {
+                                $text .=
+                                    '<a class="popup" href="' . $transport->getUrl() . '">' . $this->tr($transport->get('name')) . '</a> / ';
+                            }
+                            $text = rtrim($text, ' /');
+                        } else {
+                            $text = $this->tr($text);
+                        }
+
+                        $html .=
+                            '<div class="row">' . $text . '</div>';
+                    }
+
+                    $html .= '</div>';
+
+                    echo $html;
+                    ?>
+                </div>
             </div>
-            <div class="row"><?php echo $this->tr('Входные билеты в Екатерининский дворец и Екатерининский парк') ?></div>
-            <div class="row"><?php echo $this->tr('Услуги персонального гида') ?></div>
         </div>
     </div>
-</div>
 
-<div class="excursion-form">
-    <?php
-    $html =
-        '<form action="/excursions/get-price/" method="post" class=" common-form">'.
-            '<input type="hidden" name="id" value="' . $excursion->getId() . '">'.
-            $this->commonForm($commonForm, [
-                ['field' => 'date', 'icon' => 'far fa-calendar-alt'],
-                ['field' => 'time', 'icon' => 'far fa-clock'],
-                ['field' => 'adults', 'icon' => 'fas fa-user'],
-                ['field' => 'children', 'icon' => 'fas fa-child'],
-            ]).
-            '<div class="price-box std-errors"></div>'.
-            '<div class="btns">'.
-                '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
-            '</div>'.
-        '</form>';
-
-    echo $html;
-    ?>
-</div>
-
-<div class="block white">
-    <div class="excursion-plan">
-        <h2><?php echo $this->tr('Маршрут экскурсии') ?></h2>
+    <div class="panel">
         <?php
-        $plan = $excursion->getPlugin('plan');
-
-        $html = '';
-
-        $icons = [
-            'museum' => '<i class="fas fa-university"></i>',
-            'park'   => '<i class="fas fa-tree"></i>',
-            'marker' => '<i class="fas fa-map-marker-alt"></i>',
-        ];
-
-        foreach ($plan as $day) {
-            $html .=
-                '<div class="day">'.
-                    '<div class="stage">'.
-                        '<div class="icon">' . $icons[$day->get('icon')] . '</div>'.
-                    '</div>'.
-                    '<div class="desc">'.
-                        '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
-                        '<div class="text">'. $this->tr($day->get('text')) . '</div>'.
-                    '</div>'.
-                '</div>';
-        }
+        $html =
+            '<form action="/excursions/get-price/" method="post" class="widget excursion-form common-form">'.
+                '<input type="hidden" name="id" value="' . $excursion->getId() . '">'.
+                $this->commonForm($commonForm, [
+                    ['field' => 'date', 'icon' => 'fal fa-calendar-alt'],
+                    ['field' => 'time', 'icon' => 'fal fa-clock'],
+                    ['field' => 'adults', 'icon' => 'fal fa-user'],
+                    ['field' => 'children', 'icon' => 'fal fa-child'],
+                ]).
+                '<div class="price-box std-errors"></div>'.
+                '<div class="btns">'.
+                    '<span class="btn yellow order">' . $this->tr('Бронировать') . '</span>'.
+                '</div>'.
+            '</form>';
 
         echo $html;
         ?>
     </div>
 
-    <div class="excursion-comments">
-        <?php echo $this->comments([
-            'depend_id' => $excursion->getId(),
-            'depend_type' => \Comments\Model\Comment::TYPE_EXCURSION,
-        ]); ?>
+    <div class="block panel">
+        <div class="excursion-plan">
+            <h2><?php echo $this->tr('Маршрут экскурсии') ?></h2>
+            <?php
+            $plan = $excursion->getPlugin('plan');
+
+            $html = '';
+
+            $icons = [
+                'museum' => '<i class="fal fa-university"></i>',
+                'park'   => '<i class="fal fa-tree"></i>',
+                'marker' => '<i class="fal fa-map-marker-alt"></i>',
+                'cafe'   => '<i class="fal fa-coffee"></i>',
+                'anchor' => '<i class="fal fa-anchor"></i>',
+                'auto'   => '<i class="fal fa-bus"></i>',
+            ];
+
+            foreach ($plan as $day) {
+                $html .=
+                    '<div class="day">'.
+                        '<div class="stage">'.
+                            '<div class="icon">' . $icons[$day->get('icon')] . '</div>'.
+                        '</div>'.
+                        '<div class="desc">'.
+                            '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
+                            ($day->get('text') ? '<div class="text panel2">'. $this->tr($day->get('text')) . '</div>' : '').
+                        '</div>'.
+                    '</div>';
+            }
+
+            echo $html;
+            ?>
+        </div>
+    </div>
+
+    <div class="block panel">
+        <div class="excursion-comments">
+            <?php echo $this->comments([
+                'depend_id' => $excursion->getId(),
+                'depend_type' => \Comments\Model\Comment::TYPE_EXCURSION,
+            ]); ?>
+        </div>
     </div>
 </div>
 

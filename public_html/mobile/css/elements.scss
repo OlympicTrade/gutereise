@@ -13,19 +13,22 @@ $fontHeader: 'Merriweather';
     cursor: pointer;
     display: inline-block;
     transition: all 0.2s;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
     text-decoration: none;
-    border-radius: 2px;
-    height: 40px;
-    line-height: 40px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #000;
+    border-radius: 99px;
+    line-height: 46px;
     border: none;
-    padding: 0 15px;
-    background: $btnColor1;
+    padding: 0 25px;
+    background: $baseColor1;
 }
 
 .btn:hover {
-    background: #ffde3f;
+    background: #252e59;
+    color: #ffffff;
 }
 
 .btn i {
@@ -375,6 +378,7 @@ input, select, textarea {
 }
 
 .ui-datepicker {
+    display: none;
     background: #FFFFFF;
     padding: 12px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.31);

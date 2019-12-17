@@ -45,43 +45,12 @@ class ExcursionsWidgets extends AbstractHelper
 
         $html =
             '<div class="search">' .
-            '<i class="fas fa-search"></i>' .
-            '<input class="search-input" type="text" name="query" value="' . $val . '" placeholder="' . $view->tr('Поиск по названию') . '">' .
+                '<i class="fal fa-search"></i>' .
+                '<input class="search-input" type="text" name="query" value="' . $val . '" placeholder="' . $view->tr('Поиск по названию') . '">' .
             '</div>';
 
         return $html;
     }
-
-    /*public function renderCatalog2($items)
-    {
-        $view = $this->getView();
-
-        $items->select()->where([
-            'type'    => 2,
-            'active'  => 1,
-        ]);
-
-        $html = '';
-
-        foreach ($items as $item) {
-            $html .=
-                '<div class="row">'.
-                    '<a href="' . $item->getUrl() .'">' . $view->tr($item->get('name')) . '</a>';
-
-            $children = $item->getChildren();
-            if($children->count()) {
-                $html .=
-                    '<div class="sub">'.
-                        $this->renderCatalog2($children).
-                    '</div>';
-            }
-
-            $html .=
-                '</div>';
-        }
-
-        return $html;
-    }*/
 
     public function renderCatalog($data)
     {
@@ -128,7 +97,7 @@ class ExcursionsWidgets extends AbstractHelper
         if($limit && $i > $limit) {
             $html .=
                 '</div>'
-                .'<span class="btn s show-all">' . $view->tr('Весь список') . '</span>';
+                .'<span class="show-all">' . $view->tr('Весь список') . '</span>';
         } elseif($i <= 1) {
             return '';
         }

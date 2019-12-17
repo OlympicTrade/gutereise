@@ -116,14 +116,24 @@ class Excursion extends Entity
             $image->setTable('excursions_images');
             $image->setFolder('excursions');
             $image->addResolutions([
-                'g' => [
-                    'width'  => 900,
-                    'height' => 500,
+                't' => [
+                    'width'  => 90,
+                    'height' => 65,
+                    'crop'   => true,
+                ],
+                'mm' => [
+                    'width'  => 400,
+                    'height' => 260,
                     'crop'   => true,
                 ],
                 'm' => [
                     'width'  => 400,
-                    'height' => 400,
+                    'height' => 360,
+                    'crop'   => true,
+                ],
+                'g' => [
+                    'width'  => 900,
+                    'height' => 500,
                     'crop'   => true,
                 ],
                 'r' => [
@@ -145,6 +155,11 @@ class Excursion extends Entity
             $image->setTable('excursions_gallery');
             $image->setFolder('excursions_gallery');
             $image->addResolutions([
+                't' => [
+                    'width'  => 90,
+                    'height' => 65,
+                    'crop'   => true,
+                ],
                 'g' => [
                     'width'  => 900,
                     'height' => 500,

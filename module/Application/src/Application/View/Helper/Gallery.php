@@ -8,17 +8,17 @@ class Gallery extends AbstractHelper
     public function __invoke($model)
     {
         $html =
-            '<div class="gallery">'.
-                '<ul class="list">';
+            '<div class="gallery flexslider">'.
+                '<ul class="slides list">';
 
         $html .=
-            '<li data-thumb="' . $model->getPlugin('image')->getImage('hr') . '">'.
+            '<li data-thumb="' . $model->getPlugin('image')->getImage('t') . '">'.
                 '<img src="' . $model->getPlugin('image')->getImage('g') . '" alt="">'.
             '</li>';
 
         foreach ($model->getPlugin('images') as $image) {
             $html .=
-                '<li data-thumb="' . $image->getImage('hr') . '">'.
+                '<li data-thumb="' . $image->getImage('t') . '">'.
                     '<img src="' . $image->getImage('g') . '" alt=""></li>'.
                 '</li>';
         }

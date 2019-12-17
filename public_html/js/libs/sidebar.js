@@ -27,7 +27,7 @@ let Sidebar = function () {
                     top: 0,
                     left: 0,
                     position: 'relative',
-                    overflow: 'hidden'
+                    //overflow: 'hidden'
                 });
             }
 
@@ -37,7 +37,6 @@ let Sidebar = function () {
             obj.sliderH = obj.slider.innerHeight() + 20 + obj.margin;
             obj.botLine = obj.sidebar.innerHeight() - obj.sliderH;
 
-            dd('update');
             $(window).trigger('scroll');
         }, 100);
 

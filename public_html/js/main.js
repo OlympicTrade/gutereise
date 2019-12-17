@@ -2,7 +2,7 @@ $document = $(document);
 
 $(window).ready(function() {
     setTimeout(function() {
-        let body = $('body');
+        var body = $('body');
         initPopups();
         initElements(body);
         initComments(body);
@@ -12,11 +12,11 @@ $(window).ready(function() {
 });
 
 function initRegionSettings() {
-    let flags = $('.language .flags', '#header');
+    var flags = $('.language .flags', '#header');
     $('.flag', flags).on('click', function () {
         if($(this).hasClass('active')) return;
 
-        let lang = $(this).data('lang');
+        var lang = $(this).data('lang');
         $.cookie('lang', lang, {expires: 365, path: "/"});
         location.reload();
     });
@@ -28,19 +28,14 @@ function initRegionSettings() {
 }
 
 function initGallery(box) {
-    let gallery = $('.gallery .list', box);
-
-    gallery.lightSlider({
-        gallery: true,
-        item: 1,
-        thumbItem: 7,
-        thumbMargin: 4,
-        slideMargin: 0,
+    $('.gallery', box).flexslider({
+        animation:  'slide',
+        controlNav: 'thumbnails'
     });
 }
 
 function initSidebar() {
-    let sidebar = $('.sidebar');
+    var sidebar = $('.sidebar');
 
     sidebar.sidebar({
         margin: 20,
@@ -57,8 +52,8 @@ function initSidebar() {
 
 function initComments(box) {
     box.each(function () {
-        let container = $(this);
-        let form = $('.form', container);
+        var container = $(this);
+        var form = $('.form', container);
 
         form.formSubmit({
             success: function(resp, form){
@@ -74,7 +69,7 @@ function initComments(box) {
 }
 
 function initMetric() {
-    let url = $.aptero.url();
+    var url = $.aptero.url();
     url.init();
 
     $.ajax({
@@ -98,11 +93,11 @@ function initElements(box) {
     });
 
     $('.select-group', box).each(function () {
-        let group = $(this);
-        let vals = $('span', group);
-        let input = $('input', group);
+        var group = $(this);
+        var vals = $('span', group);
+        var input = $('input', group);
 
-        let setActive = function (val) {
+        var setActive = function (val) {
             if(input.val() == val) { return; }
 
             input.val(val).trigger('change');
@@ -116,14 +111,14 @@ function initElements(box) {
             setActive($(this).data('value'));
         });
 
-        let initVal = input.val() ? input.val() : vals.eq(0).data('value');
+        var initVal = input.val() ? input.val() : vals.eq(0).data('value');
         input.val('');
         setActive(initVal);
     });
 
     $('input[type="checkbox"]', box).each(function() {
-        let checkbox = $(this);
-        let label = checkbox.closest('label');
+        var checkbox = $(this);
+        var label = checkbox.closest('label');
 
         label.addClass('checkbox');
 
@@ -141,8 +136,8 @@ function initElements(box) {
     });
 
     $('input[type="radio"]', box).each(function() {
-        let radio = $(this);
-        let label = radio.closest('label');
+        var radio = $(this);
+        var label = radio.closest('label');
 
         label.addClass('radio');
         label.attr('data-name', radio.attr('name'));
@@ -159,10 +154,10 @@ function initElements(box) {
     });
 
     $('.std-counter', box).each(function() {
-        let el = $(this);
-        let input = $('input', el);
-        let incr = $('<div class="incr"></div>').appendTo(el);
-        let decr = $('<div class="decr"></div>').appendTo(el);
+        var el = $(this);
+        var input = $('input', el);
+        var incr = $('<div class="incr"></div>').appendTo(el);
+        var decr = $('<div class="decr"></div>').appendTo(el);
 
         function checkMinMax() {
             if(parseInt(input.val()) >= parseInt(input.data('max'))) {
@@ -181,9 +176,9 @@ function initElements(box) {
         checkMinMax();
 
         incr.on('click', function() {
-            let count = parseInt(input.val());
+            var count = parseInt(input.val());
             count = (isNaN(count) ? 0 : count) + 1;
-            let max = input.data('max') ? parseInt(input.data('max')) : 999;
+            var max = input.data('max') ? parseInt(input.data('max')) : 999;
             if(count > max) {
                 return false;
             }
@@ -193,9 +188,9 @@ function initElements(box) {
         });
 
         decr.on('click', function() {
-            let count = parseInt(input.val());
+            var count = parseInt(input.val());
             count = (isNaN(count) ? 0 : count) - 1;
-            let min = input.data('min') !== '' ? parseInt(input.data('min')) : 1;
+            var min = input.data('min') !== '' ? parseInt(input.data('min')) : 1;
             if(count < min) {
                 return false;
             }
@@ -208,7 +203,7 @@ function initElements(box) {
             checkMinMax();
         });
 
-        let timer = null;
+        var timer = null;
         $('.incr, .decr', el).on('click', function () {
             if(timer) clearTimeout(timer);
             timer = setTimeout(function() {
@@ -218,8 +213,8 @@ function initElements(box) {
     });
 
     $('.std-input, .std-textarea, .std-select', '.element', box).each(function () {
-        let el = $(this);
-        let element = $(this).closest('.element');
+        var el = $(this);
+        var element = $(this).closest('.element');
 
         if(el.attr('placeholder') !== undefined && el.attr('placeholder') !== '') {
             element.addClass('not-empty');
@@ -251,22 +246,22 @@ function initElements(box) {
     });
 
     $('.short-list').each(function () {
-        let box = $(this);
-        let slider = $('.slider', box).lightSlider({
+        var box = $(this);
+        var slider = $('.slider', box).lightSlider({
             item:   3,
             pager:  false,
             loop:   false,
             easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
             speed:  600,
             slideMove: 3,
-            slideMargin: 20,
+            slideMargin: 15,
             responsive : [
                 {
                     breakpoint:800,
                     settings: {
                         item:3,
                         slideMove:1,
-                        slideMargin:6,
+                        slideMargin:15,
                     }
                 },
                 {
@@ -318,8 +313,8 @@ function initElements(box) {
 
 function initPopups() {
     $('body').on('click', '.popup, .popup-img', function() {
-        let el = $(this);
-        let type = el.hasClass('popup-img') ? 'image' : 'ajax';
+        var el = $(this);
+        var type = el.hasClass('popup-img') ? 'image' : 'ajax';
 
         if(el.hasClass('popup-img')) {
             $.fancybox.open({

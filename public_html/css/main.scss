@@ -1,19 +1,9 @@
-/*
-$background: #f7f7f7;
-$baseColor1: #fcd828;
-$baseColor2: #f4f4f4;
-$baseColor3: #ee4923;
-$linkColor: #f5031a;
-$imgDir: '/images/';
-$fontCommon: 'Proxima Nova';
-$fontHeader: 'Merriweather';*/
-
 body {
-    font-family: 'Proxima Nova', sans-serif;
-    font-size: 10.5pt;
+    font-family: $fontCommon, sans-serif;
+    font-size: 15px;
     font-weight: 300;
-    color: #000;
-    background: #fff;
+    color: $fontColor2;
+    background: #f9f9f9;
 }
 
 a {
@@ -22,12 +12,76 @@ a {
 }
 
 h2 {
-    font-size: 27px;
-    font-weight: 900;
-    font-style: italic;
-    font-family: $fontHeader, Sarif;
+    font-size: 35px;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    font-family: $fontHeader1;
+    color: $fontColor1;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 18px;
+    font-family: $fontHeader1;
+    color: $fontColor1;
+}
+
+.panel {
+    position: relative;
+    background: #fff;
+    padding: 50px 70px;
+    box-shadow: 0 10px 45px 0 rgba(37, 46, 89, 0.1);
+    margin-bottom: 55px;
+    overflow: hidden;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.panel2 {
+    position: relative;
+    padding: 25px 35px;
+    background: $baseColor4;
+
+    &.info {
+        padding-left: 145px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            margin-top: 10px;
+            left: 35px;
+            width: 85px;
+            height: 85px;
+            background: url($imgDir + 'p-info.png') 50% 0 no-repeat;
+        }
+    }
+
+    .text {
+        line-height: 1.5;
+    }
+
+    .contacts {
+        margin-top: 20px;
+
+        .item {
+            display: inline-block;
+            font-size: 16px;
+            margin-right: 60px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            i {
+                color: $linkColor1;
+                font-size: 20px;
+                margin-right: 15px;
+            }
+        }
+    }
 }
 
 .notice-panel {
@@ -52,7 +106,7 @@ h2 {
 
         a {
             text-decoration: underline;
-            color: $linkColor;
+            color: $linkColor1;
         }
     }
 
@@ -95,7 +149,7 @@ h2 {
     .header {
         position: relative;
         padding: 14px 45px;
-        font-family: $fontHeader, serif;
+        font-family: $fontHeader1, serif;
         font-size: 19px;
         font-style: italic;
         background: #000;
@@ -119,12 +173,6 @@ h2 {
     }
 }
 
-h1 {
-    font-size: 40px;
-    font-weight: 800;
-    margin-bottom: 18px;
-}
-
 .block {
     padding: 0 75px;
 
@@ -136,11 +184,11 @@ h1 {
         padding-bottom: 80px;
     }
 }
-
+/*
 .block.gray {
     background: #f6f8f9;
 }
-
+*/
 .fa-euro-sign,
 .fa-ruble-sign {
     font-size: 75%;
@@ -155,11 +203,6 @@ h1 {
 
 .wide-wrapper {
     position: relative;
-}
-
-.panel {
-    background: #ffffff;
-    padding: 25px 30px;
 }
 
 #header {
@@ -180,10 +223,13 @@ h1 {
     .logo {
         position: absolute;
         left: 0;
-        top: 16px;
-        background: url($imgDir + 'logo.png');
-        width: 142px;
-        height: 36px;
+        top: 14px;
+        background: url($imgDir + 'h-logo.png') 0 50% no-repeat;
+        padding-left: 48px;
+        height: 41px;
+        font-family: $fontHeader1;
+        font-size: 25px;
+        color: #ffffff;
     }
 
     .nav {
@@ -194,12 +240,12 @@ h1 {
             a {
                 position: relative;
                 color: #ffffff;
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 300;
                 display: block;
                 height: 68px;
-                line-height: 68px;
-                font-family: $fontHeader, serif;
+                line-height: 66px;
+                //font-family: $fontHeader1, serif;
 
                 &:before,
                 &:after {
@@ -361,9 +407,9 @@ h1 {
 
     h1 {
         font-size: 60px;
-        font-weight: 900;
-        text-shadow: 0 4px 0 rgba(0,0,0,0.8);
+        text-shadow: 0 1px 30px rgba(0,0,0,1);
         margin-bottom: 0;
+        color: #FFFFFF;
     }
 
     .desc {
@@ -379,90 +425,87 @@ h1 {
 
 .main-block-1 {
     position: relative;
-    /*background: url($imgDir + 'main-bg.jpg') 50% 50%;*/
     background: #000000;
     height: 850px;
-}
 
-.main-block-1 .video {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    overflow: hidden;
-}
+    .video {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        overflow: hidden;
 
-.main-block-1 .video:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.45);
-}
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.40);
+        }
+    }
 
-.main-block-1 .wrapper {
-    padding-top: 250px;
-    z-index: 1;
-}
 
-.main-block-1 h1 {
-    text-shadow: 0 3px 0 #000;
-    width: 770px;
-    margin: 0 auto;
-    color: #ffffff;
-    font-size: 42px;
-    text-align: center;
-    font-weight: 600;
-    font-family: $fontHeader, serif;
-    font-style: italic;
-}
+    .wrapper {
+        padding-top: 250px;
+        z-index: 1;
+    }
 
-.main-block-1 .menu {
-    text-align: center;
-    margin-top: 30px;
-}
+    h1 {
+        text-shadow: 0 0 25px #000;
+        max-width: 950px;
+        margin: 0 auto;
+        color: #ffffff;
+        font-size: 50px;
+        text-align: center;
+        font-weight: 400;
+        font-family: $fontHeader1, serif;
+    }
 
-.main-block-1 .menu .btn {
-    border-radius: 99px;
-    font-size: 20px;
-    padding: 0 30px 0 30px;
-    color: #2e363e;
-    font-weight: 400;
-    margin: 0 6px;
-    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.9);
-}
+    .menu {
+        text-align: center;
+        margin-top: 30px;
 
-.main-block-1 .tags {
-    margin: 180px auto 0 auto;
-    max-width: 970px;
-    height: 90px;
-    overflow: hidden;
-    text-align: center;
-}
+        .btn {
+            border-radius: 99px;
+            padding: 0 30px;
+            margin: 0 6px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 
-.main-block-1 .tags .btn {
-    height: 35px;
-    line-height: 35px;
-    background: none;
-    border: 1px solid #fff;
-    color: #ffffff;
-    border-radius: 99px;
-    margin: 0 10px 20px 0;
-}
+            &:hover {
+                box-shadow: 0 0 25px rgba(0,0,0,#c1b086);
+            }
+        }
+    }
 
-.main-block-1 .tags .btn:hover {
-    box-shadow: 0 0 5px rgba(245, 215, 110, 0.9);
-    border-color: rgba(245, 215, 110, 0.9);
-    color: #f5d76e;
-}
+    .tags {
+        margin: 180px auto 0 auto;
+        max-width: 970px;
+        height: 90px;
+        overflow: hidden;
+        text-align: center;
 
-.main-block {
+        .btn {
+            font-size: 12px;
+            height: 35px;
+            line-height: 35px;
+            background: none;
+            border: 1px solid #fff;
+            color: #ffffff;
+            border-radius: 99px;
+            margin: 0 10px 20px 0;
 
+            &:hover {
+                box-shadow: 0 0 5px rgba(245, 215, 110, 0.9);
+                border-color: rgba(245, 215, 110, 0.9);
+                color: #f5d76e;
+            }
+        }
+    }
 }
 
 .main-block .header {
@@ -476,7 +519,7 @@ h1 {
     font-weight: 600;
     font-style: italic;
     margin-bottom: 8px;
-    font-family: $fontHeader, Serif;
+    font-family: $fontHeader1, Serif;
 }
 
 .main-block .header .notice{
@@ -519,7 +562,7 @@ h1 {
                 border-top: 2px solid #fff;
                 text-align: center;
                 padding-top: 24px;
-                font-family: $fontHeader, serif;
+                font-family: $fontHeader1, serif;
                 font-style: italic;
                 font-weight: 700;
                 font-size: 25px;
@@ -608,7 +651,7 @@ h1 {
     font-size: 30px;
     margin-bottom: 8px;
     font-weight: 600;
-    font-family: $fontHeader, serif;
+    font-family: $fontHeader1, serif;
     font-style: italic;
 }
 
@@ -667,7 +710,7 @@ h1 {
         font-size: 36px;
         font-weight: 300;
         padding: 4px 4px;
-        font-family: $fontHeader, serif;
+        font-family: $fontHeader1, serif;
         font-style: italic;
     }
 
@@ -744,21 +787,21 @@ h1 {
 }
 
 .short-list {
-    padding: 0 30px;
     position: relative;
+    padding-left: 15px;
 
     .nav {
         position: absolute;
         left: 0;
         top: 50%;
-        margin-top: -20px;
+        margin-top: -32px;
         width: 100%;
         height: 0;
 
         .prev, .next {
             cursor: pointer;
-            width: 41px;
-            height: 39px;
+            width: 22px;
+            height: 64px;
             position: absolute;
             top: 0;
             background: url($imgDir + 's-arr.png');
@@ -788,12 +831,22 @@ h1 {
         padding-bottom: 20px;
 
         .name {
-            font-family: $fontHeader, Sans-Serif;
-            font-weight: 700;
-            font-style: italic;
-            font-size: 18px;
-            margin-bottom: 8px;
+            font-family: $fontHeader1, Sans-Serif;
+            font-size: 17px;
+            margin-bottom: 10px;
             margin-top: 11px;
+            color: $fontColor1;
+            height: 44px;
+        }
+
+        .price {
+            font-size: 13px;
+            color: $fontColor1;
+
+            span {
+                font-size: 20px;
+                color: $linkColor1;
+            }
         }
     }
 }
@@ -814,11 +867,11 @@ h1 {
         max-width: 385px;
         flex: 0 30%;
         margin-bottom: 50px;
-        border-radius: 4px;
         transition: all ease .4s;
+        box-shadow: 0 5px 25px 0 rgba(37, 46, 89, 0.13);
 
         &:hover {
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+
         }
 
         .pic {
@@ -836,14 +889,9 @@ h1 {
         }
 
         .info {
-            position: absolute;
-            top: calc(100% - 110px);
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 13px 20px;
-            color: #ffffff;
-            transition: all ease .2s;
+            position: relative;
+            background: #ffffff;
+            padding: 24px 33px 30px 33px;
 
             * {
                 position: relative;
@@ -851,14 +899,21 @@ h1 {
             }
 
             .name {
-                font-size: 23px;
-                height: 84px;
-                font-weight: 600;
+                font-size: 19px;
                 line-height: 1.4;
+                height: 56px;
                 overflow: hidden;
+                font-family: $fontHeader2;
+                margin-bottom: 10px;
+            }
 
-                &.long {
-                    font-size: 19px;
+            .price {
+                font-size: 13px;
+                color: $fontColor2;
+
+                span {
+                    font-size: 20px;
+                    color: $linkColor1;
                 }
             }
 
@@ -866,219 +921,22 @@ h1 {
                 margin-top: 10px;
                 height: 85px;
                 overflow: hidden;
-            }
-
-            &:before {
-                content: "";
-                z-index: 1;
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 230px;
-                background:
-                        linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
-            }
-        }
-
-        &:hover .info {
-            top: calc(100% - 200px);
-            background: #ffffff;
-            color: #000000;
-            .name {
-                height: auto;
-            }
-
-            &:before {
-                display: none;
-            }
-        }
-
-        /*&:hover .info {
-            .desc {
-                top: -147px;
-            }
-        }
-
-        .info {
-            position: relative;
-            display: flex;
-
-            &:after {
-                content: "";
-                position: absolute;
-                top: -2px;
-                left: 0;
-                width: 100%;
-                height: 2px;
-                background: $baseColor1;
-                z-index: 7;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
-            }
-
-            .desc {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background: #ffffff;
-                transition: all ease .2s;
-                font-size: 15px;
-                color: #606060;
-                padding: 12px 20px;
+                color: $fontColor2;
                 line-height: 1.5;
-                height: 145px;
-                z-index: 5;
-            }
-
-            .name, .price {
-                position: relative;
-                z-index: 10;
-                height: 80px;
-                overflow: hidden;
-                display: flex;
-                align-items: center;
-
-                & > div {
-                    width: 100%;
-                }
-            }
-
-            .name {
-                flex: 1;
-                font-size: 18px;
-                font-weight: 300;
-                padding: 0 20px;
-                background: #ffffff;
-            }
-
-            .price {
-                flex: 0 135px;
-                background: $baseColor1;
-
-                * {
-                    text-align: center;
-                }
-
-                span {
-                    font-size: 20px;
-                }
-            }
-        }*/
-
-        /*.info {
-            position: relative;
-            width: 100%;
-            left: 0;
-            top: -29px;
-            margin-bottom: -29px;
-            display: block;
-            padding: 6px 15px;
-            background: rgba(32, 32, 32, 0.9);
-            color: #ffffff;
-
-            .row {
-                display: inline-block;
-                margin-right: 10px;
-                font-weight: 500;
-                font-size: 14px;
             }
         }
-
-        .desc {
-            position: relative;
-            background: #ffffff;
-            padding: 20px 25px 80px 25px;
-        }
-
-        .name {
-            display: block;
-            overflow: hidden;
-            font-size: 19px;
-            font-weight: 700;
-            height: 44px;
-            margin-bottom: 5px;
-        }
-
-        .time  {
-            position: absolute;
-            right: 25px;
-            top: 24px;
-            font-size: 18px;
-            font-weight: 700;
-
-            i {
-                margin-right: 5px;
-            }
-        }
-
-        .preview  {
-            overflow: hidden;
-            height: 85px;
-            color: #868686;
-        }
-
-        .order  {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-
-            .btn {
-                position: absolute;
-                padding: 0;
-                right: 0;
-                width: 50%;
-                height: 60px;
-                line-height: 60px;
-            }
-
-            .duration {
-                position: absolute;
-                left: 25px;
-                width: 50%;
-                height: 60px;
-                padding-top: 5px;
-                font-size: 14px;
-
-                div {
-                    margin-top: 3px;
-                    font-size: 15px;
-                    font-weight: 600;
-
-                    i {
-                        margin-right: 3px;
-                    }
-                }
-            }
-
-            .price {
-                position: absolute;
-                left: 25px;
-                width: 50%;
-                height: 60px;
-                padding-top: 5px;
-                font-size: 14px;
-            }
-
-            .price span {
-                font-size: 20px;
-                font-weight: 600;
-            }
-        }*/
     }
 
     &.items-3 .item {
-        flex: 0 31%;
-        margin-right: 1%;
-        margin-left: 1%;
+        flex: 0 30.93333%;
+        margin-right: 1.2%;
+        margin-left: 1.2%;
     }
 
     &.items-4 .item {
         flex: 0 22.5%;
-        margin-right: 1%;
-        margin-left: 1%;
+        margin-right: 1.2%;
+        margin-left: 1.2%;
 
         .name {
             padding: 0 15px;
@@ -1100,6 +958,74 @@ h1 {
             }
         }
     }
+}
+
+.short-list {
+    /*.item {
+        overflow: hidden;
+        display: block;
+        position: relative;
+        max-width: 385px;
+        flex: 0 30%;
+        margin-bottom: 50px;
+        transition: all ease .4s;
+        box-shadow: 0 5px 25px 0 rgba(37, 46, 89, 0.13);
+
+        &:hover {
+
+        }
+
+        .pic {
+            display: block;
+            overflow: hidden;
+        }
+
+        img {
+            display: block;
+            transition: all ease .4s;
+        }
+
+        &:hover img {
+            transform: scale(1.1);
+        }
+
+        .info {
+            background: #ffffff;
+            padding: 24px 33px 30px 33px;
+
+            * {
+                position: relative;
+                z-index: 10;
+            }
+
+            .name {
+                font-size: 19px;
+                line-height: 1.4;
+                height: 56px;
+                overflow: hidden;
+                font-family: $fontHeader2;
+                margin-bottom: 10px;
+            }
+
+            .price {
+                font-size: 13px;
+                color: $fontColor2;
+
+                span {
+                    font-size: 20px;
+                    color: $linkColor1;
+                }
+            }
+
+            .desc {
+                margin-top: 10px;
+                height: 85px;
+                overflow: hidden;
+                color: $fontColor2;
+                line-height: 1.5;
+            }
+        }
+    }*/
 }
 
 .transports-list {
@@ -1159,23 +1085,30 @@ h1 {
             .search {
                 position: relative;
                 padding-top: 0;
-                padding-bottom: 0;
                 margin-bottom: 30px;
+                border-bottom: 1px solid #ededed;
+                padding-bottom: 3px;
 
                 input {
-                    padding-left: 35px;
+                    padding-left: 32px;
                     height: 33px;
                     border: none;
-                    border-bottom: 2px solid #000;
                     background: none;
                     font-size: 16px;
                     width: 100%;
+                    font-weight: 300;
+
+                    &::placeholder {
+                        color: #878787;
+                    }
                 }
 
                 i {
                     position: absolute;
-                    top: 4px;
-                    font-size: 20px;
+                    top: 7px;
+                    left: 1px;
+                    font-size: 18px;
+                    color: #878787;
                 }
             }
 
@@ -1189,40 +1122,27 @@ h1 {
             }
 
             .show-all {
-                height: 20px;
-                line-height: 20px;
-                padding: 0 10px;
                 margin-top: 24px;
+                color: $linkColor1;
+                font-size: 15px;
+                cursor: pointer;
             }
 
             &.catalog a {
                 position: relative;
                 display: block;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
                 font-size: 16px;
                 font-weight: 300;
-                padding-left: 15px;
                 color: #1f1f1f;
                 transition: all ease .2s;
 
                 &:hover {
-                    color: $baseColor3;
-                }
-
-                &:before {
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    margin-top: -3px;
-                    content: '';
-                    height: 5px;
-                    width: 5px;
-                    border-radius: 50%;
-                    background: #000000;
+                    color: $linkColor1;
                 }
 
                 span {
-                    color: $baseColor3;
+                    color: $linkColor1;
                 }
             }
 
@@ -1258,8 +1178,8 @@ h1 {
 }
 
 .sidebar .widget .calc {
-    .header {
-        font-family: $fontHeader, Serif;
+    /*.header {
+        font-family: $fontHeader1, Serif;
         font-size: 24px;
         font-style: italic;
         font-weight: 700;
@@ -1267,7 +1187,7 @@ h1 {
         margin-bottom: 0;
         background: none;
         color: #000000;
-    }
+    }*/
 
     .body {
         padding-bottom: 0;
@@ -1283,6 +1203,7 @@ h1 {
             left: 0;
             bottom: 15px;
             font-size: 17px;
+            color: $linkColor1;
         }
 
         .errors {
@@ -1386,10 +1307,7 @@ h1 {
     }
 }
 
-.desc-box {
-    margin-bottom: 60px;
-}
-
+/*
 .module-item-block .menu {
     background: #f6f8f9;
     margin: 0 -50px 30px -50px;
@@ -1427,10 +1345,14 @@ h1 {
         }
     }
 }
+*/
+
+.module-item-block {
+
+}
 
 .module-item-block .desc-box h2 {
     font-size: 40px;
-    font-weight: 700;
     margin-bottom: 16px;
 }
 
@@ -1439,20 +1361,20 @@ h1 {
 
     .widget {
         background: #ffffff;
+        box-shadow: 0 13px 43px 0 rgba(37, 46, 89, .1);
+        color: $fontColor1;
 
         &:last-child {
         }
 
         .header {
-            padding: 12px 20px;
-            font-size: 21px;
-            font-weight: 200;
-            background: #000000;
-            color: #ffffff;
+            padding: 26px 40px 0 40px;
+            font-size: 30px;
+            font-weight: 300;
         }
 
         .body {
-            padding: 20px 20px 40px 20px;
+            padding: 30px 40px 40px 40px;
         }
 
         &.text {
@@ -1464,7 +1386,7 @@ h1 {
                 padding-bottom: 35px;
 
                 a {
-                    color: $linkColor;
+                    color: $linkColor1;
                 }
             }
         }
@@ -1513,19 +1435,14 @@ h1 {
     }
 
     .content {
-        overflow-y: hidden;
-        background: #ffffff;
-        padding: 0 50px 50px 50px;
+        /*overflow-y: hidden;
+        background: #ffffff;*/
         flex: 1;
-        margin-top: 30px;
-        padding-top: 40px;
     }
-
 
     .sidebar {
         flex: 0 295px;
-        margin-top: 30px;
-        margin-left: 30px;
+        margin-left: 2%;
 
         .widget {
             background: #ffffff;
@@ -1534,10 +1451,10 @@ h1 {
             &:last-child {
             }
 
-            .header {
+            /*.header {
                 font-size: 21px;
                 text-align: center;
-            }
+            }*/
 
             &.reco {
                 .item {
@@ -1570,7 +1487,7 @@ h1 {
                             right: 0;
                             bottom: 0;
                             font-size: 14px;
-                            color: $linkColor;
+                            color: $linkColor1;
                         }
                     }
                 }
@@ -1578,7 +1495,7 @@ h1 {
         }
     }
 
-    &.menu-aware {
+    /*&.menu-aware {
         .content {
             margin-top: 0;
             padding-top: 0;
@@ -1587,17 +1504,17 @@ h1 {
         .sidebar {
             margin-top: 65px;
         }
-    }
+    }*/
 
     .common-form {
         background: #ffffff;
 
-        .header {
+        /*.header {
             font-size: 24px;
             text-align: center;
             font-weight: 700;
             margin-bottom: 16px;
-        }
+        }*/
 
         .element select,
         .element input {
@@ -1739,6 +1656,37 @@ h1 {
 }
 
 .comments {
+    .header {
+        position: relative;
+        text-align: left;
+        padding-bottom: 24px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #ededed;
+
+        h2 {
+            text-align: left;
+            margin-bottom: 4px;
+        }
+
+        .desc {
+            color: $fontColor2;
+            font-size: 15px;
+
+            a {
+                color: $linkColor1;
+            }
+        }
+
+        .btn {
+            position: absolute;
+            right: 0;
+            top: 11px;
+            line-height: 55px;
+            width: 200px;
+            font-size: 14px;
+        }
+    }
+
     .add-question {
         background: $baseColor2;
         margin-bottom: 20px;
@@ -1751,38 +1699,46 @@ h1 {
 
     .comment {
         position: relative;
-        padding-left: 160px;
-        padding-top: 30px;
-        padding-bottom: 40px;
-        background: url($imgDir + 'border.png') 0 0 repeat-x;
+        padding-left: 170px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 40px;
+
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 140px;
+            top: 0;
+            height: 100%;
+            width: 7px;
+            background: url($imgDir + 'comment-brd.png') 0 -13px;
+        }
 
         .info {
             position: absolute;
             left: 0;
-            top: 30px;
+            top: 10px;
             width: 150px;
 
             .name {
                 font-size: 16px;
-                font-weight: 700;
+                font-weight: 600;
                 margin-bottom: 6px;
+                color: $fontColor1;
             }
 
             .date {
-                font-size: 14px;
-                font-style: italic;
+                font-size: 11px;
                 font-weight: 300;
-                color: #f85a1e;
+                color: $linkColor1;
+                text-transform: uppercase;
             }
         }
 
-        &:first-child {
-            padding-top: 15px;
-            background: none;
-
-            .info {
-                top: 15px;
-            }
+        .question, .answer {
+            line-height: 1.5;
+            color: $fontColor2;
         }
 
         .question {
@@ -1792,9 +1748,10 @@ h1 {
         .answer {
             margin-top: 14px;
             font-size: 15px;
-            color: #000000;
             padding-left: 20px;
+
             .admin {
+                color: #000000;
                 font-size: 14px;
                 font-weight: 700;
                 margin-bottom: 5px;
@@ -1830,11 +1787,11 @@ h1 {
 
 .std-text {
     font-size: 15px;
+    color: $fontColor2;
 
     p, li {
         line-height: 1.6;
         font-size: 16px;
-        color: #2f2f2f;
         font-weight: 300;
     }
 
@@ -1901,69 +1858,86 @@ h1 {
     }
 
     .wrapper {
-        padding: 43px 360px 60px 520px;
+        padding-top: 60px;
+        padding-bottom: 90px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col {
+        flex: 1;
+
+        .header {
+            height: 45px;
+            line-height: 45px;
+            color: #ffffff;
+            font-size: 24px;
+            font-family: $fontHeader1;
+            margin-bottom: 23px;
+        }
+
+        .body {
+            color: #bdbdbd;
+        }
     }
 
     .about {
-        position: absolute;
-        left: 0;
-        top: 35px;
-        width: 435px;
+        max-width: 420px;
+
+        .header {
+            color: #ffffff;
+            font-size: 30px;
+        }
 
         .logo {
             display: block;
-            background: url($imgDir + 'logo.png');
-            width: 142px;
-            height: 36px;
-            margin-bottom: 18px;
+            background: url($imgDir + 'f-logo.png') 0 50% no-repeat;
+            padding-left: 55px;
+            font-size: 30px;
+        }
+    }
+
+    .registry {
+        flex: 0 205px;
+
+        a {
+            color: $linkColor1;
         }
 
-        .desc {
-            color: #bdbdbd;
+        p {
+            margin-bottom: 8px;
         }
     }
 
     .menu {
-        display: flex;
+        flex: 0 140px;
 
-        ul {
-            flex: 1;
-            margin-right: 125px;
+        li {
+            margin-bottom: 8px;
+        }
 
-            &:last-child {
-                margin-right: 0;
-            }
-
-            li.title {
-                font-weight: 600;
-                color: #ffffff;
-                font-size: 17px;
-                margin-bottom: 22px;
-            }
-
-            li {
-                margin-bottom: 6px;
-            }
+        a:hover {
+            color: $linkColor1;
+            transition: all ease .3s;
         }
     }
 
     .contacts {
-        position: absolute;
-        right: 0;
-        top: 65px;
-        width: 345px;
+        flex: 0 300px;
 
         .row {
             padding-left: 35px;
             position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #bdbdbd;
 
             i {
+                color: $linkColor1;
                 position: absolute;
                 left: 0;
                 top: 0;
-                color: var(--color-1);
             }
         }
     }
@@ -2004,17 +1978,6 @@ h1 {
         &, .wrapper {
             height: 340px;
         }
-    }
-
-    #footer .wrapper {
-        padding-left: 400px;
-    }
-
-    #footer .about {
-        position: absolute;
-        left: 0;
-        top: 35px;
-        width: 375px;
     }
 
     .main-block-2 {
@@ -2058,8 +2021,13 @@ h1 {
         }
 
         .item {
-            .name {
-                font-size: 17px;
+            .info {
+                padding: 20px 26px 26px 26px;
+
+                .name {
+                    font-size: 17px;
+                    margin-bottom: 4px;
+                }
             }
         }
     }
@@ -2073,18 +2041,6 @@ h1 {
         font-size: 45px;
         font-weight: 900;
         text-shadow: 0 2px 0 rgba(0,0,0,0.8);
-    }
-
-    #footer {
-        .wrapper {
-            padding: 50px 340px 60px 445px;
-        }
-
-        .menu {
-            ul {
-                margin-right: 100px;
-            }
-        }
     }
 
     .sidebar .widget .body {

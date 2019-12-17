@@ -38,10 +38,12 @@ $isTour = $excursion->isTour();
 $duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get('db_data')->days[0]->duration;
 ?>
 
-<div class="block gray">
+<div class="block first last">
     <div class="wrapper">
-    <div class="module-item-block menu-aware excursion-block">
+    <div class="module-item-block excursion-block">
     <div class="content">
+    <div class=" panel">
+        <?php /*
         <div class="menu">
             <?php
             foreach ($menu as $item) {
@@ -61,52 +63,44 @@ $duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get(
                 '</div>';
         }
         ?>
-
-        <?php echo $this->gallery($excursion) ?>
-        <?php /*
-        $html =
-            '<div class="gallery">'.
-                '<ul class="list">';
-
-        $html .=
-            '<li data-thumb="' . $excursion->getPlugin('image')->getImage('hr') . '">'.
-                '<img src="' . $excursion->getPlugin('image')->getImage('g') . '" alt="">'.
-            '</li>';
-
-        foreach ($excursion->getPlugin('images') as $image) {
-            $html .=
-                '<li data-thumb="' . $image->getImage('hr') . '">'.
-                    '<img src="' . $image->getImage('g') . '" alt=""></li>'.
-                '</li>';
-        }
-
-        $html .=
-                '</ul>'.
-            '</div>';
-        echo $html;
         */ ?>
 
+        <?php echo $this->gallery($excursion) ?>
+
         <div class="desc-box">
-            <h2><?php echo $this->tr($excursion->get('name')) ?></h2>
             <div class="std-text"><?php echo $this->tr($excursion->get('text')) ?></div>
 
             <div class="attrs-list">
                 <div class="row">
-                    <div class="label"><?php echo $this->tr('Место и время начала экскурсии') ?></div>
-                    <?php echo $excursion->get('place_and_time') ? $excursion->get('place_and_time') : $this->tr('по договоренности') ?>
-                </div>
-                <div class="row">
-                    <div class="label"><?php echo $this->tr('Длительность экскурсии') ?></div>
-                    <?= $isTour ?
-                        $this->declension($duration, ['день', 'дня', 'дней']) :
-                        $this->declension($duration, ['час', 'часа', 'часов'])
+                    <i class="fal fa-clock"></i>
+                    <?php if($excursion->get('place_and_time')) {
+                        echo $this->tr('Место и время начала: ' . $excursion->get('place_and_time'));
+                    } else {
+                        echo $this->tr('Место и время начала экскурсии по вашему желанию');
+                    }
                     ?>
                 </div>
                 <div class="row">
-                    <div class="label"><?php echo $this->tr('В стоимость включено') ?></div>
-
+                    <i class="fal fa-map-marker-alt"></i>
                     <?php
-                    $html = '';
+                    if(!$isTour) {
+                        echo
+                            $this->tr('Длительность экскурсии - ').
+                            $this->declension($duration, ['час', 'часа', 'часов']);
+                    } else {
+                        echo
+                            $this->tr('Длительность тура - ').
+                            $this->declension($duration, ['день', 'дня', 'дней']);
+                    }
+                    ?>
+                </div>
+                <div class="row">
+                    <i class="fal fa-clipboard-list-check"></i>
+                    <?php
+                    echo $this->tr('В стоимость включено:');
+
+                    $html =
+                        '<div class="sub">';
 
                     foreach ($excursion->getPlugin('pricetable') as $row) {
                         $text = $row->get('text');
@@ -126,84 +120,94 @@ $duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get(
                         }
 
                         $html .=
-                            '<div class="row">'.
-                                '<i class="fas fa-check"></i> '.
-                                $text.
-                            '</div>';
+                            '<div class="row">- ' . $text . '</div>';
                     }
+
+                    $html .= '</div>';
 
                     echo $html;
                     ?>
                 </div>
             </div>
+
+            <div class="panel2 info">
+                <div class="icon"></div>
+
+                <div class="text">
+                <?= $this->tr('Все экскурсии на сайте являются индивидуальными, то есть Вам предоставляется персональный гид и транспорт.
+                Экскурсия начинается в удобное для Вас время, в любом месте города. Вход в музеи осуществляется без очереди.
+                Мы можем организовать встречу в аэропорту и на вокзале, поможем с выбором гостиницы. Наша фирма работает с
+                туристами из России, Европы и Китая. Количество туристов в группе не ограничено.'); ?>
+                </div>
+
+                <div class="contacts">
+                    <div class="item">
+                        <i class="fal fa-phone"></i>
+                        +7 (954) 123-45-67
+                    </div>
+                    <div class="item">
+                        <i class="fal fa-envelope"></i>
+                        info@gutereise.ru
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
 
         <?php if(array_key_exists('plan', $menu)) { ?>
+        <div class="panel">
 
-        <div class="std-header anchor-plan">
             <h2><?php echo $this->tr('План экскурсии') ?></h2>
-            <div class="separ"></div>
+
+            <div class="plan">
+                <?php
+                $plan = $excursion->getPlugin('plan');
+
+                $html = '';
+
+                $days = $duration;
+
+                $icons = [
+                    'museum' => '<i class="fal fa-university"></i>',
+                    'park'   => '<i class="fal fa-tree"></i>',
+                    'marker' => '<i class="fal fa-map-marker-alt"></i>',
+                    'cafe'   => '<i class="fal fa-coffee"></i>',
+                    'anchor' => '<i class="fal fa-anchor"></i>',
+                    'auto'   => '<i class="fal fa-bus"></i>',
+                ];
+
+                foreach ($plan as $day) {
+                    $html .=
+                        '<div class="day">'.
+                            '<div class="stage">'.
+                                '<div class="icon">' . $icons[$day->get('icon')] . '</div>'.
+                            '</div>'.
+                            '<div class="desc">'.
+                                '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
+                                ($day->get('text') ? '<div class="text panel2">'. $this->tr($day->get('text')) . '</div>' : '').
+                            '</div>'.
+                        '</div>';
+                }
+
+                echo $html;
+                ?>
+            </div>
         </div>
-
-        <div class="plan">
-            <?php
-            $plan = $excursion->getPlugin('plan');
-
-            $html = '';
-
-            $days = $duration;
-
-            $icons = [
-                'museum' => '<i class="fas fa-university"></i>',
-                'park'   => '<i class="fas fa-tree"></i>',
-                'marker' => '<i class="fas fa-map-marker-alt"></i>',
-                'cafe'   => '<i class="fas fa-coffee"></i>',
-                'anchor' => '<i class="fas fa-anchor"></i>',
-                'auto'   => '<i class="fas fa-car"></i>',
-            ];
-
-            foreach ($plan as $day) {
-                $html .=
-                    '<div class="day">'.
-                        '<div class="stage">'.
-                            '<div class="icon">' . $icons[$day->get('icon')] . '</div>'.
-                        '</div>'.
-                        '<div class="desc">'.
-                            '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
-                            ($day->get('text') ? '<div class="text">'. $this->tr($day->get('text')) . '</div>' : '').
-                        '</div>'.
-                    '</div>';
-            }
-
-            echo $html;
-            ?>
-        </div>
-
         <?php } ?>
 
-        <?php if(array_key_exists('museums', $menu)) { ?>
-
-        <div class="std-header anchor-attractions">
-            <h2><?php echo $this->tr('Похожие экскурсии') ?></h2>
-            <div class="separ"></div>
-        </div>
-
-        <?php echo $this->shortList($excursion->getPlugin('reco'), ['desc' => false]) ?>
-
-        <div class="notice-panel yellow">
-            <?php echo $this->tr('Все экскурсии на сайте являются <b>индивидуальными</b>, то есть Вам предоставляется персональный гид и транспорт.
-            Экскурсия начинается в удобное для Вас время, в любом месте города. Вход в музеи осуществляется без очереди.
-            Мы можем организовать встречу в аэропорту и на вокзале, поможем с выбором гостиницы. Наша фирма работает с
-            туристами из России, Европы и Китая. Количество туристов в группе не ограничено. Рады ответить на любой Ваш
-            вопрос по телефону') ?> <b>+7 (812) 380-88-47</b>
-        </div>
-
-        <?php } ?>
-
+        <div class="panel">
         <?php echo $this->comments([
             'depend_id' => $excursion->getId(),
             'depend_type' => \Comments\Model\Comment::TYPE_EXCURSION,
         ]); ?>
+        </div>
+
+        <?php if(array_key_exists('museums', $menu)) { ?>
+            <div class="panel">
+                <h2><?php echo $this->tr('Похожие экскурсии') ?></h2>
+                <?php echo $this->shortList($excursion->getPlugin('reco'), ['desc' => false]) ?>
+            </div>
+        <?php } ?>
     </div>
     <div class="sidebar">
         <div class="slider">
@@ -220,7 +224,7 @@ $duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get(
                     '<div class="body">'.
                         '<div class="price-box std-errors"></div>'.
                         '<div class="btns">'.
-                            '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
+                            '<span class="btn yellow order">' . $this->tr('Бронировать') . '</span>'.
                         '</div>'.
                     '</div>'.
                 '</form>';

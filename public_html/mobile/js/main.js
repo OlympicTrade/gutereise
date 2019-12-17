@@ -469,7 +469,9 @@ function initDatepicker() {
         maxDate: +30,
     };
 
-    $('.datepicker').datepicker($.config.datepicker);
+    $('.datepicker')
+        .attr('readonly', 'readonly')
+        .datepicker($.config.datepicker);
 }
 
 var mapsArr = [];
