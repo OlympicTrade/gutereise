@@ -118,6 +118,10 @@ $duration = $isTour ? count($excursion->get('db_data')->days) : $excursion->get(
                                     '<a class="popup" href="' . $transport->getUrl() . '">' . $this->tr($transport->get('name')) . '</a> / ';
                             }
                             $text = rtrim($text, ' /');
+                        } elseif('%GUIDE%') {
+                            $text = $this->tr('Услуги русскоговорящего гида');
+                        } elseif('%MUSEUM%') {
+                            $text = $this->tr('Входные билеты в музеи');
                         } else {
                             $text = $this->tr($text);
                         }

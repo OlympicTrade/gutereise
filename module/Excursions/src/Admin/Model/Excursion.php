@@ -264,7 +264,7 @@ class Excursion extends Entity
         $sync = new Sync();
         $data = $sync->getExcursionData(['id' => $dbId]);
 
-        $data = $data->days;
+        //$data = $data->days;
 
 		$this->set('db_data', $data);
 
