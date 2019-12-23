@@ -728,6 +728,28 @@ h2 {
     }
 }
 
+.info-block {
+    display: flex;
+    background: $btnColor1;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+
+    .icon {
+        line-height: 1.2;
+        flex: 0 34px;
+        height: 34px;
+        margin-right: 10px;
+        background: url($imgDir + 'info.svg');
+        background-size: cover;
+    }
+
+    .text {
+        flex: 1;
+
+    }
+}
+
 .comments-popup {
     .btns {
         display: flex;
@@ -818,7 +840,7 @@ h2 {
         position: absolute;
         right: 22px;
         bottom: 19px;
-        background: rgba(255, 255, 255, 1);
+        background: $baseColor1;
         align-items: center;
         height: 55px;
         width: 55px;

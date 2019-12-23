@@ -110,28 +110,26 @@ input, select, textarea {
     }
 }
 
-
 .std-form {
+    .row {
+        margin-bottom: 10px;
+    }
 
+    .error {
+        margin-top: -2px;
+    }
 }
 
-.std-form .row {
-    margin-bottom: 10px;
-}
-
-.std-form .error,
-.std-errors .error {
-    position: relative;
-    padding: 2px 8px;
-    background: #ee4923;
-    color: #fff;
-    border-radius: 0 0 2px 2px;
-    border-bottom: 1px solid #fff;
-    font-size: 12px;
-}
-
-.std-form .error {
-    margin-top: -2px;
+.std-form, .std-errors {
+    .error {
+        position: relative;
+        padding: 2px 8px;
+        background: #ee4923;
+        color: #fff;
+        border-radius: 0 0 2px 2px;
+        border-bottom: 1px solid #fff;
+        font-size: 12px;
+    }
 }
 
 .success-box {

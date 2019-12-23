@@ -116,7 +116,7 @@ $duration = $excursion->get('db_data')->duration;
         <?php
         $html =
             '<form action="/excursions/get-price/" method="post" class="widget excursion-form common-form">'.
-                '<input type="hidden" name="id" value="' . $excursion->getId() . '">'.
+                '<input type="hidden" name="lang_id" value="' . \Translator\Model\Translator::getInstance()->getLangId() . '">'.
                 $this->commonForm($commonForm, [
                     ['field' => 'date', 'icon' => 'fal fa-calendar-alt'],
                     ['field' => 'time', 'icon' => 'fal fa-clock'],
@@ -222,6 +222,75 @@ $duration = $excursion->get('db_data')->duration;
             } else {
                 menu.removeClass('shadow');
             }
+        });
+
+        var form = $('.excursion-form');
+        var timer = null;
+
+        form.formSubmit({
+            success: function(resp, form){
+                updatePrice(resp.data);
+            }
+        });
+
+        $('input, select', form).on('keyup change', function () {
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                form.submit();
+            }, 200);
+        }).trigger('change');
+
+        function updatePrice(data) {
+            var html = '';
+            new CommonForm(form);
+            var errorsHtml = '';
+
+            $.each(data.errors, function(key, val) {
+                errorsHtml += '<div class="error">' + val + '</div>';
+            });
+
+            if(errorsHtml) {
+                $('.price-box', form).html(errorsHtml);
+                return;
+            }
+
+            html +=
+                '<div class="price"><span>' + $.aptero.price(data.price) + '</span></div>';
+            if(!data.child) {
+                html +=
+                    '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <?php echo $this->tr('за человека') ?></div>';
+            } else {
+                html +=
+                    '<div class="notice">' +
+                    '<?php echo $this->tr('взрослый') ?> - <b>' + $.aptero.price(data.adult) + '</b>, ' +
+                    '<?php echo $this->tr('детский') ?> - <b>'  + $.aptero.price(data.child) + '</b>' +
+                    '</div>';
+            }
+
+            $('.price-box', form).html(html);
+        }
+
+        $('.order', form).on('click', function() {
+            var data = $.aptero.serializeArray(form);
+            data.id = <?php echo $excursion->getId() ?>;
+
+            $.fancybox.open({
+                src: '/excursions/order/',
+                type: 'ajax',
+                opts: {
+                    ajax: {
+                        settings: {
+                            method: 'get',
+                            data: data
+                        }
+                    },
+                    afterLoad: function(e, slide) {
+                        dd(slide.$slide);
+                        //initElements(e.$refs.slider);
+                        initElements(slide.$slide);
+                    }
+                }
+            });
         });
     });
 </script>

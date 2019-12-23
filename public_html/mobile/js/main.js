@@ -5,7 +5,6 @@ $(document).ready(function() {
     initPopups();
     initElements($('body'));
     initAutocomplete();
-    initDatepicker();
     initMetric();
 });
 
@@ -207,7 +206,7 @@ function initElements(box) {
         });
     });
 
-    $('.element', box).each(function () {
+    /*$('.element', box).each(function () {
         $('input, textarea, select', $(this)).on('focus', function () {
             $(this).closest('.element').addClass('focus');
         }).on('focusout', function () {
@@ -220,29 +219,42 @@ function initElements(box) {
                 element.removeClass('not-empty');
             }
         }).trigger('keyup');
-    });
+    });*/
 
-    /*$('.popup', box).on('click', function() {
+    $('.std-input, .std-textarea, .std-select', '.element', box).each(function () {
         var el = $(this);
+        var element = $(this).closest('.element');
 
-        $.fancybox.open({
-            src: el.attr('href'),
-            type: 'ajax',
-            opts: {
-                margin : [20, 10],
-                ajax: {
-                    settings: {
-                        data: el.data()
-                    }
-                },
-                afterLoad: function(e) {
-                    initElements(e.$refs.slider);
-                }
+        if(el.attr('placeholder') !== undefined && el.attr('placeholder') !== '') {
+            element.addClass('not-empty');
+            return;
+        }
+
+        if(el.hasClass('std-select')) {
+            element.addClass('not-empty');
+            return;
+        }
+
+        el.on('focus', function () {
+            $(this).closest('.element').addClass('focus');
+        });
+
+        el.on('focusout', function () {
+            $(this).closest('.element').removeClass('focus');
+        });
+
+        el.on('keyup check', function () {
+            if($(this).val()) {
+                element.addClass('not-empty');
+            } else {
+                element.removeClass('not-empty');
             }
         });
 
-        return false;
-    });*/
+        el.trigger('keyup');
+    });
+
+    initDatepicker(box);
 }
 
 function initPopups() {
@@ -280,10 +292,11 @@ function initPopups() {
                 afterLoad: function(e, slide) {
                     slide.$slide.on('click', function(e) {
                         if($(e.target).hasClass('fancybox-slide')) {
-                            $.fancybox.close()
+                            $.fancybox.close();
                         }
                     });
 
+                    //initElements(slide.$slide);
                     initElements(e.$refs.slider);
                 }
             }
@@ -435,7 +448,7 @@ function initAutocomplete() {
     });
 }
 
-function initDatepicker() {
+function initDatepicker(box) {
     $.config.datepicker = {
         clearText: 'Очистить',
         clearStatus: '',
@@ -463,10 +476,9 @@ function initDatepicker() {
         initStatus: '',
         isRTL: false,
         minDate: +1,
-        maxDate: +30,
     };
 
-    $('.datepicker')
+    $('.datepicker', box)
         .attr('readonly', 'readonly')
         .datepicker($.config.datepicker);
 }

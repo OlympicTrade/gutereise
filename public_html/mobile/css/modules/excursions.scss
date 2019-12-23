@@ -1,26 +1,5 @@
 
 .excursions-block {
-    .info-block {
-        display: flex;
-        background: $btnColor1;
-        padding-top: 8px;
-        padding-bottom: 8px;
-
-        .icon {
-            line-height: 1.2;
-            flex: 0 34px;
-            height: 34px;
-            margin-right: 10px;
-            background: url($imgDir + 'info.svg');
-            background-size: cover;
-        }
-
-        .text {
-            flex: 1;
-
-        }
-    }
-
     .filters-block {
         margin-top: 14px;
 

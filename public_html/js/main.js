@@ -69,7 +69,7 @@ function initComments(box) {
 }
 
 function initMetric() {
-    var url = $.aptero.url();
+    /*var url = $.aptero.url();
     url.init();
 
     $.ajax({
@@ -79,7 +79,7 @@ function initMetric() {
             query: url.getParams(),
             source: 'desktop'
         }
-    });
+    });*/
 }
 
 function initElements(box) {
@@ -304,7 +304,7 @@ function initElements(box) {
         firstDay: 1,
         initStatus: '',
         isRTL: false,
-        minDate: 1,
+        minDate: 3,
         //maxDate: 92
     };
 

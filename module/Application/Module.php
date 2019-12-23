@@ -166,6 +166,7 @@ class Module
             60 => PUBLIC_DIR . '/js/libs/form-validator.js',
             70 => PUBLIC_DIR . '/js/libs/counter.js',
             75 => PUBLIC_DIR . '/mobile/js/main.js',
+            95 => PUBLIC_DIR . '/js/common-form.js',
         ];
 
         $compressor->compress($jsMobile, 'js', 'mobile');
@@ -238,7 +239,7 @@ class Module
         return array(
             'invokables' => array(
                 'IsMobile'              => 'Aptero\View\Helper\IsMobile',
-                'languageSelect'        => 'Application\View\Helper\languageSelect',
+                'languageSelect'        => 'Application\View\Helper\LanguageSelect',
                 'Gallery'               => 'Application\View\Helper\Gallery',
                 'MenuList'              => 'Application\View\Helper\MenuList',
                 'Breadcrumbs'           => 'Application\View\Helper\Breadcrumbs',
