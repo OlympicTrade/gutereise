@@ -127,7 +127,7 @@ class ExcursionsController extends AbstractActionController
 
         return $view->setVariables([
             'headerImage'    => $excursion->getPlugin('background')->getImage('h'),
-            'header'         => $excursion->get('header') ?? $excursion->get('name'),
+            'header'         => $excursion->get('header') ? $excursion->get('header') : $excursion->get('name'),
             'headerDesc'     => $excursion->get('header_desc'),
             'excursion'      => $excursion,
             'commonForm'     => new CommonForm($excursion),
