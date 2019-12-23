@@ -1,0 +1,23 @@
+<div class="museum-block block panel first last content-block">
+    <?php echo $this->contentRender($museum->getPlugin('content')) ?>
+    <?php //echo $this->shortList($museum->getChildren(false), ['header' => 'Достопримечательности']); ?>
+
+    <div class="panel2 info">
+        <div class="text">
+            <?= $this->tr('Турфирма “Gute Reise” рада предложить Вам разные экскурсии по Петербургу и пригородам.
+                         Мы можем организовать экскурсию или тур  для группы лиц или индивидуальных туристов с учетом ваших
+                          предпочтений, предоставить транспорт, проживание в гостинице.'); ?>
+        </div>
+
+        <div class="contacts">
+            <div class="item">
+                <i class="fal fa-phone"></i>
+                <?= $contacts->get('phone_1') ?>
+            </div>
+            <div class="item">
+                <i class="fal fa-envelope"></i>
+                <?= $contacts->get('email') ?>
+            </div>
+        </div>
+    </div>
+</div>

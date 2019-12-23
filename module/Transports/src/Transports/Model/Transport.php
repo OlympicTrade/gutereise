@@ -46,6 +46,11 @@ class Transport extends Entity
             $image->setTable('transports_images');
             $image->setFolder('transports');
             $image->addResolutions([
+                't' => [
+                    'width'  => 90,
+                    'height' => 65,
+                    'crop'   => true,
+                ],
                 'g' => [
                     'width'  => 900,
                     'height' => 500,
@@ -75,6 +80,11 @@ class Transport extends Entity
             $image->setTable('transports_gallery');
             $image->setFolder('transports_gallery');
             $image->addResolutions([
+                't' => [
+                    'width'  => 90,
+                    'height' => 65,
+                    'crop'   => true,
+                ],
                 'g' => [
                     'width'  => 900,
                     'height' => 500,

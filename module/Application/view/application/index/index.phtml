@@ -3,23 +3,30 @@
         <img src="images/placeholder.jpg" alt="" class="placeholder-image">
     </div>
     <div class="wrapper">
-        <h1><?php echo $this->tr('Индивидуальные экскурсии и туры по Санкт-Петербургу') ?></h1>
+        <h1><?php echo $this->tr('Индивидуальные экскурсии и туры по<br>Санкт-Петербургу') ?></h1>
         <div class="menu">
             <a href="/excursions/" class="btn yellow"><?php echo $this->tr('Экскурсии') ?></a>
             <a href="/tours/" class="btn yellow"><?php echo $this->tr('Туры') ?></a>
             <a href="/transport/" class="btn yellow"><?php echo $this->tr('Траспорт') ?></a>
         </div>
 
-        <div class="tags">
-            <?php
-            $types = \Museums\Model\Museum::getEntityCollection();
-            $types->select()->limit(14);
+        <?php
+        $types = \Excursions\Model\Tags::getEntityCollection();
+        $types->select()->limit(14);
 
-            foreach ($types as $type) {
-                echo '<a href="' . $type->getUrl() . '" class="btn">' . $this->tr($type->get('name')) . '</a>';
-            }
-            ?>
-        </div>
+        $html =
+            '<div class="tags">';
+
+        foreach ($types as $type) {
+            $html .=
+                '<a href="' . $type->getUrl() . '" class="btn">' . $this->tr($type->get('name')) . '</a>';
+        }
+
+        $html .=
+            '</div>';
+
+        echo $html;
+        ?>
     </div>
 </div>
 <script>

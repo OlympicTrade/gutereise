@@ -82,7 +82,7 @@ setcookie("greeting", 1, time()+(31104000), '/');
         </div>
     </a>
 
-    <span class="language">languageSelect
+    <span class="language">
         <?= $this->languageSelect() ?>
     </span>
 
@@ -103,7 +103,7 @@ setcookie("greeting", 1, time()+(31104000), '/');
 
                 <ul class="menu">
                     <li>
-                        <a href="/excursions/"><i class="fas fa-university"></i> <?php echo $this->tr('Экскурсии') ?></a>
+                        <a href="/excursions/"><i class="fal fa-university"></i> <?php echo $this->tr('Экскурсии') ?></a>
                         <?php
                         $sub = \Excursions\Model\Tags::getEntityCollection();
                         $sub->select()->where(['type' => 1]);
@@ -111,22 +111,30 @@ setcookie("greeting", 1, time()+(31104000), '/');
                         ?>
                     </li>
 
-                    <li><a href="/tours/"><i class="fas fa-university"></i> <?php echo $this->tr('Туры') ?></a></li>
-                    <li><a href="/hotels/"><i class="far fa-building"></i> <?php echo $this->tr('Отели') ?></a></li>
-                    <li><a href="/transport/"><i class="fas fa-bus"></i> <?php echo $this->tr('Транспорт') ?></a></li>
+                    <li><a href="/tours/"><i class="fal fa-university"></i> <?php echo $this->tr('Туры') ?></a></li>
+                    <li><a href="/transport/"><i class="fal fa-bus"></i> <?php echo $this->tr('Транспорт') ?></a></li>
                     <li><a href="/about/"> <?php echo $this->tr('О компании') ?></a></li>
+
+                    <li>
+                        <a href="/museums/"><i class="fal fa-university"></i> <?php echo $this->tr('О петербурге') ?></a>
+                        <?php
+                        $sub = \Museums\Model\Tags::getEntityCollection();
+                        echo $this->menuList($sub);
+                        ?>
+                    </li>
+
                     <li><a href="/contacts/"><?php echo $this->tr('Контакты') ?></a></li>
                 </ul>
 
                 <div class="contacts">
                     <div class="row">
-                        <a href="<?php echo $this->link($contacts->get('email')) ?>"><i class="far fa-envelope"></i> <?php echo $contacts->get('email') ?></a>
+                        <a href="<?php echo $this->link($contacts->get('email')) ?>"><i class="fal fa-envelope"></i> <?php echo $contacts->get('email') ?></a>
                     </div>
                     <div class="row">
-                        <a href="<?php echo $this->link($contacts->get('phone_1')) ?>"><i class="fa fa-phone"></i> <?php echo $contacts->get('phone_1') ?></a>
+                        <a href="<?php echo $this->link($contacts->get('phone_1')) ?>"><i class="fal fa-phone"></i> <?php echo $contacts->get('phone_1') ?></a>
                     </div>
                     <div class="row">
-                        <a href="<?php echo $this->link($contacts->get('phone_2')) ?>"><i class="fa fa-phone"></i> <?php echo $contacts->get('phone_2') ?></a>
+                        <a href="<?php echo $this->link($contacts->get('phone_2')) ?>"><i class="fal fa-phone"></i> <?php echo $contacts->get('phone_2') ?></a>
                     </div>
                 </div>
             </div>

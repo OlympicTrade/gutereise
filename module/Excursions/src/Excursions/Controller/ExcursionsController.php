@@ -120,11 +120,10 @@ class ExcursionsController extends AbstractActionController
 
         $this->addBreadcrumbs([['url' => $excursion->getUrl(), 'name' => $excursion->get('name')]]);
 
-        $meta = $this->layout()->getVariable('meta');
-        $meta->title = $excursion->get('title');
-        $meta->description = $excursion->get('description');
-
-        $this->layout()->setVariable('meta', $meta);
+        $this->layout()->setVariable('meta',  $this->generateMeta($excursion,
+            ['%NAME%'],
+            [$excursion->get('name')]
+        ));
 
         return $view->setVariables([
             'headerImage'    => $excursion->getPlugin('background')->getImage('h'),

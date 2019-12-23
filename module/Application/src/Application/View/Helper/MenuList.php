@@ -7,15 +7,16 @@ class MenuList extends AbstractHelper
 {
     public function __invoke($items)
     {
-        $html =
-            '<ul>';
+        $view = $this->getView();
 
-        $html .=
-            '<li class="back"><span>Назад</span></li>';
+        $html =
+            '<ul>'.
+                '<li class="back"><span>' . $view->tr('Назад') . '</span></li>'.
+                '<li><a href="/excursions/">' . $view->tr('Все экскурсии') . '</a></li>';
 
         foreach ($items as $item) {
             $html .=
-                '<li class="back"><a href="' . $item->getUrl() . '">' . $item->get('name') . '</a></li>';
+                '<li><a href="' . $item->getUrl() . '">' . $view->tr($item->get('name')) . '</a></li>';
         }
 
         $html .=

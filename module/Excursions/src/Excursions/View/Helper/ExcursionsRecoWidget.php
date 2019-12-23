@@ -8,39 +8,50 @@ class ExcursionsRecoWidget extends AbstractHelper
 {
     public function __invoke($items, $options = [])
     {
+        $view = $this->getView();
         $html = '';
 
         $options = $options + [
             'header' => 'Похожие экскурсии'
         ];
 
-        $html .=
-            '<div class="widget reco">'.
-                '<div class="header">' . $this->getView()->tr($options['header']) . '</div>'.
-                '<div class="body">';
-
         foreach ($items as $item) {
-            $html .=
+            $rowHtml = '';
+
+            $rowHtml .=
                 '<a href="' . $item->getUrl() . '" class="item">'.
-                    '<div class="pic"><img src="' . $item->getPlugin('background')->getImage('s') . '" alt="' . $item->get('name') . '"></div>'.
                     '<div class="name">' . $item->get('name') . '</div>'.
-                    '<div class="info">';
+                    '<div class="info">'
+                        //'<div class="pic"><img src="' . $item->getPlugin('image')->getImage('t') . '" alt="' . $item->get('name') . '"></div>'
+            ;
 
             if($t = Time::getDT($item->get('db_data')->duration)) {
-                $html .=
-                    '<span class="duration"><i class="far fa-clock"></i> ' . $t->getString() . '</span>';
+                $price = $item->get('db_data')->price->rub->adult;
+                $rowHtml .=
+                    '<div class="row duration">Длительность ' . $t->getString() . '</div>'.
+                    '<div class="row price">от ' . $view->price($price) . ' / за человека</div>';
+            } else {
+                continue;
             }
 
-            $html .=
+            $rowHtml .=
                         '<span class="readmore">Узнать подробнее</span>'.
                     '</div>'.
                 '</a>';
+
+            $html .= $rowHtml;
         }
 
-        $html .=
+        if(!$html) {
+            return '';
+        }
+
+        return
+            '<div class="widget reco">'.
+                '<div class="header">' . $this->getView()->tr($options['header']) . '</div>'.
+                '<div class="body">'.
+                    $html.
                 '</div>'.
             '</div>';
-
-        return $html;
     }
 }

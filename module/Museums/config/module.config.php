@@ -3,12 +3,61 @@ return [
     'controllers' => [
         'invokables' => [
             'Museums\Controller\Museums'      => 'Museums\Controller\MuseumsController',
+            'Museums\Controller\MuseumsMobile'      => 'Museums\Controller\MuseumsMobileController',
             'MuseumsAdmin\Controller\Museums' => 'MuseumsAdmin\Controller\MuseumsController',
             'MuseumsAdmin\Controller\Tags'    => 'MuseumsAdmin\Controller\TagsController',
         ],
     ],
     'router' => [
         'routes' => [
+            'mobile' => [
+                'type' => 'Hostname',
+                'priority' => 600,
+                'options' => [
+                    'route' => 'm.:domain',
+                    'constraints' => ['domain' => '.*',],
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'museums' => [
+                        'type' => 'literal',
+                        'priority' => 500,
+                        'options' => [
+                            'route' => '/attractions',
+                        ],
+                        'may_terminate' => true,
+                        'child_routes' => [
+                            'list' => [
+                                'type'    => 'literal',
+                                'priority' => 500,
+                                'options' => [
+                                    'route'    => '/',
+                                    'defaults' => [
+                                        'module'     => 'Museums',
+                                        'section'    => 'Museums',
+                                        'controller' => 'Museums\Controller\MuseumsMobile',
+                                        'action'     => 'index',
+                                    ],
+                                ],
+                            ],
+                            'museum' => [
+                                'type'    => 'segment',
+                                'priority' => 500,
+                                'options' => [
+                                    'route'    => '/:url/',
+                                    'constraints' => ['url' => '.*'],
+                                    'defaults' => [
+                                        'module'     => 'Museums',
+                                        'section'    => 'Museums',
+                                        'controller' => 'Museums\Controller\MuseumsMobile',
+                                        'action'     => 'museum',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'museums' => [
                 'type' => 'literal',
                 'priority' => 500,
@@ -30,48 +79,6 @@ return [
                             ],
                         ],
                     ],
-                    'tags' => [
-                        'type'    => 'segment',
-                        'priority' => 600,
-                        'options' => [
-                            'route'    => '/category/[:tag]/',
-                            'constraints' => ['url' => '.*'],
-                            'defaults' => [
-                                'module'     => 'Museums',
-                                'section'    => 'Museums',
-                                'controller' => 'Museums\Controller\Museums',
-                                'action'     => 'tags',
-                            ],
-                        ],
-                    ],
-                    'point' => [
-                        'type'    => 'segment',
-                        'priority' => 600,
-                        'options' => [
-                            'route'    => '/attraction/:url/',
-                            'constraints' => ['url' => '.*'],
-                            'defaults' => [
-                                'module'     => 'Museums',
-                                'section'    => 'Museums',
-                                'controller' => 'Museums\Controller\Museums',
-                                'action'     => 'attraction',
-                            ],
-                        ],
-                    ],
-                    'attractionsMap' => [
-                        'type'    => 'segment',
-                        'priority' => 600,
-                        'options' => [
-                            'route'    => '/get-map-attractions/',
-                            'constraints' => ['url' => '.*'],
-                            'defaults' => [
-                                'module'     => 'Museums',
-                                'section'    => 'Museums',
-                                'controller' => 'Museums\Controller\Museums',
-                                'action'     => 'getMapAttractions',
-                            ],
-                        ],
-                    ],
                     'museum' => [
                         'type'    => 'segment',
                         'priority' => 500,
@@ -83,6 +90,20 @@ return [
                                 'section'    => 'Museums',
                                 'controller' => 'Museums\Controller\Museums',
                                 'action'     => 'museum',
+                            ],
+                        ],
+                    ],
+                    'tags' => [
+                        'type'    => 'segment',
+                        'priority' => 600,
+                        'options' => [
+                            'route'    => '/category/[:tag]/',
+                            'constraints' => ['url' => '.*'],
+                            'defaults' => [
+                                'module'     => 'Museums',
+                                'section'    => 'Museums',
+                                'controller' => 'Museums\Controller\Museums',
+                                'action'     => 'tags',
                             ],
                         ],
                     ],

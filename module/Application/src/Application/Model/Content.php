@@ -29,6 +29,11 @@ class Content extends Entity
             $image->setTable('content_gallery');
             $image->setFolder('content');
             $image->addResolutions([
+                'mb' => [
+                    'width'  => 400,
+                    'height' => 9999,
+                    'crop'   => false,
+                ],
                 'm' => [
                     'width'  => 900,
                     'height' => 500,

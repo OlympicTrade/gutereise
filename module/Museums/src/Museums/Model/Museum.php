@@ -80,6 +80,11 @@ class Museum extends EntityHierarchy
                     'height' => 400,
                     'crop'   => true,
                 ],
+                'mm' => [
+                    'width'  => 400,
+                    'height' => 260,
+                    'crop'   => true,
+                ],
                 'r' => [
                     'width'  => 965,
                     'height' => 575,

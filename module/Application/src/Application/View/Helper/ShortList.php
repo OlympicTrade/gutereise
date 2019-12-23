@@ -1,6 +1,7 @@
 <?php
 namespace Application\View\Helper;
 
+use Excursions\Model\Excursion;
 use Zend\View\Helper\AbstractHelper;
 
 class ShortList extends AbstractHelper
@@ -19,41 +20,51 @@ class ShortList extends AbstractHelper
             'desc'    => true,
         ];
 
-        $html = '';
-
-        if($options['header']) {
-            $html .=
-                '<div class="std-header">'.
-                    '<h2>' . $view->tr('Достопримечательности') . '</h2>'.
-                    '<div class="separ"></div>'.
-                '</div>';
-        }
+        $slider = '';
 
         foreach ($items as $item) {
             $img = $item->getPlugin('image');
-            $html .=
+
+            $slider .=
                 '<a href="' . $item->getUrl() . '" class="item">'.
                     '<div class="pic">'.
                         '<img src="' . $img->getImage($options['imgSize']) . '" alt="' . $img->getDesc() . '">'.
                     '</div>'.
-                    '<div class="name">' . $item->get('name') . '</div>' .
-                    '<div class="price">от <span>1 200</span> <i class="fal fa-ruble-sign"></i> / за 1 человека</div>' .
-                    //($options['desc'] ? '<div class="desc">' . $item->get('preview') . '</div>' : '').
+                    '<div class="name">' . $item->get('name') . '</div>';
+
+            if($item instanceof Excursion) {
+                $slider .=
+                    '<div class="price">от <span>' . $view->price($item->get('db_data')->price->rub->adult) . '</span> <i class="fal fa-ruble-sign"></i> / за 1 человека</div>';
+            } else {
+                $slider .=
+                    '<div class="desc">' . $view->subStr($item->get('preview'), 120) . '</div>';
+            }
+
+            $slider .=
                 '</a>';
         }
 
-        if(!$html) {
+        if(!$slider) {
             return '';
         }
 
         $html =
-            '<div class="short-list">'.
+            '<div class="short-list">';
+
+        if($options['header']) {
+            $html .=
+                '<div class="std-header">'.
+                    '<h2>' . $view->tr($options['header']) . '</h2>'.
+                '</div>';
+        }
+
+        $html .=
                 '<div class="nav">'.
                     '<div class="prev"></div>'.
                     '<div class="next"></div>'.
                 '</div>'.
                 '<div class="slider">'.
-                    $html.
+                    $slider.
                 '</div>'.
             '</div>';
 

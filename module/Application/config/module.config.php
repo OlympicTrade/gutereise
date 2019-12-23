@@ -49,6 +49,19 @@ return [
                             ],
                         ],
                     ],
+                    'about' => [
+                        'type' => 'literal',
+                        'priority' => 500,
+                        'options' => [
+                            'route'    => '/about/',
+                            'defaults' => [
+                                'module'     => 'Application',
+                                'section'    => 'Page',
+                                'controller' => 'Application\Controller\Mobile',
+                                'action'     => 'about',
+                            ],
+                        ],
+                    ],
                     'textPage' => [
                         'type' => 'segment',
                         'priority' => 100,

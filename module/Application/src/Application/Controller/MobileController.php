@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\About;
 use Aptero\Mvc\Controller\AbstractMobileActionController;
 use Zend\View\Model\ViewModel;
 
@@ -12,9 +13,20 @@ class MobileController extends AbstractMobileActionController
 
         $contacts = $this->layout()->getVariable('contacts');
 
-        return array(
-            'contacts'         => $contacts,
-        );
+        return [
+            'contacts' => $contacts,
+        ];
+    }
+
+    public function aboutAction()
+    {
+        $view = $this->generate();
+
+        $about = new About();
+
+        return $view->setVariables([
+            'about' => $about,
+        ]);
     }
 
     public function sitemapAction()

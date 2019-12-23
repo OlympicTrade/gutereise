@@ -51,131 +51,6 @@
 
     .list-block {
         margin-top: 25px;
-
-        .item {
-            overflow: hidden;
-            display: block;
-            position: relative;
-            max-width: 385px;
-            flex: 0 30%;
-            margin-bottom: 20px;
-            transition: all ease .4s;
-            box-shadow: 0 5px 25px 0 rgba(37, 46, 89, 0.13);
-
-            &:hover {
-
-            }
-
-            .pic {
-                display: block;
-                overflow: hidden;
-            }
-
-            img {
-                display: block;
-                transition: all ease .4s;
-            }
-
-            &:hover img {
-                transform: scale(1.1);
-            }
-
-            .info {
-                position: relative;
-                background: #ffffff;
-                padding: 14px 15px;
-
-                * {
-                    position: relative;
-                    z-index: 10;
-                }
-
-                .season {
-                    position: absolute;
-                    top: -40px;
-                    background: #b6f1b4;
-                    color: #000;
-                    font-size: 15px;
-                    font-weight: 400;
-                    border-radius: 4px;
-                    padding: 6px 10px;
-                }
-
-                .name {
-                    font-size: 17px;
-                    line-height: 1.4;
-                    overflow: hidden;
-                    margin-bottom: 6px;
-                    font-weight: 400;
-                }
-
-                .price {
-                    font-size: 13px;
-                    color: $fontColor2;
-
-                    span {
-                        font-size: 17px;
-                        color: $linkColor1;
-                    }
-                }
-
-                .desc {
-                    margin-top: 10px;
-                    height: 85px;
-                    overflow: hidden;
-                    color: $fontColor2;
-                    line-height: 1.5;
-                }
-            }
-        }
-
-        /*.item {
-            display: block;
-            position: relative;
-            background: #ffffff;
-            margin-bottom: 30px;
-
-            .name, .preview {
-                padding-left: 17px;
-                padding-right: 17px;
-            }
-
-            .name {
-                display: block;
-                margin-top: 15px;
-                font-size: 17px;
-                font-weight: 600;
-            }
-
-            .preview {
-                margin-top: 12px;
-                color: #868686;
-            }
-
-            .info {
-                position: absolute;
-                left: 0;
-                bottom: 5px;
-                font-weight: 400;
-
-                .row {
-                    margin-bottom: 3px;
-
-                    i {
-                        margin-right: 4px;
-                    }
-                }
-            }
-
-            .btn {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                width: 175px;
-                height: 50px;
-                line-height: 50px;
-            }
-        }*/
     }
 }
 
@@ -282,18 +157,18 @@
     }
 
     .stage {
-        flex: 0 37px;
+        flex: 0 30px;
         margin-right: 10px;
-        background: url($imgDir + 'border-v.png') 50% 39px repeat-y;
+        background: url($imgDir + 'border-v.png') 50% 43px repeat-y;
 
         .icon {
             border-radius: 50%;
             background: #fce12a;
-            font-size: 19px;
+            font-size: 15px;
             text-align: center;
-            vertical-align: 37px;
-            width: 37px;
-            height: 37px;
+            vertical-align: 30px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -302,7 +177,7 @@
 
     .desc {
         flex: 1;
-        padding-bottom: 30px;
+        padding-bottom: 14px;
 
         a {
             color: $linkColor1;

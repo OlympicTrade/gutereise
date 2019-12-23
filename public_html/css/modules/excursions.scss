@@ -1,5 +1,9 @@
 .excursion-items {
     .item {
+        .name {
+            height: 50px;
+        }
+
         .season {
             position: absolute;
             top: -40px;
@@ -13,7 +17,9 @@
     }
 }
 
-.excursion-block{
+.excursion-block {
+    margin-top: 70px;
+
     .sidebar {
         .excursion-form {
         }
@@ -56,7 +62,7 @@
                 left: 0;
                 top: 0;
                 font-size: 20px;
-                color: $linkColor1;
+                color: $iconColor1;
                 width: 20px;
                 text-align: center;
                 display: inline-block;
@@ -96,7 +102,7 @@
 
         .stage .icon {
             border-radius: 50%;
-            background: $linkColor1;
+            background: $iconColor1;
             color: #ffffff;
             font-size: 17px;
             text-align: center;

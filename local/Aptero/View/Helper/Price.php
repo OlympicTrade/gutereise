@@ -8,7 +8,7 @@ use Zend\View\Helper\AbstractHelper;
 
 class Price extends AbstractHelper
 {
-    public function __invoke($price, $sign = true, $currency = null)
+    public function __invoke($price, $sign = true, $nbr = true,  $currency = null)
     {
         $currency = $currency ?? Currency::getInstance()->getCurrency();
 
@@ -23,9 +23,12 @@ class Price extends AbstractHelper
                 $rate = 1;
         }
 
-        $price = (int) ($price / $rate);
+        $str = '';
 
-        $str = '<span>' . preg_replace('/(\d)(?=(\d\d\d)+([^\d]|$))/i', '$1 ', $price);
+        if($nbr) {
+            $price = (int)($price / $rate);
+            $str = '<span>' . preg_replace('/(\d)(?=(\d\d\d)+([^\d]|$))/i', '$1 ', $price);
+        }
 
         if($sign) {
             $str .= ' ';

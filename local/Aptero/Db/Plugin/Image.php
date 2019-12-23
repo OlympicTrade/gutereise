@@ -84,20 +84,20 @@ class Image extends PluginAbstract
         $options = array_merge($default, $options);
 
         if(array_key_exists($prefix, $this->resolutions)) {
-            throw new \Aptero\Db\Exception\RuntimeException('Image version "' . $prefix . '" already exists');
+            throw new \Exception('Image version "' . $prefix . '" already exists');
         }
 
         if($prefix == '') {
-            throw new \Aptero\Db\Exception\RuntimeException('Image prefix can\'t be empty');
+            throw new \Exception('Image prefix can\'t be empty');
         }
 
-        $this->resolutions[$prefix] = array(
+        $this->resolutions[$prefix] = [
             'width'      => $options['width'],
             'height'     => $options['height'],
             'watermark'  => $options['watermark'],
             'crop'       => $options['crop'],
             'updated'    => false
-        );
+        ];
 
         return $this;
     }

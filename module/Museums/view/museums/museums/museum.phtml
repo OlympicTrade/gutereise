@@ -3,26 +3,69 @@
     'wrapper'    => true
 ]); ?>
 
-<div class="block first last">
-    <div class="wrapper">
-        <div class="module-item-block museum-block">
-            <div class="content panel">
-                <?php echo $this->contentRender($museum->getPlugin('content')) ?>
-                <?php echo $this->shortList($museum->getChildren(false), ['header' => 'Достопримечательности']); ?>
+<div class="block module-item-block museum-block123 sidebar-aware sidebar-left">
+    <div class="container">
+        <div class="sidebar">
+            <div class="slider">
+                <div class="widget catalog">
+                    <div class="header"><?= $this->tr('Категории') ?></div>
+                    <div class="body">
+                        <?php
+                        $tags = \Museums\Model\Tags::getEntityCollection();
+                        $tags->select()->where
+                            ->equalTo('parent', 0)
+                            ->greaterThan('count', 0);
 
-                <div class="notice">
-                    Турфирма “Gute Reise” рада предложить Вам
-                    разные экскурсии по Петербургу и пригородам. Мы можем организовать экскурсию или тур  для группы лиц
-                    или индивидуальных туристов с учетом ваших предпочтений, предоставить транспорт, проживание в гостинице.
-                    По всем вопросам можно обратиться по телефону <?= $contacts->get('phone_1') ?> или на почту <?= $contacts->get('email') ?>.
+                        echo $this->ExcursionsWidgets([
+                            'url'   => '/attractions/',
+                        ], [
+                            'search' => [
+                                'value'   => $filters['search'],
+                            ],
+                            'catalog' => [
+                                'value'   => $filters['tags'],
+                                'data'    => $tags,
+                                'limit'   => false,
+                                'counter' => false,
+                                'all'     => ['text' => 'Показать все', 'url' => '/attractions/']
+                            ],
+                        ]);
+                        ?>
+                    </div>
                 </div>
+
+                <?php
+                $excursions = $museum->getPlugin('excursions');
+                $excursions->select()->limit(4);
+                echo $this->excursionsRecoWidget($excursions, ['header' => 'Экскурсии']);
+                ?>
             </div>
-            <div class="sidebar">
-                <div class="slider">
-                    <?php
-                    $excursions = $museum->getPlugin('excursions');
-                    $excursions->select()->limit(4);
-                    echo $this->excursionsRecoWidget($excursions, ['header' => 'Экскурсии']) ?>
+        </div>
+        <div class="content">
+            <div class="panel">
+                <?php echo $this->contentRender($museum->getPlugin('content')) ?>
+
+                <?php echo $this->shortList($museum->getChildren(false), ['header' => '']); ?>
+
+                <div class="panel2 info">
+                    <div class="icon"></div>
+
+                    <div class="text">
+                        <?= $this->tr('Турфирма “Gute Reise” рада предложить Вам разные экскурсии по Петербургу и пригородам.
+                         Мы можем организовать экскурсию или тур  для группы лиц или индивидуальных туристов с учетом ваших
+                          предпочтений, предоставить транспорт, проживание в гостинице.'); ?>
+                    </div>
+
+                    <div class="contacts">
+                        <div class="item">
+                            <i class="fal fa-phone"></i>
+                            <?= $contacts->get('phone_1') ?>
+                        </div>
+                        <div class="item">
+                            <i class="fal fa-envelope"></i>
+                            <?= $contacts->get('email') ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

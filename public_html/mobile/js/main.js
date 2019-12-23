@@ -34,7 +34,6 @@ function initNav() {
 
     $('.anchor').on('click', function () {
         var scrollTo = $($(this).attr('href')).offset().top - 100;
-        dd(scrollTo);
 
         $('html, body').animate({scrollTop: scrollTo}, 300);
 
@@ -93,7 +92,7 @@ function initNav() {
             height: $document.height() - $('#header').height() - $('#footer').height()
         });
 
-        $('.menu', nav).css('height', box.innerHeight() - box.children('.search').height() - 85 - 10);
+        $('.menu', nav).css('height', box.innerHeight() - box.children('.search').height() - 90);
     }());
 
     var menuH = 0;
@@ -103,8 +102,6 @@ function initNav() {
             menuH = ul.outerHeight();
         }
     });
-
-    //$('.nav ul', header).css({height: menuH});
 
     $('a, span', menu).on('click', function (e) {
         var li = $(this).closest('li');

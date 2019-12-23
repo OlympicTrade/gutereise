@@ -78,6 +78,7 @@ abstract class AbstractMobileActionController extends AbstractActionController
         return new ViewModel(array(
             'header'       => $header,
             'page'         => $page,
+            'contacts'     => $contacts,
         ));
     }
 

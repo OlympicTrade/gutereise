@@ -1,0 +1,8 @@
+<div class="block about-block panel">
+    <h1><?php echo $about->get('name') ?></h1>
+    <div class="std-text"><?php echo $about->get('text') ?></div>
+
+    <div class="certificate">
+        <img src="<?php echo $about->getPlugin('certificate')->getImage('m') ?>" alt="Свидетельство туроператора">
+    </div>
+</div>

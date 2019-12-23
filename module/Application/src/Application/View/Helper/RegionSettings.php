@@ -15,11 +15,12 @@ class RegionSettings extends AbstractHelper
         $html =
             '<div class="settings">'.
                 '<div class="row language">'.
-                    '<div class="label">' . $view->tr('Язык') . ':</div>'.
+                    //'<div class="label">' . $view->tr('Язык') . ':</div>'.
                     $this->languageSelect().
                 '</div>'.
+                '<div class="row sep">/</div>'.
                 '<div class="row currency">'.
-                    '<div class="label">' . $view->tr('Валюта') . ':</div>'.
+                    //'<div class="label">' . $view->tr('Валюта') . ':</div>'.
                     $this->currencySelect().
                 '</div>'.
             '</div>';

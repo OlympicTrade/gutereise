@@ -30,7 +30,7 @@ class ContentRender extends AbstractHelper
             $html .=
                 '<div class="std-header">'.
                     '<h2>' . $this->getView()->tr($header) . '</h2>'.
-                    '<div class="separ"></div>'.
+                    //'<div class="separ"></div>'.
                 '</div>';
         }
 
@@ -75,7 +75,7 @@ class ContentRender extends AbstractHelper
 
             $html .=
                 '<li data-thumb="' . $image->getImage('hr') . '">'.
-                    '<img src="' . $image->getImage('m') . '" alt="' . $alt . '"></li>'.
+                    '<img src="' . $image->getImage(IS_MOBILE ? 'mb' : 'm') . '" alt="' . $alt . '"></li>'.
                 '</li>';
         }
 
@@ -98,7 +98,7 @@ class ContentRender extends AbstractHelper
 
             $html .=
                 '<div class="' . ($imgSize['width'] > $imgSize['height'] ? 'wide' : 'narrow') . '">'.
-                    '<img src="' . $image->getImage('p') . '" alt="' . $alt . '">'.
+                    '<img src="' . $image->getImage(IS_MOBILE ? 'mb' : 'p') . '" alt="' . $alt . '">'.
                 '</div>';
         }
 

@@ -105,7 +105,10 @@ class ExcursionsWidgets extends AbstractHelper
         if($data['all']['text']) {
             $html =
                 '<div class="row">' .
-                    '<a href="/excursions/">Все экскурсии<span> ' . $count . '</span></a>' .
+                    '<a href="/excursions/">'.
+                        $data['all']['text'].
+                        ($data['counter'] ? ' <span>' . $count . '</span>' : '').
+                    '</a>' .
                 '</div>' .
                 $html;
         }

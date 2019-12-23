@@ -1,0 +1,27 @@
+.transport-block {
+    padding-top: 40px;
+
+    .content {
+    }
+
+    .attrs-list {
+        max-width: 700px;
+        background: $baseColor2;
+        margin: 45px auto 60px auto;
+        padding: 20px 35px;
+
+        .row {
+            line-height: 50px;
+            background: url($imgDir + 'border.png') 0 100% repeat-x;
+            font-size: 16px;
+
+            &:last-child {
+                background: none;
+            }
+
+            i:first-child {
+                width: 23px;
+            }
+        }
+    }
+}

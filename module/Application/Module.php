@@ -89,12 +89,14 @@ class Module
             'baseColor2'  => '#f4f4f4',
             'baseColor3'  => '#ee4923',
             'baseColor4'  => '#eff6fb',
-            'linkColor1'  => '#2a2f31',
+            'linkColor1'  => '#c1b086',
             'linkColor2'  => '#76838c',
+            'iconColor1'  => '#c1b086',
             'imgDir'      => '/images/',
             'fontCommon'  => 'Proxima Nova',
-            'fontHeader1' => 'Playfair Display',
-            'fontHeader2' => 'Merriwc1b086eather',
+            'fontHeader1' => 'normal normal 20px "Playfair Display"',
+            'fontHeader2' => 'bold italic 20px Merriweather',
+            //'styleHeader1'=> 'normal',
             //'fontHeader'  => 'Merriweather',
         ], 'css');
 
@@ -109,6 +111,7 @@ class Module
             PUBLIC_DIR . '/css/elements.scss',
             PUBLIC_DIR . '/css/main.scss',
             PUBLIC_DIR . '/css/modules/excursions.scss',
+            PUBLIC_DIR . '/css/modules/transports.scss',
         ],  'css');
 		
 		 $jsDesktop = [
@@ -146,6 +149,7 @@ class Module
             PUBLIC_DIR . '/mobile/css/elements.scss',
             PUBLIC_DIR . '/mobile/css/main.scss',
             PUBLIC_DIR . '/mobile/css/modules/excursions.scss',
+            PUBLIC_DIR . '/mobile/css/modules/transports.scss',
         ], 'css', 'mobile');
 
 		$jsMobile = [

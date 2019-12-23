@@ -11,7 +11,8 @@ class Module implements AutoloaderProviderInterface
     public function getViewHelperConfig() {
         return [
             'invokables' => [
-                'MuseumsList'   => 'Museums\View\Helper\MuseumsList',
+                'museumsList'       => 'Museums\View\Helper\MuseumsList',
+                'mobileMuseumsList' => 'Museums\View\Helper\MobileMuseumsList',
             ],
         ];
     }

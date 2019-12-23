@@ -5,3 +5,5 @@ public_html/index.php
 public_html/files
 composer.phar
 composer.lock
+**/css/mini-*.css
+**/js/mini-*.js

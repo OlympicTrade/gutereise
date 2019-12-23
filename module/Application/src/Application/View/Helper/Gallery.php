@@ -16,11 +16,16 @@ class Gallery extends AbstractHelper
                 '<img src="' . $model->getPlugin('image')->getImage('g') . '" alt="">'.
             '</li>';
 
+        $i = 1;
         foreach ($model->getPlugin('images') as $image) {
+            $i++;
             $html .=
                 '<li data-thumb="' . $image->getImage('t') . '">'.
                     '<img src="' . $image->getImage('g') . '" alt=""></li>'.
                 '</li>';
+            if($i = 10) {
+                break;
+            }
         }
 
         $html .=

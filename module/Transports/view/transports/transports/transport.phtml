@@ -3,56 +3,41 @@ i<?php echo $this->header([
     'wrapper'    => true
 ]); ?>
 
-<div class="block gray">
+<div class="block module-item-block transport-block sidebar-aware sidebar-right">
     <div class="wrapper">
-        <div class="module-item-block transport-block">
+        <div class="container">
             <div class="content">
-                <?php echo $this->gallery($transport) ?>
+                <div class=" panel">
+                    <?php echo '<h1' . (mb_strlen($this->header) > 40 ? ' style="font-size: 35px"' : '') . '>' . $this->header . '</h1>' ?>
+                    <?php echo $this->gallery($transport) ?>
 
-                <div class="desc-box">
-                    <h2><?php echo $this->tr($transport->get('name')) ?></h2>
-                    <div class="std-text"><?= $this->tr($transport->get('text')) ?></div>
-                </div>
+                    <div class="desc-box">
+                        <h2><?php echo $this->tr($transport->get('name')) ?></h2>
+                        <div class="std-text"><?= $this->tr($transport->get('text')) ?></div>
+                    </div>
 
-                <div class="attrs-list">
-                    <?php
-                    foreach ($transport->getPlugin('props') as $row) {
-                        echo
-                        '<div class="row">'.
-                            $row->get('name').
-                        '</div>';
-                    }
-                    ?>
+                    <div class="attrs-list">
+                        <?php
+                        foreach ($transport->getPlugin('props') as $row) {
+                            echo
+                            '<div class="row">'.
+                                $row->get('name').
+                            '</div>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
             <div class="sidebar">
                 <div class="slider">
                     <div class="widget text">
-                        <div class="header">Заказ транспорта</div>
+                        <div class="header med"><?= $this->tr('Заказ транспорта') ?></div>
                         <div class="body">
-                            Весь представленный транспорт используется в наших индивидуальных экскурсиях.
-                            Если вы желаете заказать катер или машину отдельно, вы можете написать на почту
-                            <a href="email:info@gutereise.ru">info@gutereise.ru</a>
+                            <?=  $this->tr('Весь представленный транспорт используется в наших индивидуальных экскурсиях.
+                            Если вы желаете заказать катер или машину отдельно, вы можете написать на почту') ?>
+                            <a href="email:<?= $contacts->get('email') ?>"><?= $contacts->get('email') ?></a>
                         </div>
                     </div>
-                    <?php /*
-                    $html =
-                        '<form action="/transport/get-price/" method="post" class="transport-form common-form">'.
-                            '<input type="hidden" name="id" value="' . $transport->getId() . '">'.
-                            $this->commonForm($commonForm, [
-                                ['field' => 'date', 'icon' => 'far fa-calendar-alt'],
-                                ['field' => 'time', 'icon' => 'far fa-clock'],
-                                ['field' => 'duration', 'icon' => 'fas fa-stopwatch'],
-                                ['field' => 'adults', 'icon' => 'fas fa-user'],
-                            ]).
-                            '<div class="price-box std-errors"></div>'.
-                            '<div class="btns">'.
-                                '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
-                            '</div>'.
-                        '</form>';
-
-                    echo $html;
-                    */ ?>
                 </div>
             </div>
         </div>

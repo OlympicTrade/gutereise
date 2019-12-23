@@ -9,8 +9,7 @@ class TransportsList extends AbstractHelper
     {
         $view = $this->getView();
 
-        $html =
-            '';
+        $html = '';
 
         foreach ($transports as $transport) {
             $html .=
@@ -18,7 +17,7 @@ class TransportsList extends AbstractHelper
                     '<a class="pic" href="' . $transport->getUrl() . '">'.
                         '<img src="' . $transport->getPlugin('image')->getImage('m') . '" alt="' . $transport->get('name') . '">'.
                     '</a>'.
-                    '<div class="desc">'.
+                    '<div class="info">'.
                         '<div class="name">' . $transport->get('name') . '</div>' .
                         '<div class="props">';
 
@@ -37,8 +36,6 @@ class TransportsList extends AbstractHelper
                 '</div>';
         }
 
-        $html .=
-            '<div class="clear"></div>';
 
         return $html;
     }
