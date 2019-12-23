@@ -23,7 +23,7 @@ class Gallery extends AbstractHelper
                 '<li data-thumb="' . $image->getImage('t') . '">'.
                     '<img src="' . $image->getImage('g') . '" alt=""></li>'.
                 '</li>';
-            if($i = 10) {
+            if($i == 10) {
                 break;
             }
         }
