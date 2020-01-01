@@ -21,6 +21,7 @@ class Module implements AutoloaderProviderInterface
     {
         return array(
             'invokables' => [
+                'Museums\Service\SystemService'   => 'Museums\Service\SystemService',
                 'Museums\Service\MuseumsService'  => 'Museums\Service\MuseumsService',
             ],
             'initializers' => [

@@ -128,6 +128,6 @@ class Museum extends EntityHierarchy
 
     public function getUrl()
     {
-        return '/attractions/' . trim($this->get('url_path'), '/') . '/';
+        return '/attractions/' . trim($this->get('url'), '/') . '/';
     }
 }

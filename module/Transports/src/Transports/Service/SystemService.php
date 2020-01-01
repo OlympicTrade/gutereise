@@ -7,27 +7,40 @@ use ApplicationAdmin\Model\Page;
 use Aptero\Db\Entity\Entity;
 use Aptero\Db\Entity\EntityFactory;
 use Aptero\Service\AbstractService;
+use Transports\Model\Transport;
 
 class SystemService extends AbstractService
 {
-    /**
-     * @param Sitemap $sitemap
-     * @return array
-     */
     public function updateSitemap(Sitemap $sitemap)
     {
-        $collection = EntityFactory::collection(new Entity());
+        $this->itemsSitemap($sitemap);
+    }
+
+    public function itemsSitemap(Sitemap $sitemap)
+    {
+        $collection = Transport::getEntityCollection();
         $collection->select()
-            ->columns(array('url', 'time_update'))
-            ->where(array('sitemap' => 1));
+            ->columns(['id', 'url', 'name',]);
 
         foreach($collection as $item) {
-            $sitemap->addPage(array(
-                'loc'        => $item['url'],
+            $images = [[
+                'url'   => $item->getPlugin('image')->getImage('hr'),
+                'name'  => $item->get('name'),
+            ]];
+            foreach ($item->getPlugin('images') as $image) {
+                $images[] = [
+                    'url'   => $image->getImage('hr'),
+                    'name'  => $item->get('name'),
+                ];
+            }
+
+            $sitemap->addPage([
+                'loc'        => $item->getUrl(),
                 'changefreq' => 'monthly', //monthly | weekly | daily
                 'priority'   => 0.5,
-                'lastmod'    => $item['time_update'],
-            ));
+                'images'     => $images,
+                //'lastmod'    => $item['time_update'],
+            ]);
         }
     }
 }

@@ -20,6 +20,7 @@ class Module implements AutoloaderProviderInterface
     {
         return [
             'invokables' => [
+                'Transports\Service\SystemService'  => 'Transports\Service\SystemService',
                 'Transports\Service\TransportsService'  => 'Transports\Service\TransportsService',
             ],
             'initializers' => [

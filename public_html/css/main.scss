@@ -1359,7 +1359,7 @@ h1 {
 
     .content > .panel {
         max-width: 1000px;
-        margin: 0 0 0 7%;
+        margin-left: 7%;
     }
 
     .desc-box h2 {
@@ -1514,10 +1514,11 @@ h1 {
         .btn {
             position: absolute;
             right: 0;
-            top: 11px;
-            line-height: 55px;
+            top: 17px;
+            line-height: 50px;
             width: 165px;
-            font-size: 14px;
+            font-size: 12px;
+            padding: 0;
         }
     }
 
