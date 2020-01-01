@@ -47,9 +47,11 @@ $html .=
             <?php
             $select = new \Zend\Form\Element\Select('filter', [
                 'options'   => [
-                    'all'    => 'Все',
-                    'empty-de'  => 'Не заполненные - DE',
-                    'empty-en'  => 'Не заполненные - EN',
+                    'all'           => 'Все',
+                    'empty-de'      => 'Не заполненные - DE',
+                    'empty-en'      => 'Не заполненные - EN',
+                    'no-url'        => 'Без привязки',
+                    'no-editor'     => 'Без редактора',
                 ]
             ]);
             $select->setValue($_GET['filter']);

@@ -5,6 +5,8 @@ use Aptero\Mvc\Controller\Admin\AbstractActionController;
 use Aptero\Service\Admin\TableService;
 use TranslatorAdmin\Model\Translator;
 use TransportsAdmin\Model\Transport;
+use Zend\Db\Sql\Expression;
+use Zend\Db\Sql\Predicate\Predicate;
 use Zend\View\Model\JsonModel;
 
 class TranslatorController extends AbstractActionController
@@ -13,29 +15,40 @@ class TranslatorController extends AbstractActionController
     {
         $this->generate();
 
-        $translatorList = Translator::getEntityCollection();
+        $list = Translator::getEntityCollection();
 
         $filters = $this->params()->fromQuery();
 
         switch ($filters['filter']) {
             case 'empty-de':
-                $translatorList->select()->where(['de' => '']);
+                $list->select()->where(['de' => '']);
                 break;
             case 'empty-en':
-                $translatorList->select()->where(['en' => '']);
+                $list->select()->where(['en' => '']);
+                break;
+            case 'no-url':
+                $list->select()->where(['url' => '']);
+                break;
+            case 'no-editor':
+                $list->select()->where
+                    ->notLike('ru', '%</p>%');
                 break;
             default:
         }
 
         if($filters['search']) {
-            $translatorList->select()->where->like('ru', '%' . $filters['search'] . '%');
+            $list->select()->where->like('ru', '%' . $filters['search'] . '%');
         }
 
-        $translatorList->select()
-            ->order('id DESC');
+        $list->select()
+            ->order('ru DESC')
+            ->where->in('id', $list->getSql()->select($list->table())
+                ->columns([new Expression('MIN(id)')])
+                ->group('ru')
+            );
 
         return [
-            'items' => $translatorList->getPaginator()
+            'items' => $list->getPaginator($_GET['page'],20)
         ];
     }
 
