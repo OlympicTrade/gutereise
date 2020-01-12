@@ -1,0 +1,307 @@
+<?php echo $this->header([
+    'background' => $headerImage,
+    'wrapper'    => true
+]);
+
+$blocks = [];
+$menu = [
+    'desc' => [
+        'href'  => '',
+        'class' => 'item active',
+        'name'  => '<i class="fal fa-file-alt"></i> ' . $this->tr('Описание'),
+    ],
+];
+
+if($hotel->getPlugin('plan')->count()) {
+    $menu['plan'] = [
+        'href'  => '.anchor-plan',
+        'class' => 'item anchor',
+        'name'  => '<i class="fal fa-map"></i> ' . $this->tr('План'),
+    ];
+}
+
+if($hotel->getPlugin('museums')->count()) {
+    $menu['museums'] = [
+        'href'  => '.anchor-attractions',
+        'class' => 'item anchor',
+        'name'  => '<i class="fal fa-university"></i> ' . $this->tr('Достопримечательности'),
+    ];
+}
+
+$menu['comments'] = [
+    'href'  => '.hotel-block .comments',
+    'class' => 'item anchor',
+    'name'  => '<i class="fal fa-comments"></i> ' . $this->tr('Вопросы'),
+];
+
+$isTour = $hotel->isTour();
+$duration = $isTour ? count($hotel->get('db_data')->days) : $hotel->get('db_data')->days[0]->duration;
+?>
+
+<div class="block gray">
+    <div class="wrapper">
+    <div class="module-item-block menu-aware hotel-block">
+    <div class="content">
+        <div class="menu">
+            <?php
+            foreach ($menu as $item) {
+                echo
+                    '<a href="' . $item['href'] . '" class="' . $item['class'] . '">' . $item['name'] . '</a>';
+            }
+            ?>
+        </div>
+
+        <?php
+        $season = $hotel->checkDate();
+        if(!$season['status']) {
+            echo
+                '<div class="season">'.
+                    '<div class="title">' . $season['header'] . '</div>'.
+                    '<div class="desc">' . $season['desc'] . '</div>'.
+                '</div>';
+        }
+        ?>
+
+        <?php echo $this->gallery($hotel) ?>
+        <?php /*
+        $html =
+            '<div class="gallery">'.
+                '<ul class="list">';
+
+        $html .=
+            '<li data-thumb="' . $hotel->getPlugin('image')->getImage('hr') . '">'.
+                '<img src="' . $hotel->getPlugin('image')->getImage('g') . '" alt="">'.
+            '</li>';
+
+        foreach ($hotel->getPlugin('images') as $image) {
+            $html .=
+                '<li data-thumb="' . $image->getImage('hr') . '">'.
+                    '<img src="' . $image->getImage('g') . '" alt=""></li>'.
+                '</li>';
+        }
+
+        $html .=
+                '</ul>'.
+            '</div>';
+        echo $html;
+        */ ?>
+
+        <div class="desc-box">
+            <h2><?php echo $this->tr($hotel->get('name')) ?></h2>
+            <div class="std-text"><?php echo $this->tr($hotel->get('text')) ?></div>
+
+            <div class="attrs-list">
+                <div class="row">
+                    <div class="label"><?php echo $this->tr('Место и время начала экскурсии') ?></div>
+                    <?php echo $hotel->get('place_and_time') ? $hotel->get('place_and_time') : $this->tr('по договоренности') ?>
+                </div>
+                <div class="row">
+                    <div class="label"><?php echo $this->tr('Длительность экскурсии') ?></div>
+                    <?= $isTour ?
+                        $this->declension($duration, ['день', 'дня', 'дней']) :
+                        $this->declension($duration, ['час', 'часа', 'часов'])
+                    ?>
+                </div>
+                <div class="row">
+                    <div class="label"><?php echo $this->tr('В стоимость включено') ?></div>
+
+                    <?php
+                    $html = '';
+
+                    foreach ($hotel->getPlugin('pricetable') as $row) {
+                        $text = $row->get('text');
+
+                        if($text == '%TRANSPORT%') {
+                            $transports = \Transports\Model\Transport::getEntityCollection();
+                            $transports->select()->where(['type' => \Transports\Model\Transport::TYPE_AUTO, 'id' => [1, 2, 3]]);
+
+                            $text = $this->tr('Аренда') . ' ';
+                            foreach ($transports as $transport) {
+                                $text .=
+                                    '<a class="popup" href="' . $transport->getUrl() . '">' . $this->tr($transport->get('name')) . '</a> / ';
+                            }
+                            $text = rtrim($text, ' /');
+                        } else {
+                            $text = $this->tr($text);
+                        }
+
+                        $html .=
+                            '<div class="row">'.
+                                '<i class="fas fa-check"></i> '.
+                                $text.
+                            '</div>';
+                    }
+
+                    echo $html;
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <?php if(array_key_exists('plan', $menu)) { ?>
+
+        <div class="std-header anchor-plan">
+            <h2><?php echo $this->tr('План экскурсии') ?></h2>
+            <div class="separ"></div>
+        </div>
+
+        <div class="plan">
+            <?php
+            $plan = $hotel->getPlugin('plan');
+
+            $html = '';
+
+            $days = $duration;
+
+            $icons = [
+                'museum' => '<i class="fas fa-university"></i>',
+                'park'   => '<i class="fas fa-tree"></i>',
+                'marker' => '<i class="fas fa-map-marker-alt"></i>',
+                'cafe'   => '<i class="fas fa-coffee"></i>',
+                'anchor' => '<i class="fas fa-anchor"></i>',
+                'auto'   => '<i class="fas fa-car"></i>',
+            ];
+
+            foreach ($plan as $day) {
+                $html .=
+                    '<div class="day">'.
+                        '<div class="stage">'.
+                            '<div class="icon">' . $icons[$day->get('icon')] . '</div>'.
+                        '</div>'.
+                        '<div class="desc">'.
+                            '<div class="header">'. $this->tr($day->get('header')) . '</div>'.
+                            ($day->get('text') ? '<div class="text">'. $this->tr($day->get('text')) . '</div>' : '').
+                        '</div>'.
+                    '</div>';
+            }
+
+            echo $html;
+            ?>
+        </div>
+
+        <?php } ?>
+
+        <?php if(array_key_exists('museums', $menu)) { ?>
+
+        <div class="std-header anchor-attractions">
+            <h2><?php echo $this->tr('Похожие экскурсии') ?></h2>
+            <div class="separ"></div>
+        </div>
+
+        <?php echo $this->shortList($hotel->getPlugin('reco'), ['desc' => false]) ?>
+
+        <div class="notice-panel yellow">
+            <?php echo $this->tr('Все экскурсии на сайте являются <b>индивидуальными</b>, то есть Вам предоставляется персональный гид и транспорт.
+            Экскурсия начинается в удобное для Вас время, в любом месте города. Вход в музеи осуществляется без очереди.
+            Мы можем организовать встречу в аэропорту и на вокзале, поможем с выбором гостиницы. Наша фирма работает с
+            туристами из России, Европы и Китая. Количество туристов в группе не ограничено. Рады ответить на любой Ваш
+            вопрос по телефону') ?> <b>+7 (812) 380-88-47</b>
+        </div>
+
+        <?php } ?>
+
+        <?php echo $this->comments([
+            'depend_id' => $hotel->getId(),
+            'depend_type' => \Comments\Model\Comment::TYPE_EXCURSION,
+        ]); ?>
+    </div>
+    <div class="sidebar">
+        <div class="slider">
+            <?php
+            $html =
+                '<form action="/hotels/get-price/" method="post" class="widget hotel-form common-form">'.
+                    '<input type="hidden" name="lang_id" value="' . \Translator\Model\Translator::getInstance()->getLangId() . '">'.
+                    $this->commonForm($commonForm, [
+                        ['field' => 'date', 'icon' => 'fal fa-calendar-alt'],
+                        ['field' => 'time', 'icon' => 'fal fa-clock'],
+                        ['field' => 'adults', 'icon' => 'fal fa-user'],
+                        ['field' => 'children', 'icon' => 'fal fa-child'],
+                    ]).
+                    '<div class="body">'.
+                        '<div class="price-box std-errors"></div>'.
+                        '<div class="btns">'.
+                            '<span class="btn yellow order">' . $this->tr('Забронировать') . '</span>'.
+                        '</div>'.
+                    '</div>'.
+                '</form>';
+
+            echo $html;
+            ?>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+    var form = $('.hotel-form');
+    var timer = null;
+
+    form.formSubmit({
+        success: function(resp, form){
+            updatePrice(resp.data);
+        }
+    });
+
+    $('input, select', form).on('keyup change', function () {
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            form.submit();
+        }, 200);
+    }).trigger('change');
+
+    function updatePrice(data) {
+        var html = '';
+        new CommonForm(form);
+        var errorsHtml = '';
+
+        $.each(data.errors, function(key, val) {
+            errorsHtml += '<div class="error">' + val + '</div>';
+        });
+
+        if(errorsHtml) {
+            $('.price-box', form).html(errorsHtml);
+            return;
+        }
+
+        html +=
+            '<div class="price"><span>' + $.aptero.price(data.price) + '</span></div>';
+        if(!data.child) {
+            html +=
+                '<div class="notice"><b>' + $.aptero.price(data.adult) + '</b> <?php echo $this->tr('за человека') ?></div>';
+        } else {
+            html +=
+                '<div class="notice">' +
+                    '<?php echo $this->tr('взрослый') ?> - <b>' + $.aptero.price(data.adult) + '</b>, ' +
+                    '<?php echo $this->tr('детский') ?> - <b>'  + $.aptero.price(data.child) + '</b>' +
+                '</div>';
+        }
+
+        $('.price-box', form).html(html);
+    }
+
+    var cForm = new CommonForm(form);
+
+    $('.order', form).on('click', function() {
+        var data = $.aptero.serializeArray(form);
+        data.id = <?php echo $hotel->getId() ?>;
+
+        $.fancybox.open({
+            src: '/hotels/order/',
+            type: 'ajax',
+            opts: {
+                ajax: {
+                    settings: {
+                        method: 'get',
+                        data: data
+                    }
+                },
+                afterLoad: function(e, slide) {
+                    initElements(slide.$slide);
+                }
+            }
+        });
+    });
+});
+</script>
