@@ -202,7 +202,7 @@ class MuseumsController extends AbstractActionController
     /**
      * @return \Museums\Service\MuseumsService
      */
-    public function getMuseumsService()
+    public function getMuseumsService() : \Museums\Service\MuseumsService
     {
         return $this->getServiceLocator()->get('Museums\Service\MuseumsService');
     }

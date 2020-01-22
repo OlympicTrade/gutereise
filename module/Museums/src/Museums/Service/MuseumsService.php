@@ -76,13 +76,13 @@ class MuseumsService extends AbstractService
         return $museums;
     }*/
 
-    public function getMuseum($filters = [])
+    public function getMuseum($filters = []) : Museum
     {
         $museum = new Museum();
 
         $museum->select()
             ->where([
-                'url_path' => '/' . $filters['url'] . '/',
+                'url' => $filters['url'],
                 'active' => 1,
             ]);
 

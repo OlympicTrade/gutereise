@@ -19,7 +19,7 @@ class MuseumsList extends AbstractHelper
                         '<img src="' . $museum->getPlugin('image')->getImage('m') . '" alt="' . $museum->get('name') . '">'.
                     '</a>'.
                     '<div class="info">'.
-                        '<div class="name">' . $museum->get('name') . '</div>'.
+                        '<a class="name" href="' . $museum->getUrl() . '">' . $museum->get('name') . '</a>'.
                         '<div class="desc">' . $museum->get('preview') . '</div>'.
                     '</div>'.
                 '</div>';

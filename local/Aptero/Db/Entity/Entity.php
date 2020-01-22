@@ -516,7 +516,7 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
         return $this;
     }
 
-    public function d($echo = true)
+    public function d($die = true)
     {
         $select = clone $this->select();
 
@@ -526,7 +526,11 @@ class Entity extends AbstractDb implements EventManagerAwareInterface, ArrayAcce
 
         $dump = $this->getSql()->buildSqlString($select);
 
-        if($echo) echo $dump;
+        if($die) {
+            die($dump);
+        } else {
+            echo $dump;
+        }
 
         return $dump;
     }
